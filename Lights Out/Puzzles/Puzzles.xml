@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Puzzles>
+	<Puzzle Number="1">
+		<Size Across="5" Down="5"/>
+		<Light X="2" Y="1"/>
+		<Light X="1" Y="2"/>
+		<Light X="2" Y="2"/>
+		<Light X="3" Y="2"/>
+		<Light X="2" Y="3"/>
+	</Puzzle>
+	<Puzzle Number="2">
+		<Size Across="5" Down="5"/>
+		<Light X="2" Y="1"/>
+		<Light X="2" Y="2"/>
+		<Light X="0" Y="2"/>
+		<Light X="4" Y="2"/>
+		<Light X="4" Y="2"/>
+	</Puzzle>
+	<Puzzle Number="3">
+		<Size Across="5" Down="5"/>
+		<Light X="3" Y="0"/>
+		<Light X="0" Y="1"/>
+		<Light X="1" Y="1"/>
+		<Light X="2" Y="1"/>
+		<Light X="1" Y="2"/>
+		<Light X="4" Y="2"/>
+		<Light X="0" Y="3"/>
+		<Light X="2" Y="3"/>
+		<Light X="4" Y="3"/>
+		<Light X="1" Y="4"/>
+		<Light X="2" Y="4"/>
+	</Puzzle>
+</Puzzles>

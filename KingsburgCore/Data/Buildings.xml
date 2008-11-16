@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfBuilding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<Building>
+		<Name>Statue</Name>
+		<Description>At the beginning of each productive season, if you have the same number on all your dice, you may reroll one of them.</Description>
+		<GoldCost>2</GoldCost>
+		<VictoryPointValue>3</VictoryPointValue>
+		<Row>1</Row>
+		<Column>1</Column>
+	</Building>
+
+	<Building>
+		<Name>Chapel</Name>
+		<Description>At the beginning of each productive season, if the total of your dice is 7 or less, you may reroll all of them.</Description>
+		<GoldCost>3</GoldCost>
+		<StoneCost>1</StoneCost>
+		<VictoryPointValue>5</VictoryPointValue>
+		<Row>1</Row>
+		<Column>2</Column>
+	</Building>
+
+	<Building>
+		<Name>Church</Name>
+		<Description>+0 in battle (becomes +1 vs. Demons)</Description>
+		<GoldCost>3</GoldCost>
+		<WoodCost>1</WoodCost>
+		<StoneCost>2</StoneCost>
+		<VictoryPointValue>7</VictoryPointValue>
+		<Row>1</Row>
+		<Column>3</Column>
+	</Building>
+
+	<Building>
+		<Name>Cathedral</Name>
+		<Description>At the end of the game, score 1 extra VP for every 2 goods you own.</Description>
+		<GoldCost>5</GoldCost>
+		<StoneCost>3</StoneCost>
+		<VictoryPointValue>9</VictoryPointValue>
+		<Row>1</Row>
+		<Column>4</Column>
+	</Building>
+
+	<Building>
+		<Name>Inn</Name>
+		<Description>At the end of each Summer you get a "+2" token.</Description>
+		<GoldCost>1</GoldCost>
+		<WoodCost>1</WoodCost>
+		<Row>2</Row>
+		<Column>1</Column>
+	</Building>
+
+	<Building>
+		<Name>Market</Name>
+		<Description>Once per season, you may influence an Advisor whose value is one point higher or lower than the sum of the dice you are using.</Description>
+		<GoldCost>2</GoldCost>
+		<WoodCost>2</WoodCost>
+		<VictoryPointValue>1</VictoryPointValue>
+		<Row>2</Row>
+		<Column>2</Column>
+	</Building>
+
+	<Building>
+		<Name>Farms</Name>
+		<Description>During each productive season, you roll one extra (white) dice. Penalty: -1 in battle.</Description>
+		<GoldCost>2</GoldCost>
+		<WoodCost>3</WoodCost>
+		<StoneCost>1</StoneCost>
+		<BattleValue>-1</BattleValue>
+		<VictoryPointValue>2</VictoryPointValue>
+		<Row>2</Row>
+		<Column>3</Column>
+	</Building>
+
+	<Building>
+		<Name>Merchants' Guild</Name>
+		<Description>At the beginning of each productive season, before rolling dice, you get 1 gold.</Description>
+		<GoldCost>3</GoldCost>
+		<WoodCost>1</WoodCost>
+		<StoneCost>2</StoneCost>
+		<VictoryPointValue>4</VictoryPointValue>
+		<Row>2</Row>
+		<Column>4</Column>
+	</Building>
+
+	<Building>
+		<Name>Guard Tower</Name>
+		<Description>+1 in battle.</Description>
+		<GoldCost>1</GoldCost>
+		<StoneCost>1</StoneCost>
+		<BattleValue>1</BattleValue>
+		<VictoryPointValue>1</VictoryPointValue>
+		<Row>3</Row>
+		<Column>1</Column>
+	</Building>
+
+	<Building>
+		<Name>Blacksmith</Name>
+		<Description>+1 in battle.</Description>
+		<GoldCost>1</GoldCost>
+		<WoodCost>2</WoodCost>
+		<BattleValue>1</BattleValue>
+		<VictoryPointValue>2</VictoryPointValue>
+		<Row>3</Row>
+		<Column>2</Column>
+	</Building>
+
+	<Building>
+		<Name>Barracks</Name>
+		<Description>You pay only one good to recruit soldiers in phase 7.</Description>
+		<GoldCost>2</GoldCost>
+		<WoodCost>2</WoodCost>
+		<StoneCost>1</StoneCost>
+		<VictoryPointValue>4</VictoryPointValue>
+		<Row>3</Row>
+		<Column>3</Column>
+	</Building>
+
+	<Building>
+		<Name>Wizards' Guild</Name>
+		<Description>+2 in battle.</Description>
+		<GoldCost>3</GoldCost>
+		<WoodCost>2</WoodCost>
+		<StoneCost>2</StoneCost>
+		<BattleValue>2</BattleValue>
+		<VictoryPointValue>6</VictoryPointValue>
+		<Row>3</Row>
+		<Column>4</Column>
+	</Building>
+
+	<Building>
+		<Name>Palisade</Name>
+		<Description>+1 in battle (becomes +2 vs. Zombies)</Description>
+		<WoodCost>2</WoodCost>
+		<BattleValue>1</BattleValue>
+		<Row>4</Row>
+		<Column>1</Column>
+	</Building>
+
+	<Building>
+		<Name>Stable</Name>
+		<Description>You get an additional soldier when you influence an Advisor who gives you at least one soldier.</Description>
+		<GoldCost>1</GoldCost>
+		<WoodCost>1</WoodCost>
+		<StoneCost>1</StoneCost>
+		<VictoryPointValue>2</VictoryPointValue>
+		<Row>4</Row>
+		<Column>2</Column>
+	</Building>
+
+	<Building>
+		<Name>Stone Wall</Name>
+		<Description>+1 in battle. In addition, in battle you win draws.</Description>
+		<GoldCost>2</GoldCost>
+		<StoneCost>2</StoneCost>
+		<BattleValue>1</BattleValue>
+		<VictoryPointValue>2</VictoryPointValue>
+		<Row>4</Row>
+		<Column>3</Column>
+	</Building>
+
+	<Building>
+		<Name>Fortress</Name>
+		<Description>+1 in battle. In addition, when you win a battle you get 1 VP on top of the normal rewards.</Description>
+		<GoldCost>3</GoldCost>
+		<StoneCost>2</StoneCost>
+		<BattleValue>1</BattleValue>
+		<VictoryPointValue>4</VictoryPointValue>
+		<Row>4</Row>
+		<Column>4</Column>
+	</Building>
+
+	<Building>
+		<Name>Barricade</Name>
+		<Description>+0 in battle. (becomes +1 vs. Goblins)</Description>
+		<WoodCost>1</WoodCost>
+		<Row>5</Row>
+		<Column>1</Column>
+	</Building>
+
+	<Building>
+		<Name>Crane</Name>
+		<Description>You pay one gold less when building in III and IV column.</Description>
+		<WoodCost>1</WoodCost>
+		<StoneCost>1</StoneCost>
+		<VictoryPointValue>1</VictoryPointValue>
+		<Row>5</Row>
+		<Column>2</Column>
+	</Building>
+
+	<Building>
+		<Name>Town Hall</Name>
+		<Description>At the end of each productive season, you may pay a "+2" token or one good (any kind) to get 1 VP (only once per season).</Description>
+		<GoldCost>1</GoldCost>
+		<WoodCost>1</WoodCost>
+		<StoneCost>1</StoneCost>
+		<VictoryPointValue>2</VictoryPointValue>
+		<Row>5</Row>
+		<Column>3</Column>
+	</Building>
+
+	<Building>
+		<Name>Embassy</Name>
+		<Description>At the end of each productive season you get 1 VP.</Description>
+		<GoldCost>1</GoldCost>
+		<WoodCost>2</WoodCost>
+		<StoneCost>2</StoneCost>
+		<VictoryPointValue>4</VictoryPointValue>
+		<Row>5</Row>
+		<Column>4</Column>
+	</Building>
+
+</ArrayOfBuilding>

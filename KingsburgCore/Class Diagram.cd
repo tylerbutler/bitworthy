@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="TylerButler.Kingsburg.Core.Advisor" Collapsed="true">
+    <Position X="8.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAQQAAAEIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Advisor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Core.AdvisorOrderComparer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Advisor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Core.Phase1" Collapsed="true">
+    <Position X="16.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AllPhases.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Core.Building" Collapsed="true">
+    <Position X="8.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAUAAQAlAAEAABAAAACQAAAAgAAAAAQAAAAAAA=</HashCode>
+      <FileName>Building.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Core.Enemy" Collapsed="true">
+    <Position X="11" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAEIAAABAAABAAAhADEIMQAxAFBAAABQQAAAAAEAAA=</HashCode>
+      <FileName>Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Core.Inventory" Collapsed="true">
+    <Position X="22" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Inventory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Core.KingsburgGameManager">
+    <Position X="10.25" Y="6.5" Width="5" />
+    <TypeIdentifier>
+      <HashCode>gAEAAAAAAUAQAQBCKACAAAAAAABAIAICQIgAAACBAAA=</HashCode>
+      <FileName>KingsburgGameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Core.Player">
+    <Position X="13.5" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>EQiIABAAAQEAAAIEAAAAAAACAAAAAAACAAACAoEAAgA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Core.PlayerDiceRollComparer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Core.ProgramRunner" Collapsed="true">
+    <Position X="20.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>ProgramRunner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Core.Settings" Collapsed="true">
+    <Position X="18.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Utilities.DataLoader" Collapsed="true">
+    <Position X="18.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAQBAAAQA=</HashCode>
+      <FileName>DataLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Utilities.Helpers" Collapsed="true">
+    <Position X="20.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Utilities.SerializableDictionary&lt;TKey, TValue&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAABAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Helpers.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Utilities.TypeConverter" Collapsed="true">
+    <Position X="20.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Helpers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Core.Properties.Settings" Collapsed="true">
+    <Position X="16.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAEAAAABAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Core.UI.UIManager" Collapsed="true">
+    <Position X="22" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAEIAAAACAIAAQAAEAABBAAAEAQACAAAAAAAA=</HashCode>
+      <FileName>UIManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.GameToolkit.Game">
+    <Position X="8.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="TylerButler.GameToolkit.GameComponent" Collapsed="true">
+    <Position X="8.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="TylerButler.GameToolkit.Character" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Enum Name="TylerButler.Kingsburg.Core.Advisors" Collapsed="true">
+    <Position X="16.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gRAgAAAAAABgAAAAEIAAACgAACgAgAAAAAIQIgAAAAA=</HashCode>
+      <FileName>Advisor.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TylerButler.Kingsburg.Core.EnemyType" Collapsed="true">
+    <Position X="18.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAQAAAgCAAAAAAACAAAAAAQAAA=</HashCode>
+      <FileName>Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TylerButler.Kingsburg.Core.GoodsChoiceOptions" Collapsed="true">
+    <Position X="20.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAIEAAAAAEAAAk=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAdvisor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<Advisor>
+		<AdvisorNameEnum>Jester</AdvisorNameEnum>
+		<Description>Gain 1 VP.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Squire</AdvisorNameEnum>
+		<Description>Take 1 gold from the supply.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Architect</AdvisorNameEnum>
+		<Description>Take 1 wood from the supply.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Merchant</AdvisorNameEnum>
+		<Description>Take 1 wood OR 1 gold from the supply.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Sergeant</AdvisorNameEnum>
+		<Description>Recruit 1 soldier.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Alchemist</AdvisorNameEnum>
+		<Description>You can trade 1 single good of your choice for the	other two goods. E.g.: give a stone, take a wood and a gold.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Astronomer</AdvisorNameEnum>
+		<Description>Take 1 good of your choice AND one "+2" token from the supply.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Treasurer</AdvisorNameEnum>
+		<Description>Take 2 gold from the supply.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>MasterHunter</AdvisorNameEnum>
+		<Description>Take 1 wood and 1 gold OR 1 wood and 1 stone from the supply.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>General</AdvisorNameEnum>
+		<Description>Recruit 2 soldiers and secretly look at the topmost card in the Enemies Deck then put it back on top of the deck facedown.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Swordsmith</AdvisorNameEnum>
+		<Description>Take 1 stone and 1 wood OR 1 stone and 1 gold from the supply.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Duchess</AdvisorNameEnum>
+		<Description>Take 2 goods of your choice AND one “+2” token from the supply.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Champion</AdvisorNameEnum>
+		<Description>Take 3 stone from the supply.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Smuggler</AdvisorNameEnum>
+		<Description>Pay 1 Victory Point to take 3 goods of your choice from the supply.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Inventor</AdvisorNameEnum>
+		<Description>Take 1 gold, 1 wood, and 1 stone from the supply.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Wizard</AdvisorNameEnum>
+		<Description>Take 4 gold from the supply.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>Queen</AdvisorNameEnum>
+		<Description>Take 2 goods of your choice from the supply AND secretly look at the topmost card in the Enemies Deck  AND gain 3 VP.</Description>
+	</Advisor>
+
+	<Advisor>
+		<AdvisorNameEnum>King</AdvisorNameEnum>
+		<Description>Take 1 gold, 1 wood and 1 stone from the supply AND Recruit 1 soldier.</Description>
+	</Advisor>
+	
+</ArrayOfAdvisor>

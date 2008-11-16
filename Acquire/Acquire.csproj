@@ -1,0 +1,179 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0868CC7F-5C0C-478A-A57A-85FAA270FDF7}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Bitworthy.Games.Acquire</RootNamespace>
+    <AssemblyName>Acquire</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Board.cs" />
+    <Compile Include="Card.cs" />
+    <Compile Include="HotelChainSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HotelChainSelection.Designer.cs">
+      <DependentUpon>HotelChainSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MergingStockChoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MergingStockChoice.Designer.cs">
+      <DependentUpon>MergingStockChoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkGameData.cs" />
+    <Compile Include="PlayerSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlayerSelection.Designer.cs">
+      <DependentUpon>PlayerSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PostMergerChoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PostMergerChoice.Designer.cs">
+      <DependentUpon>PostMergerChoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tile.cs" />
+    <Compile Include="Util.cs" />
+    <Compile Include="GameManager.cs" />
+    <Compile Include="GameWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameWindow.Designer.cs">
+      <DependentUpon>GameWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="layout\AbstractLayoutManager.cs" />
+    <Compile Include="layout\AreaPane.cs" />
+    <Compile Include="layout\BorderLayout.cs" />
+    <Compile Include="layout\ContainerBox.cs" />
+    <Compile Include="layout\ControlBox.cs" />
+    <Compile Include="layout\FlowLayout.cs" />
+    <Compile Include="layout\GridLayout.cs" />
+    <Compile Include="layout\ILayoutable.cs" />
+    <Compile Include="layout\ILayoutManager.cs" />
+    <Compile Include="layout\ResizeablePane.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GameWindow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>GameWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Class Diagram.cd" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Range.cs" />
+    <Compile Include="SpecialCard.cs" />
+    <Compile Include="StockCard.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\fusion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\hydra.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\phoenix.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\quantum.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\american.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\zeta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\sackson.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HotelChainSelection.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>HotelChainSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MergingStockChoice.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MergingStockChoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlayerSelection.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PlayerSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PostMergerChoice.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PostMergerChoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\special.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

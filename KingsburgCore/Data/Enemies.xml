@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dictionary>
+  <item>
+    <key>
+      <Enemy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Name>Enemy name</Name>
+        <Description>Enemy description</Description>
+        <Level>1</Level>
+        <Strength>1</Strength>
+        <GoodPenalty>0</GoodPenalty>
+        <GoldPenalty>0</GoldPenalty>
+        <WoodPenalty>0</WoodPenalty>
+        <StonePenalty>0</StonePenalty>
+        <VictoryPointPenalty>0</VictoryPointPenalty>
+        <BuildingPenalty>0</BuildingPenalty>
+        <GoldReward>0</GoldReward>
+        <WoodReward>0</WoodReward>
+        <StoneReward>0</StoneReward>
+        <VictoryPointReward>0</VictoryPointReward>
+      </Enemy>
+    </key>
+    <value>
+      <int>1</int>
+    </value>
+  </item>
+  <item>
+    <key>
+      <Enemy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Name>Enemy name</Name>
+        <Description>Enemy description</Description>
+        <Level>1</Level>
+        <Strength>1</Strength>
+        <GoodPenalty>0</GoodPenalty>
+        <GoldPenalty>0</GoldPenalty>
+        <WoodPenalty>0</WoodPenalty>
+        <StonePenalty>0</StonePenalty>
+        <VictoryPointPenalty>0</VictoryPointPenalty>
+        <BuildingPenalty>0</BuildingPenalty>
+        <GoldReward>0</GoldReward>
+        <WoodReward>0</WoodReward>
+        <StoneReward>0</StoneReward>
+        <VictoryPointReward>0</VictoryPointReward>
+      </Enemy>
+    </key>
+    <value>
+      <int>2</int>
+    </value>
+  </item>
+</dictionary>
