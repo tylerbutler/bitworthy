@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Collections;
 using TylerButler.Kingsburg.Utilities;
+using TylerButler.GameToolkit;
 
 namespace TylerButler.Kingsburg.Core
 {
@@ -24,7 +25,29 @@ namespace TylerButler.Kingsburg.Core
             ////serializer.Serialize(writer, a);
             ////writer.Close();
 
-            GameManager.Instance.MainExecutionMethod();
+            //GameManager.Instance.MainExecutionMethod();
+
+            //KingsburgDie d = new KingsburgDie( KingsburgDie.DieTypes.Regular );
+            //d.Value = 1;
+            DiceBag<KingsburgDie> bag = new DiceBag<KingsburgDie>( 3, 6 );
+            bag.Dice[0].Value = 1;
+            bag.Dice[1].Value = 4;
+            bag.Dice[2].Value = 3;
+            bag.AddDie( new KingsburgDie( KingsburgDie.DieTypes.White ) );
+            bag.Dice[3].Value = 2;
+
+            List<List<KingsburgDie>> combos;
+            Dictionary<int, List<List<KingsburgDie>>> d = new Dictionary<int, List<List<KingsburgDie>>>();
+            Helpers.SumComboFinder comboFinder = new Helpers.SumComboFinder();
+            HashSet<int> foo = Helpers.Sums( bag.Values );
+            foreach( int sum in foo )
+            {
+                combos = comboFinder.Find( sum, bag.Dice );
+                d[sum] = combos;
+            }
+            List<List<KingsburgDie>> temp = d[2];
+            temp = d[3];
+
         }
     }
 }

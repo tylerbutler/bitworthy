@@ -69,6 +69,7 @@
     <Compile Include="AllPhases.cs" />
     <Compile Include="Building.cs" />
     <Compile Include="DataLoader.cs" />
+    <Compile Include="DiceAllocationManager.cs" />
     <Compile Include="KingsburgDie.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Helpers.cs" />

@@ -79,16 +79,19 @@ namespace TylerButler.Kingsburg.Core.UI
                     }
                     Console.WriteLine();
                     break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
             }
         }
 
-        internal Advisor DisplayAllocateDice( Player p, List<Advisor> unavailableAdvisors )
+        internal Advisor DisplayAllocateDice( Player p )
         {
+            // case:4
             Advisor chosenAdvisor = null;
             switch( this.Mode )
             {
                 case graphicsMode.CLI:
-                    List<Advisor> CanBeInfluenced = p.Envoy ? InfluenceableAdvisors( p ) : InfluenceableAdvisors( p, unavailableAdvisors );
+                    AdvisorCollection CanBeInfluenced = DiceAllocationManager.Instance.InfluenceableAdvisors( p );
                     Console.WriteLine( "{0}, choose an advisor to influence.", p.Name );
                     Console.WriteLine( "You may influence:" );
                     foreach( Advisor a in CanBeInfluenced )
@@ -106,7 +109,7 @@ namespace TylerButler.Kingsburg.Core.UI
                             p.AllocateAllDice();
                         }
                         // Ticket:3 Need to add a check for this value (should be > 0 and < 18 )
-                        // 
+                        //
                         chosenAdvisor = GameManager.Instance.Advisors[int.Parse( choice )-1];
                         if( CanBeInfluenced.Contains( chosenAdvisor ) )
                         {
@@ -125,32 +128,32 @@ namespace TylerButler.Kingsburg.Core.UI
             return chosenAdvisor;
         }
 
-        private List<Advisor> InfluenceableAdvisors( Player p, List<Advisor> unavailableAdvisors )
-        {
-            List<Advisor> toReturn = new List<Advisor>(GameManager.Instance.Advisors);
-            foreach( Advisor a in unavailableAdvisors )
-            {
-                toReturn.Remove( a );
-            }
+        //private List<Advisor> InfluenceableAdvisors( Player p, List<Advisor> unavailableAdvisors )
+        //{
+        //    List<Advisor> toReturn = new List<Advisor>(GameManager.Instance.Advisors);
+        //    foreach( Advisor a in unavailableAdvisors )
+        //    {
+        //        toReturn.Remove( a );
+        //    }
 
-            List<Advisor>copy = new List<Advisor>(toReturn);
-            foreach( Advisor a in copy )
-            {
-                if( !p.Sums.Contains( a.Order ) )
-                {
-                    toReturn.Remove( a );
-                }
-            }
+        //    List<Advisor>copy = new List<Advisor>(toReturn);
+        //    foreach( Advisor a in copy )
+        //    {
+        //        if( !p.Sums.Contains( a.Order ) )
+        //        {
+        //            toReturn.Remove( a );
+        //        }
+        //    }
 
-            return toReturn;
-        }
+        //    return toReturn;
+        //}
 
-        private List<Advisor> InfluenceableAdvisors( Player p )
-        {
-            return InfluenceableAdvisors( p, new List<Advisor>() );
-        }
+        //private List<Advisor> InfluenceableAdvisors( Player p )
+        //{
+        //    return InfluenceableAdvisors( p, new List<Advisor>() );
+        //}
 
-        internal void DisplayPlayerOrder( List<Player> order )
+        internal void DisplayPlayerOrder( PlayerCollection order )
         {
             switch( this.Mode )
             {
@@ -165,13 +168,13 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        public void DisplayBuildingCard( Player p, bool canBuild )
+        internal void DisplayBuildingCard( Player p, bool canBuild )
         {
             //displays the building card for a given player. The boolean argument specifies whether or not the player can build a building. When false, the player can only see what he's built.
             throw new NotImplementedException();
         }
 
-        public void DisplayKingsReward( List<Player> players )
+        internal void DisplayKingsReward( PlayerCollection players )
         {
             //Displays the confirmation that the players in the playerlist have received a 1VP bonus.
         }
@@ -286,9 +289,9 @@ namespace TylerButler.Kingsburg.Core.UI
             return toReturn;
         }
 
-        internal List<Player> DisplayGetPlayers()
+        internal PlayerCollection DisplayGetPlayers()
         {
-            List<Player> toReturn = new List<Player>();
+            PlayerCollection toReturn = new PlayerCollection();
 
             switch( this.Mode )
             {

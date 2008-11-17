@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 using TylerButler.Kingsburg.Utilities;
 using TylerButler.GameToolkit;
@@ -10,6 +11,8 @@ namespace TylerButler.Kingsburg.Core
     public class Advisor : Character
     {
         private Advisors advisorNameEnum;
+        //private bool isInfluenced = false;
+        private PlayerCollection influencingPlayers = new PlayerCollection();
 
         public Advisor( Advisors adv, string descriptionIn )
             : base( "" /*will get replaced when advisor enum is set*/, descriptionIn )
@@ -55,18 +58,56 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        public bool isInfluenced( List<Player> players, out Player player )
+        //public bool isInfluenced( List<Player> players, out Player player )
+        //{
+        //    foreach( Player p in players )
+        //    {
+        //        if( p.InfluencedAdvisors.Contains( this ) )
+        //        {
+        //            player = p;
+        //            return true;
+        //        }
+        //    }
+        //    player = null;
+        //    return false;
+        //}
+
+        internal bool IsInfluenced
         {
-            foreach( Player p in players )
+            get
             {
-                if( p.InfluencedAdvisors.Contains( this ) )
-                {
-                    player = p;
-                    return true;
-                }
+                return (InfluencingPlayers.Count > 0 );
             }
-            player = null;
-            return false;
+        }
+
+        internal PlayerCollection InfluencingPlayers
+        {
+            get
+            {
+                return influencingPlayers;
+            }
+            //set
+            //{
+            //    influencingPlayer = value;
+            //    if( value == null )
+            //    {
+            //        isInfluenced = false;
+            //    }
+            //    else
+            //    {
+            //        isInfluenced = true;
+            //    }
+            //}
+        }
+
+        internal void Influence( Player p )
+        {
+            this.InfluencingPlayers.Add( p );
+        }
+
+        internal void Reset()
+        {
+            this.InfluencingPlayers.Clear();
         }
 
         public void DoAction( Player p )
@@ -112,5 +153,27 @@ namespace TylerButler.Kingsburg.Core
         Wizard,
         Queen,
         King,
+    }
+
+    internal class AdvisorCollection : HashSet<Advisor>
+    {
+        internal AdvisorCollection() : base()
+        {
+        }
+
+        internal AdvisorCollection( IEnumerable<Advisor> collection )
+            : base( collection )
+        {
+        }
+
+        internal Advisor this[int advisorNumber]
+        {
+            get
+            {
+                List<Advisor> l = new List<Advisor>( this );
+                l.Sort( new AdvisorOrderComparer() );
+                return l[advisorNumber];
+            }
+        }
     }
 }

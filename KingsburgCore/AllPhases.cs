@@ -34,14 +34,14 @@ namespace TylerButler.Kingsburg.Core
         {
             GameManager k = GameManager.Instance;
             //TODO: Pop up phase info message
-            List<Player> LeastBuildingPlayers = k.PlayersWithLowestBuildingCount( k.AllPlayers );
+            PlayerCollection LeastBuildingPlayers = k.PlayersWithLowestBuildingCount( k.AllPlayers );
             if( LeastBuildingPlayers.Count == 1 )
             {
                 LeastBuildingPlayers[0].AddDie();
             }
             else
             {
-                List<Player> LeastGoodsPlayers = k.PlayersWithLowestGoodsCount( LeastBuildingPlayers );
+                PlayerCollection LeastGoodsPlayers = k.PlayersWithLowestGoodsCount( LeastBuildingPlayers );
                 if( LeastGoodsPlayers.Count == 1 )
                 {
                     LeastGoodsPlayers[0].AddDie();
@@ -63,7 +63,7 @@ namespace TylerButler.Kingsburg.Core
 
     internal class Phase2 : Phase
     {
-        private Dictionary<Advisor, Player> AvailableAdvisors = new Dictionary<Advisor, Player>();
+        //private Dictionary<Advisor, Player> AvailableAdvisors = new Dictionary<Advisor, Player>();
         //private List<Advisor> takenAdvisors = null;
 
         public Phase2()
@@ -75,22 +75,22 @@ namespace TylerButler.Kingsburg.Core
         public override Phase Execute()
         {
             GameManager gm = GameManager.Instance;
-            LoadAdvisors();
+            DiceAllocationManager dam = DiceAllocationManager.Instance;
+            //LoadAdvisors();
             foreach( Player p in gm.AllPlayers )
             {
                 p.RollDice();
                 UIManager.Instance.DisplayDiceRoll( p );
             }
             gm.DeterminePlayerOrder();
-            while( PlayersHaveDiceToAllocate( gm.AllPlayers ) )
+            while( dam.PlayersHaveDiceToAllocate() )
             {
                 foreach( Player p in gm.AllPlayers )
                 {
                     if( !p.HasUsedAllDice )
                     {
-                        Advisor influenced = UIManager.Instance.DisplayAllocateDice( p, TakenAdvisors() );
+                        Advisor influenced = UIManager.Instance.DisplayAllocateDice(p);
                         p.InfluencedAdvisors.Add( influenced );
-                        AvailableAdvisors[influenced] = p;
                     }
                 }
             }
@@ -112,40 +112,28 @@ InfluenceAdvisors()
 ConstructBuildings()
     UI.DisplayBuildingCard(Player, canBuild=true)
 GO TO PHASE 3*/
-            return null;
+            throw new NotImplementedException();
         }
 
-        private void LoadAdvisors()
-        {
-            foreach( Advisor a in GameManager.Instance.Advisors )
-            {
-                AvailableAdvisors.Add( a, null );
-            }
-        }
+        //private void LoadAdvisors()
+        //{
+        //    foreach( Advisor a in GameManager.Instance.Advisors )
+        //    {
+        //        AvailableAdvisors.Add( a, null );
+        //    }
+        //}
 
-        private List<Advisor> TakenAdvisors()
-        {
-            List<Advisor> toReturn = new List<Advisor>();
-            foreach( Advisor a in this.AvailableAdvisors.Keys )
-            {
-                if( AvailableAdvisors[a] != null )
-                {
-                    toReturn.Add( a );
-                }
-            }
-            return toReturn;
-        }
-
-        private bool PlayersHaveDiceToAllocate( List<Player> players )
-        {
-            foreach( Player p in players )
-            {
-                if( !p.HasUsedAllDice )
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        //private List<Advisor> TakenAdvisors()
+        //{
+        //    List<Advisor> toReturn = new List<Advisor>();
+        //    foreach( Advisor a in this.AvailableAdvisors.Keys )
+        //    {
+        //        if( AvailableAdvisors[a] != null )
+        //        {
+        //            toReturn.Add( a );
+        //        }
+        //    }
+        //    return toReturn;
+        //}
     }
 }

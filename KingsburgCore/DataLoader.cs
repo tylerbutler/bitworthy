@@ -20,14 +20,14 @@ namespace TylerButler.Kingsburg.Utilities
             return toReturn;
         }
 
-        public static List<Advisor> LoadAdvisors(string pathToFile)
+        public static AdvisorCollection LoadAdvisors(string pathToFile)
         {
             serializer = new XmlSerializer(typeof(List<Advisor>));
             TextReader reader = new StreamReader(pathToFile);
             List<Advisor> toReturn = (List<Advisor>)serializer.Deserialize(reader);
             reader.Close();
             toReturn.Sort(new AdvisorOrderComparer());
-            return toReturn;
+            return new AdvisorCollection(toReturn);
         }
 
         public static Dictionary<Enemy, int> LoadEnemies(string pathToFile)

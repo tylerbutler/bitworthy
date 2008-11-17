@@ -66,10 +66,6 @@ namespace TylerButler.Kingsburg.Core
             {
                 return this.dice;
             }
-            set
-            {
-                this.dice = value;
-            }
         }
 
         internal int GoodsCount
@@ -95,7 +91,7 @@ namespace TylerButler.Kingsburg.Core
 
         internal void AddDie()
         {
-            Dice.AddDie();
+            Dice.AddDie( new KingsburgDie(KingsburgDie.DieTypes.White));
         }
 
         internal void AddGood( GoodsChoiceOptions good )
@@ -160,24 +156,24 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal HashSet<int> Sums
-        {
-            get
-            {
-                // returns all the sums of the players dice
-                HashSet<int> toReturn = new HashSet<int>();
-                for( int i = 0; i < this.MostRecentDiceRoll.Count; i++ )
-                {
-                    toReturn.Add( this.MostRecentDiceRoll[i] );
-                    for( int j = i + 1; j < this.MostRecentDiceRoll.Count; j++ )
-                    {
-                        toReturn.Add( this.MostRecentDiceRoll[i] + this.MostRecentDiceRoll[j] );
-                    }
-                }
-                toReturn.Add( MostRecentDiceRollTotalValue );
-                return toReturn;
-            }
-        }
+        //internal HashSet<int> Sums
+        //{
+        //    get
+        //    {
+        //        // returns all the sums of the players dice
+        //        HashSet<int> toReturn = new HashSet<int>();
+        //        for( int i = 0; i < this.MostRecentDiceRoll.Count; i++ )
+        //        {
+        //            toReturn.Add( this.MostRecentDiceRoll[i] );
+        //            for( int j = i + 1; j < this.MostRecentDiceRoll.Count; j++ )
+        //            {
+        //                toReturn.Add( this.MostRecentDiceRoll[i] + this.MostRecentDiceRoll[j] );
+        //            }
+        //        }
+        //        toReturn.Add( MostRecentDiceRollTotalValue );
+        //        return toReturn;
+        //    }
+        //}
 
         public bool CanBuild( Building b )
         {
@@ -226,5 +222,17 @@ namespace TylerButler.Kingsburg.Core
         GoldAndStone,
         WoodAndStone,
         None,
+    }
+
+    internal class PlayerCollection : List<Player>
+    {
+
+        internal PlayerCollection() : base()
+        {
+        }
+
+        internal PlayerCollection( IEnumerable<Player> collection ) : base( collection )
+        {
+        }
     }
 }

@@ -9,11 +9,11 @@ namespace TylerButler.Kingsburg.Core
     public sealed class GameManager : Game
     {
         private static GameManager instance = null;
-        private List<Player> playerOrderPrimary;
-        private List<Player> playerOrderSecondary;
-        private List<Player> allPlayers;
+        private PlayerCollection playerOrderPrimary;
+        private PlayerCollection playerOrderSecondary;
+        private PlayerCollection allPlayers;
         private readonly List<Building> buildings = DataLoader.LoadBuildings(Path.Combine(Properties.Settings.Default.DataPath, "Buildings.xml"));
-        private readonly List<Advisor> advisors = DataLoader.LoadAdvisors(Path.Combine(Properties.Settings.Default.DataPath, "Advisors.xml"));
+        private readonly AdvisorCollection advisors = DataLoader.LoadAdvisors(Path.Combine(Properties.Settings.Default.DataPath, "Advisors.xml"));
         private readonly Dictionary<Enemy, int> enemies = DataLoader.LoadEnemies(Path.Combine(Properties.Settings.Default.DataPath, "Enemies.xml"));
 
         static GameManager()
@@ -41,7 +41,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        public Dictionary<Enemy, int> Enemies
+        internal Dictionary<Enemy, int> Enemies
         {
             get
             {
@@ -49,7 +49,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        public List<Advisor> Advisors
+        internal AdvisorCollection Advisors
         {
             get
             {
@@ -57,7 +57,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        public List<Building> Buildings
+        internal List<Building> Buildings
         {
             get
             {
@@ -65,7 +65,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        public List<Player> PlayerOrderPrimary
+        internal PlayerCollection PlayerOrderPrimary
         {
             get
             {
@@ -77,7 +77,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        public List<Player> PlayerOrderSecondary
+        internal PlayerCollection PlayerOrderSecondary
         {
             get
             {
@@ -89,7 +89,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        public List<Player> AllPlayers
+        internal PlayerCollection AllPlayers
         {
             get
             {
@@ -118,9 +118,9 @@ namespace TylerButler.Kingsburg.Core
 
         }
 
-        public List<Player> PlayersWithLowestBuildingCount(List<Player> PlayersToCheck)
+        internal PlayerCollection PlayersWithLowestBuildingCount( PlayerCollection PlayersToCheck )
         {
-            List<Player> toReturn = new List<Player>();
+            PlayerCollection toReturn = new PlayerCollection();
             toReturn.Add(PlayersToCheck[0]);
             for (int i = 1; /* skipping the first player in the list */ i < PlayersToCheck.Count; i++)
             {
@@ -140,9 +140,9 @@ namespace TylerButler.Kingsburg.Core
             return toReturn;
         }
 
-        public List<Player> PlayersWithHighestBuildingCount(List<Player> PlayersToCheck)
+        internal PlayerCollection PlayersWithHighestBuildingCount( PlayerCollection PlayersToCheck )
         {
-            List<Player> toReturn = new List<Player>();
+            PlayerCollection toReturn = new PlayerCollection();
             toReturn.Add(PlayersToCheck[0]);
             for (int i = 1; i < PlayersToCheck.Count; i++)
             {
@@ -162,9 +162,9 @@ namespace TylerButler.Kingsburg.Core
             return toReturn;
         }
 
-        public List<Player> PlayersWithLowestGoodsCount(List<Player> PlayersToCheck)
+        internal PlayerCollection PlayersWithLowestGoodsCount( PlayerCollection PlayersToCheck )
         {
-            List<Player> toReturn = new List<Player>();
+            PlayerCollection toReturn = new PlayerCollection();
             toReturn.Add(PlayersToCheck[0]);
             for (int i = 1; /* skipping the first player in the list */ i < PlayersToCheck.Count; i++)
             {
@@ -184,7 +184,7 @@ namespace TylerButler.Kingsburg.Core
             return toReturn;
         }
 
-        public void DeterminePlayerOrder()
+        internal void DeterminePlayerOrder()
         {
             // int[] toReturn = new int[Players.Count]
             // toReturn[0] = Players[0]
@@ -195,15 +195,17 @@ namespace TylerButler.Kingsburg.Core
 
         public void InfluenceAdvisors()
         {
-            // Walk through all the advisors, and do their actions\
+            // Walk through all the advisors, and do their actions
             //ticket:2 case:3
 
             foreach( Advisor a in Advisors )
             {
-                Player p;
-                if( a.isInfluenced(AllPlayers, out p) )
+                if( a.IsInfluenced )
                 {
-                    a.DoAction( p );
+                    foreach( Player p in a.InfluencingPlayers )
+                    {
+                        a.DoAction( p );
+                    }
                 }
             }
 
