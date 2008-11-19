@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using TylerButler.GameToolkit;
+﻿using TylerButler.GameToolkit;
 
 namespace TylerButler.Kingsburg.Core
 {

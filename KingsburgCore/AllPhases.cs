@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using TylerButler.GameToolkit;
 using TylerButler.Kingsburg.Core.UI;
 
@@ -63,9 +61,6 @@ namespace TylerButler.Kingsburg.Core
 
     internal class Phase2 : Phase
     {
-        //private Dictionary<Advisor, Player> AvailableAdvisors = new Dictionary<Advisor, Player>();
-        //private List<Advisor> takenAdvisors = null;
-
         public Phase2()
         {
             this.Title = "Phase 2 - Spring";
@@ -90,7 +85,9 @@ namespace TylerButler.Kingsburg.Core
                     if( !p.HasUsedAllDice )
                     {
                         Advisor influenced = UIManager.Instance.DisplayAllocateDice(p);
-                        p.InfluencedAdvisors.Add( influenced );
+                        
+                        // do we need this line? 
+                        //p.InfluencedAdvisors.Add( influenced );
                     }
                 }
             }

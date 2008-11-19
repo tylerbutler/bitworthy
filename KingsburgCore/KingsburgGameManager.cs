@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using TylerButler.GameToolkit;
-using TylerButler.Kingsburg.Utilities;
 using TylerButler.Kingsburg.Core.UI;
+using TylerButler.Kingsburg.Utilities;
 
 namespace TylerButler.Kingsburg.Core
 {

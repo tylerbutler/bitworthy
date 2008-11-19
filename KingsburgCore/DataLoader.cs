@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TylerButler.Kingsburg.Core;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
+using TylerButler.Kingsburg.Core;
 
 namespace TylerButler.Kingsburg.Utilities
 {

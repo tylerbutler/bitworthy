@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
-using TylerButler.Kingsburg.Core;
 using TylerButler.GameToolkit;
+using TylerButler.Kingsburg.Core;
 using TylerButler.Kingsburg.Core.UI;
 
 

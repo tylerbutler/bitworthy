@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
-using System.IO;
-using System.Collections;
-using TylerButler.Kingsburg.Utilities;
 using TylerButler.GameToolkit;
+using TylerButler.Kingsburg.Utilities;
 
 namespace TylerButler.Kingsburg.Core
 {

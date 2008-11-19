@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 namespace TylerButler.GameToolkit
 {
     // This code based on sample at http://dotnetperls.com/Content/Random-Number-Class.aspx

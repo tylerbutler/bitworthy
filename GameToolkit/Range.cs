@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 
+
 namespace TylerButler.GameToolkit
 {
     public struct Range : ICollection, IEnumerable
