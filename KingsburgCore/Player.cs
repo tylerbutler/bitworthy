@@ -9,7 +9,7 @@ namespace TylerButler.Kingsburg.Core
         private Inventory inventory = new Inventory();
         private List<Building> buildings = new List<Building>();
         public bool Envoy = false;
-        public int VictoryPoints = 0, Soldiers = 0;
+        public int VictoryPoints = 0, Soldiers = 0, PlusTwoTokens = 0;
         private DiceBag<KingsburgDie> dice = new DiceBag<KingsburgDie>(3, 6);
         public DiceValues MostRecentDiceRoll;//,UsedDice,RemainingDice;
         //private bool hasUsedAllDice = false;
@@ -35,7 +35,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        public Inventory Inventory
+        public Inventory Goods
         {
             get
             {
@@ -71,7 +71,7 @@ namespace TylerButler.Kingsburg.Core
         {
             get
             {
-                return Inventory["Gold"] + Inventory["Wood"] + Inventory["Stone"];
+                return Goods["Gold"] + Goods["Wood"] + Goods["Stone"];
             }
         }
 
@@ -98,14 +98,30 @@ namespace TylerButler.Kingsburg.Core
             switch( good )
             {
                 case GoodsChoiceOptions.Gold:
-                    this.Inventory["Gold"]++;
+                    this.Goods["Gold"]++;
                     break;
                 case GoodsChoiceOptions.Wood:
-                    this.Inventory["Wood"]++;
+                    this.Goods["Wood"]++;
                     break;
                 case GoodsChoiceOptions.Stone:
-                    this.Inventory["Stone"]++;
+                    this.Goods["Stone"]++;
                     break;
+                case GoodsChoiceOptions.GoldAndStone:
+                    this.Goods["Gold"]++;
+                    this.Goods["Stone"]++;
+                    break;
+                case GoodsChoiceOptions.GoldAndWood:
+                    this.Goods["Gold"]++;
+                    this.Goods["Wood"]++;
+                    break;
+                case GoodsChoiceOptions.WoodAndStone:
+                    this.Goods["Wood"]++;
+                    this.Goods["Stone"]++;
+                    break;
+                case GoodsChoiceOptions.None:
+                    throw new ArgumentException( "Why are you trying to add no goods to a player?" );
+                default:
+                    throw new ArgumentException("Arguments passed into AddGood method were not valid.");
             }
         }
 

@@ -58,7 +58,7 @@
 
 	<Advisor>
 		<AdvisorNameEnum>Duchess</AdvisorNameEnum>
-		<Description>Take 2 goods of your choice AND one “+2” token from the supply.</Description>
+		<Description>Take 2 goods of your choice AND one "+2" token from the supply.</Description>
 	</Advisor>
 
 	<Advisor>

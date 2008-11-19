@@ -110,7 +110,7 @@ namespace TylerButler.Kingsburg.Core
 
         public void DoAction( Player p )
         {
-            throw new System.NotImplementedException();
+            Helpers.InfluenceAdvisorHelper( this, p );
         }
 
         public override string ToString()

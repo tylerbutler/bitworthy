@@ -31,6 +31,7 @@ namespace TylerButler.Kingsburg.Core
         public override Phase Execute()
         {
             GameManager k = GameManager.Instance;
+            k.CurrentYear++;
             //TODO: Pop up phase info message
             PlayerCollection LeastBuildingPlayers = k.PlayersWithLowestBuildingCount( k.AllPlayers );
             if( LeastBuildingPlayers.Count == 1 )

@@ -11,8 +11,12 @@ namespace TylerButler.Kingsburg.Utilities
 {
     public static class Helpers
     {
-        public static void ExecuteAdvisor( Advisor a, Player p )
+        public static void InfluenceAdvisorHelper( Advisor a, Player p )
         {
+            // For actions that require return data from the UI
+            List<object> returnData;
+            GoodsChoiceOptions choice;
+            
             // TODO: Finish this
             switch( a.AdvisorNameEnum )
             {
@@ -23,32 +27,119 @@ namespace TylerButler.Kingsburg.Utilities
                     break;
                 case Advisors.Squire:
                     // Take 1 gold from the supply.
-                    p.Inventory["Gold"]++;
+                    p.Goods["Gold"]++;
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p );
                     break;
                 case Advisors.Architect:
                     // Take 1 wood from the supply.
-                    p.Inventory["Wood"]++;
+                    p.Goods["Wood"]++;
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p );
                     break;
                 case Advisors.Merchant:
                     // Take 1 wood OR 1 gold from the supply.
-                    List<object> returnData;
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p, out returnData );
-                    GoodsChoiceOptions choice = (GoodsChoiceOptions)returnData[0];
-                    if( choice == GoodsChoiceOptions.Gold )
-                    {
-                        p.Inventory["Gold"]++;
-                    }
-                    else if( choice == GoodsChoiceOptions.Wood )
-                    {
-                        p.Inventory["Wood"]++;
-                    }
+                    choice = (GoodsChoiceOptions)returnData[0];
+                    p.AddGood(choice);
                     break;
                 case Advisors.Sergeant:
                     // Recruit 1 soldier.
                     p.Soldiers++;
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p );
+                    break;
+                case Advisors.Alchemist:
+                    //trade a single good for one of each of the other two goods
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p, out returnData );
+                    choice = (GoodsChoiceOptions)returnData[0];
+                    switch( choice )
+                    {
+                        case GoodsChoiceOptions.Gold:
+                            p.Goods["Wood"]++;
+                            p.Goods["Stone"]++;
+                            break;
+                        case GoodsChoiceOptions.Wood:
+                            p.Goods["Gold"]++;
+                            p.Goods["Stone"]++;
+                            break;
+                        case GoodsChoiceOptions.Stone:
+                            p.Goods["Gold"]++;
+                            p.Goods["Wood"]++;
+                            break;
+                    }
+                    break;
+                case Advisors.Astronomer:
+                    // Receive a good of choice and a +2 token
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p, out returnData );
+                    choice = (GoodsChoiceOptions)returnData[0];
+                    p.AddGood( choice );
+                    p.PlusTwoTokens++;
+                    break;
+                case Advisors.Treasurer:
+                    // Receive 2 gold
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p );
+                    p.Goods["Gold"] += 2;
+                    break;
+                case Advisors.MasterHunter:
+                    // Take a wood and a gold, or a wood and a stone
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p, out returnData );
+                    choice = (GoodsChoiceOptions)returnData[0];
+                    p.AddGood( choice );
+                    break;
+                case Advisors.General:
+                    // recruit two soliders and secretly look at the enemy card
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p );
+                    p.Soldiers += 2;
+                    break;
+                case Advisors.Swordsmith:
+                    // receive a stone and a wood or a stone and a gold
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p, out returnData );
+                    choice = (GoodsChoiceOptions)returnData[0];
+                    p.AddGood( choice );
+                    break;
+                case Advisors.Duchess:
+                    // Take 2 goods of choice and a "+2" token
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p, out returnData );
+                    p.AddGood( (GoodsChoiceOptions)returnData[0] );
+                    p.AddGood( (GoodsChoiceOptions)returnData[1] );
+                    p.PlusTwoTokens++;
+                    break;
+                case Advisors.Champion:
+                    // Take 3 stone
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p );
+                    p.Goods["Stone"] += 3;
+                    break;
+                case Advisors.Smuggler:
+                    // Pay a VP to take 3 goods of choice.
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p, out returnData );
+                    p.AddGood( (GoodsChoiceOptions)returnData[0] );
+                    p.AddGood( (GoodsChoiceOptions)returnData[1] );
+                    p.AddGood( (GoodsChoiceOptions)returnData[2] );
+                    break;
+                case Advisors.Inventor:
+                    // receive 1 of each good
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p );
+                    p.Goods["Gold"]++;
+                    p.Goods["Wood"]++;
+                    p.Goods["Stone"]++;
+                    break;
+                case Advisors.Wizard:
+                    // Take 4 gold
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p );
+                    p.Goods["Gold"] += 4;
+                    break;
+                case Advisors.Queen:
+                    // Take 2 goods of choice, spy on the enemy, and get 3 VP
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p, out returnData );
+                    p.AddGood( (GoodsChoiceOptions)returnData[0] );
+                    p.AddGood( (GoodsChoiceOptions)returnData[1] );
+                    p.VictoryPoints += 3;
+                    break;
+                case Advisors.King:
+                    // take one of each good and a soldier
+                    UIManager.Instance.DisplayInfluenceAdvisor( a, p );
+                    p.Goods["Gold"]++;
+                    p.Goods["Wood"]++;
+                    p.Goods["Stone"]++;
+                    p.Soldiers++;
                     break;
                 default:
                     throw new Exception( "Something went wrong when running the ExecuteAdvisor method. Advisor={0}, Player={1}" );

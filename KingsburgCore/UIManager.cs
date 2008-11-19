@@ -109,7 +109,7 @@ namespace TylerButler.Kingsburg.Core.UI
                         }
                         // Ticket:3 Need to add a check for this value (should be > 0 and < 18 )
                         //
-                        chosenAdvisor = GameManager.Instance.Advisors[int.Parse( choice )-1];
+                        chosenAdvisor = GameManager.Instance.Advisors[int.Parse( choice ) - 1];
                         if( CanBeInfluenced.Contains( chosenAdvisor ) )
                         {
                             exitLoop = true;
@@ -200,8 +200,10 @@ namespace TylerButler.Kingsburg.Core.UI
 
         public void DisplayInfluenceAdvisor( Advisor a, Player p, out List<object> returnData )
         {
-            //Displays info about the Advisor that is being influenced
+            // Displays info about the Advisor that is being influenced
             returnData = new List<object>();
+            GoodsChoiceOptions choice;
+
             switch( this.Mode )
             {
                 case graphicsMode.CLI:
@@ -209,40 +211,127 @@ namespace TylerButler.Kingsburg.Core.UI
                     {
                         case Advisors.Jester:
                             Console.WriteLine( "{0} influences the Jester, and receives 1 Victory Point.", p.Name );
-                            Console.ReadLine();
                             break;
                         case Advisors.Squire:
                             Console.WriteLine( "{0} influences the Squire and receives 1 Gold.", p.Name );
-                            Console.ReadLine();
                             break;
                         case Advisors.Architect:
                             Console.WriteLine( "{0} influences the Architect and receives 1 Wood.", p.Name );
-                            Console.ReadLine();
                             break;
                         case Advisors.Merchant:
                             Console.WriteLine( "{0} influences the Merchant and receives 1 Wood OR 1 Gold.", p.Name );
-                            GoodsChoiceOptions choice = DisplayChooseAGood( p, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Gold );
+                            choice = DisplayChooseAGood( p, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Gold );
                             returnData.Add( choice );
-                            Console.WriteLine( "{0} chose {1}.", choice );
-                            Console.ReadLine();
                             break;
                         case Advisors.Sergeant:
-                            Console.WriteLine( "{0} influences the Sergeant and recruits 1 Soldier." );
-                            Console.WriteLine();
+                            Console.WriteLine( "{0} influences the Sergeant and recruits 1 Soldier.", p.Name );
                             break;
+                        case Advisors.Alchemist:
+                            Console.WriteLine( "{0} influences the Alchemist and can transmute 1 good.", p.Name );
+                            GoodsChoiceOptions[] availableGoods = new GoodsChoiceOptions[3];
+                            availableGoods[0] = p.Goods["Gold"] > 0 ? GoodsChoiceOptions.Gold : GoodsChoiceOptions.None;
+                            availableGoods[1] = p.Goods["Wood"] > 0 ? GoodsChoiceOptions.Wood : GoodsChoiceOptions.None;
+                            availableGoods[2] = p.Goods["Stone"] > 0 ? GoodsChoiceOptions.Stone : GoodsChoiceOptions.None;
+                            choice = DisplayChooseAGood( p, availableGoods );
+                            returnData.Add( choice );
+                            break;
+                        case Advisors.Astronomer:
+                            Console.WriteLine( "{0} influences the Astronomer and receives 1 good of choice and a \"+2\" token.", p.Name );
+                            choice = DisplayChooseAGood( p, GoodsChoiceOptions.Gold, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone );
+                            returnData.Add( choice );
+                            break;
+                        case Advisors.Treasurer:
+                            Console.WriteLine( "{0} influences the Treasurer and receives 2 Gold.", p.Name );
+                            break;
+                        case Advisors.MasterHunter:
+                            Console.WriteLine( "{0} influences the Master Hunter and receives either 1 Wood and 1 Stone, or 1 Wood and 1 Gold.", p.Name );
+                            choice = DisplayChooseAGood( p, GoodsChoiceOptions.WoodAndStone, GoodsChoiceOptions.GoldAndWood );
+                            returnData.Add( choice );
+                            break;
+                        case Advisors.General:
+                            Console.WriteLine( "{0} influences the General and recruits 2 soldiers and may spy on the enemy.", p.Name );
+                            UIManager.Instance.DisplayPeekAtEnemy( p );
+                            break;
+                        case Advisors.Swordsmith:
+                            Console.WriteLine( "{0} influences the Swordsmith and receives either 1 Stone and 1 Wood, or 1 Stone and 1 Gold.", p.Name );
+                            choice = DisplayChooseAGood( p, GoodsChoiceOptions.WoodAndStone, GoodsChoiceOptions.GoldAndStone );
+                            returnData.Add( choice );
+                            break;
+                        case Advisors.Duchess:
+                            Console.WriteLine( "{0} influences the Duchess and receives 2 goods of choice and a \"+2\" token.", p.Name );
+                            choice = DisplayChooseAGood( p, GoodsChoiceOptions.Gold, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone );
+                            returnData.Add( choice );
+                            choice = DisplayChooseAGood( p, GoodsChoiceOptions.Gold, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone );
+                            returnData.Add( choice );
+                            break;
+                        case Advisors.Champion:
+                            Console.WriteLine( "{0} influences the Champion and receives 3 Stone.", p.Name );
+                            break;
+                        case Advisors.Smuggler:
+                            Console.WriteLine( "{0} influences the Smuggler and pays 1 Victory Point to receive 3 goods of choice.", p.Name );
+                            choice = DisplayChooseAGood( p, GoodsChoiceOptions.Gold, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone );
+                            returnData.Add( choice );
+                            choice = DisplayChooseAGood( p, GoodsChoiceOptions.Gold, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone );
+                            returnData.Add( choice );
+                            choice = DisplayChooseAGood( p, GoodsChoiceOptions.Gold, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone );
+                            returnData.Add( choice );
+                            break;
+                        case Advisors.Inventor:
+                            Console.WriteLine( "{0} influences the Inventor and receives 1 Gold, 1 Wood, and 1 Stone.", p.Name );
+                            break;
+                        case Advisors.Wizard:
+                            Console.WriteLine( "{0} influences the Wizard and receives 4 Gold.", p.Name );
+                            break;
+                        case Advisors.Queen:
+                            Console.WriteLine( "{0} influences the Queen and receives 2 goods of choice, 3 Victory Points, and may spy on the enemy.", p.Name );
+                            choice = DisplayChooseAGood( p, GoodsChoiceOptions.Gold, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone );
+                            returnData.Add( choice );
+                            choice = DisplayChooseAGood( p, GoodsChoiceOptions.Gold, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone );
+                            returnData.Add( choice );
+                            this.DisplayPeekAtEnemy( p );
+                            break;
+                        case Advisors.King:
+                            Console.WriteLine( "{0} influences the King and receives 1 Gold, 1 Wood, and 1 Stone, and recruits 1 Soldier.", p.Name );
+                            break;
+                        default:
+                            throw new Exception( "Something went wrong when running the DisplayInfluenceAdvisor method. Advisor={0}, Player={1}" );
                     }
                     break;
+            }
+        }
+
+        private void DisplayPeekAtEnemy( Player p )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "{0} may now spy on the enemy. All other players should look away. Press any key when ready.", p.Name );
+                    Console.ReadLine();
+                    Enemy e = GameManager.Instance.EnemiesForGame[GameManager.Instance.CurrentYear - 1];
+                    Console.WriteLine( "Enemy Name: {0}", e.Name );
+                    Console.WriteLine( "Strength: {0}", e.Strength );
+                    Console.WriteLine( "Penalties:" );
+                    Console.WriteLine( "Goods of choice: {0}, Gold: {1}, Wood: {2}, Stone: {3}, VP: {4}, Buildings: {5}", e.GoodPenalty, e.GoldPenalty, e.WoodPenalty, e.StonePenalty, e.VictoryPointPenalty, e.BuildingPenalty );
+                    Console.WriteLine( "Rewards:" );
+                    Console.WriteLine( "Gold: {0}, Wood: {1}, Stone: {2}, VP: {3}", e.GoldReward, e.WoodReward, e.StoneReward, e.VictoryPointReward );
+                    Console.WriteLine( "\nPress any key to continue." );
+                    Console.ReadLine();
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
             }
         }
 
         internal void DisplayKingsEnvoy( Player p )
         {
             //Displays a report that the kings envoy was rewarded to a specific player
+            throw new NotImplementedException();
         }
 
         internal void DisplaySoldierRecruitment( Player p )
         {
             //Displays the soldier recruitment UI for a given player
+            throw new NotImplementedException();
         }
 
         internal GoodsChoiceOptions DisplayChooseAGood( Player p, params GoodsChoiceOptions[] available )
@@ -316,7 +405,7 @@ namespace TylerButler.Kingsburg.Core.UI
                         //bool a = !data.Equals( String.Empty );
                         bool b = !data.Equals( cancelChar, StringComparison.OrdinalIgnoreCase );
                         bool c = toReturn.Count <= 5;
-                        dbg =  b & c;
+                        dbg = b & c;
                     }
                     while( dbg );
                     break;
