@@ -86,8 +86,13 @@ namespace TylerButler.Kingsburg.Core
                     if( !p.HasUsedAllDice )
                     {
                         Advisor influenced = UIManager.Instance.DisplayChooseAdvisorToInfluence(p);
-                        DiceBag spent = UIManager.Instance.DisplayChooseDice( p, influenced );
-                        
+                        if( influenced != null ) // player has passed if influenced==null
+                        {
+                            influenced.InfluencingPlayers.Add( p );
+                            DiceCollection spent = UIManager.Instance.DisplayChooseDice( p, influenced );
+                            p.AllocateDice( spent );
+                        }
+
                         // do we need this line? 
                         //p.InfluencedAdvisors.Add( influenced );
                     }
@@ -96,6 +101,7 @@ namespace TylerButler.Kingsburg.Core
 
             gm.InfluenceAdvisors();
             gm.ConstructBuildings();
+            // TODO: reset data for next phase (or should the next phase do that?)
 
 
             /*All players roll dice, influence advisors, receive help and construct buildings.

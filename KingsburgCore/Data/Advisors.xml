@@ -28,7 +28,7 @@
 
 	<Advisor>
 		<AdvisorNameEnum>Alchemist</AdvisorNameEnum>
-		<Description>You can trade 1 single good of your choice for the	other two goods. E.g.: give a stone, take a wood and a gold.</Description>
+		<Description>You can trade 1 single good of your choice for the other two goods. E.g.: give a stone, take a wood and a gold.</Description>
 	</Advisor>
 
 	<Advisor>

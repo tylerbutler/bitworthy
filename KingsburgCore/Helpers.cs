@@ -17,7 +17,6 @@ namespace TylerButler.Kingsburg.Utilities
             List<object> returnData;
             GoodsChoiceOptions choice;
 
-            // TODO: Finish this
             switch( a.AdvisorNameEnum )
             {
                 case Advisors.Jester:
@@ -53,14 +52,17 @@ namespace TylerButler.Kingsburg.Utilities
                     switch( choice )
                     {
                         case GoodsChoiceOptions.Gold:
+                            p.Goods["Gold"]--;
                             p.Goods["Wood"]++;
                             p.Goods["Stone"]++;
                             break;
                         case GoodsChoiceOptions.Wood:
+                            p.Goods["Wood"]--;
                             p.Goods["Gold"]++;
                             p.Goods["Stone"]++;
                             break;
                         case GoodsChoiceOptions.Stone:
+                            p.Goods["Stone"]--;
                             p.Goods["Gold"]++;
                             p.Goods["Wood"]++;
                             break;
@@ -110,6 +112,7 @@ namespace TylerButler.Kingsburg.Utilities
                 case Advisors.Smuggler:
                     // Pay a VP to take 3 goods of choice.
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p, out returnData );
+                    p.VictoryPoints--;
                     p.AddGood( (GoodsChoiceOptions)returnData[0] );
                     p.AddGood( (GoodsChoiceOptions)returnData[1] );
                     p.AddGood( (GoodsChoiceOptions)returnData[2] );
@@ -169,9 +172,11 @@ namespace TylerButler.Kingsburg.Utilities
         {
             private List<List<KingsburgDie>> mResults;
 
-            public List<List<KingsburgDie>> Find( int targetSum, DiceBag bag )
+            public List<List<KingsburgDie>> Find( int targetSum, DiceCollection bag )
             {
-                List<KingsburgDie> elements = bag.GetListOfDice().ConvertAll<KingsburgDie>( TypeConverter.DownCast<Die, KingsburgDie>() );
+                //DiceCollection clone = (DiceCollection)bag.Clone();
+                DiceCollection clone = bag;
+                List<KingsburgDie> elements = (List<KingsburgDie>)clone;
                 mResults = new List<List<KingsburgDie>>();
                 RecursiveFind( targetSum, 0, new List<KingsburgDie>(), elements, 0 );
 
@@ -216,11 +221,11 @@ namespace TylerButler.Kingsburg.Utilities
         }
 
         // This is a horrible way to do this but I am sick of trying to do the right algorithm to find all subset sums
-        internal static HashSet<int> Sums( DiceBag diceVals )
+        internal static HashSet<int> Sums( DiceCollection diceVals )
         {
 
             HashSet<int> toReturn = new HashSet<int>();
-            DiceBag bag = new DiceBag( 0, 6 );
+            DiceCollection bag = new DiceCollection( 0, 6 );
             SumComboFinder comboFinder = new SumComboFinder();
 
             int j= 0;

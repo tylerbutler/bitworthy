@@ -143,6 +143,11 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
+        public override string ToString()
+        {
+            return this.Name;
+        }
+
         #region ICloneable Members
 
         public object Clone()

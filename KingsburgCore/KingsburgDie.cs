@@ -1,4 +1,6 @@
-﻿using TylerButler.GameToolkit;
+﻿using System;
+using System.Collections.Generic;
+using TylerButler.GameToolkit;
 
 namespace TylerButler.Kingsburg.Core
 {
@@ -22,6 +24,11 @@ namespace TylerButler.Kingsburg.Core
             : this()
         {
             this.type = type;
+        }
+
+        public KingsburgDie( int maxRoll )
+            : base( maxRoll )
+        {
         }
 
         public bool IsUsed
@@ -48,4 +55,51 @@ namespace TylerButler.Kingsburg.Core
             }
         }
     }
+
+    internal class DiceCollection : List<KingsburgDie>, ICloneable
+    {
+
+        public DiceCollection()
+            : base()
+        {
+        }
+
+        public DiceCollection( IEnumerable<KingsburgDie> collection )
+            : base( collection )
+        {
+        }
+
+        public DiceCollection( int numDice, int maxRoll )
+            : base()
+        {
+            foreach( int i in new Range( 1, numDice ) )
+            {
+                this.Add( new KingsburgDie( maxRoll ) );
+            }
+        }
+
+        public void RollAllDice()
+        {
+            foreach( KingsburgDie die in this )
+            {
+                die.Roll();
+            }
+        }
+
+        //public List<KingsburgDie> GetListOfDice()
+        //{
+        //    return this;
+        //}
+
+        #region ICloneable Members
+
+        public object Clone()
+        {
+            DiceCollection toReturn = new DiceCollection( this );
+            return toReturn;
+        }
+
+        #endregion
+    }
+
 }

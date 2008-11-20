@@ -67,7 +67,7 @@ namespace TylerButler.Kingsburg.Core.UI
             DisplayDiceRoll( p, p.MostRecentDiceRoll );
         }
 
-        public void DisplayDiceRoll( Player p, DiceBag roll )
+        internal void DisplayDiceRoll( Player p, DiceCollection roll )
         {
             switch( this.Mode )
             {
@@ -92,7 +92,7 @@ namespace TylerButler.Kingsburg.Core.UI
             {
                 case graphicsMode.CLI:
                     AdvisorCollection CanBeInfluenced = DiceAllocationManager.Instance.InfluenceableAdvisors( p );
-                    Console.WriteLine( "\n{0}, choose an advisor to influence.", p.Name );
+                    Console.WriteLine( "\n{0}, choose an advisor to influence. (Enter 'p' to pass)", p.Name );
                     Console.WriteLine( "You may influence:" );
                     foreach( Advisor a in CanBeInfluenced )
                     {
@@ -105,8 +105,9 @@ namespace TylerButler.Kingsburg.Core.UI
                         string choice =  Console.ReadLine();
                         if( choice.Equals( "p", StringComparison.OrdinalIgnoreCase ) )
                         {
-                            Console.WriteLine( "{0} passed." );
+                            Console.WriteLine( "{0} passed.", p.Name );
                             p.AllocateAllDice();
+                            return null;
                         }
                         // TODO: Add a check for this value (should be > 0 and < 18 )
                         //
@@ -369,6 +370,11 @@ namespace TylerButler.Kingsburg.Core.UI
             //pops up dialog to select a good
             GoodsChoiceOptions toReturn = GoodsChoiceOptions.None;
             List<GoodsChoiceOptions> validOptions = new List<GoodsChoiceOptions>( available );
+            validOptions.RemoveAll( delegate( GoodsChoiceOptions none )
+            {
+                return none.Equals(GoodsChoiceOptions.None);
+            }
+                );
             switch( this.Mode )
             {
                 case graphicsMode.CLI:
@@ -443,12 +449,39 @@ namespace TylerButler.Kingsburg.Core.UI
             return toReturn;
         }
 
-        internal DiceBag DisplayChooseDice( Player p, Advisor a )
+        internal DiceCollection DisplayChooseDice( Player p, Advisor a )
         {
-            //Console.WriteLine( "\n{0}, pick which dice to use:", p.Name );
-            //Helpers.SumComboFinder sc = new Helpers.SumComboFinder();
-            //sc.Find(p.MostRecentDiceRollTotalValue, p.Re
-            throw new NotImplementedException();
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "\n{0}, pick which dice combo to use:", p.Name );
+                    Helpers.SumComboFinder sc = new Helpers.SumComboFinder();
+                    List<List<KingsburgDie>> combos = sc.Find( a.Order, p.RemainingDice );
+                    foreach( List<KingsburgDie> combo in combos )
+                    {
+                        Console.Write( "{0}: ", combos.IndexOf( combo ) );
+                        foreach( KingsburgDie d in combo )
+                        {
+                            string isWhite = d.Type == KingsburgDie.DieTypes.White ? "*" : string.Empty;
+                            Console.Write( "{0}{1}, ", d.Value, isWhite );
+                        }
+                        Console.WriteLine();
+                    }
+                    Console.WriteLine( "\"*\" indicates a white die." );
+                    int chosenCombo = -1;
+                    do
+                    {
+                        string input = Console.ReadLine();
+                        chosenCombo = int.Parse( input );
+                    }
+                    while( chosenCombo == -1 || chosenCombo + 1 > combos.Count );
+                    DiceCollection toReturn = new DiceCollection( combos[chosenCombo] );
+                    return toReturn;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+                default:
+                    throw new Exception();
+            }
         }
 
         #endregion
