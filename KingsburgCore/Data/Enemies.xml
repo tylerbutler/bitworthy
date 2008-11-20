@@ -1,49 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dictionary>
-  <item>
-    <key>
-      <Enemy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-        <Name>Enemy name</Name>
-        <Description>Enemy description</Description>
-        <Level>1</Level>
-        <Strength>1</Strength>
-        <GoodPenalty>0</GoodPenalty>
-        <GoldPenalty>0</GoldPenalty>
-        <WoodPenalty>0</WoodPenalty>
-        <StonePenalty>0</StonePenalty>
-        <VictoryPointPenalty>0</VictoryPointPenalty>
-        <BuildingPenalty>0</BuildingPenalty>
-        <GoldReward>0</GoldReward>
-        <WoodReward>0</WoodReward>
-        <StoneReward>0</StoneReward>
-        <VictoryPointReward>0</VictoryPointReward>
-      </Enemy>
-    </key>
-    <value>
-      <int>1</int>
-    </value>
-  </item>
-  <item>
-    <key>
-      <Enemy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-        <Name>Enemy name</Name>
-        <Description>Enemy description</Description>
-        <Level>1</Level>
-        <Strength>1</Strength>
-        <GoodPenalty>0</GoodPenalty>
-        <GoldPenalty>0</GoldPenalty>
-        <WoodPenalty>0</WoodPenalty>
-        <StonePenalty>0</StonePenalty>
-        <VictoryPointPenalty>0</VictoryPointPenalty>
-        <BuildingPenalty>0</BuildingPenalty>
-        <GoldReward>0</GoldReward>
-        <WoodReward>0</WoodReward>
-        <StoneReward>0</StoneReward>
-        <VictoryPointReward>0</VictoryPointReward>
-      </Enemy>
-    </key>
-    <value>
-      <int>2</int>
-    </value>
-  </item>
-</dictionary>
+<ArrayOfEnemy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	
+	<Enemy>
+		<Name>Barbarians</Name>
+		<Description></Description>
+		<Level>1</Level>
+		<Strength>2</Strength>
+		<GoodPenalty>1</GoodPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<GoldReward>1</GoldReward>
+		<Type>Barbarians</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Goblins</Name>
+		<Description></Description>
+		<Level>1</Level>
+		<Strength>2</Strength>
+		<WoodPenalty>1</WoodPenalty>
+		<StonePenalty>1</StonePenalty>
+		<VictoryPointPenalty>1</VictoryPointPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<WoodReward>1</WoodReward>
+		<Type>Goblins</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Goblins</Name>
+		<Description></Description>
+		<Level>1</Level>
+		<Strength>3</Strength>
+		<GoldPenalty>1</GoldPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<StoneReward>1</StoneReward>
+		<Type>Goblins</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Orcs</Name>
+		<Description></Description>
+		<Level>1</Level>
+		<Strength>3</Strength>
+		<GoodPenalty>2</GoodPenalty>
+		<VictoryPointPenalty>1</VictoryPointPenalty>
+		<GoldReward>1</GoldReward>
+		<Type>Orcs</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Zombies</Name>
+		<Description></Description>
+		<Level>1</Level>
+		<Strength>4</Strength>
+		<VictoryPointPenalty>2</VictoryPointPenalty>
+		<VictoryPointReward>1</VictoryPointReward>
+		<Type>Zombies</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Goblins</Name>
+		<Description></Description>
+		<Level>2</Level>
+		<Strength>3</Strength>
+		<WoodPenalty>2</WoodPenalty>
+		<StonePenalty>2</StonePenalty>
+		<VictoryPointPenalty>1</VictoryPointPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<WoodReward>1</WoodReward>
+		<Type>Goblins</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Goblins</Name>
+		<Description></Description>
+		<Level>2</Level>
+		<Strength>4</Strength>
+		<GoldPenalty>2</GoldPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<StoneReward>1</StoneReward>
+		<Type>Goblins</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Orcs</Name>
+		<Description></Description>
+		<Level>2</Level>
+		<Strength>4</Strength>
+		<GoodPenalty>2</GoodPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<GoldReward>1</GoldReward>
+		<Type>Orcs</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Barbarians</Name>
+		<Description></Description>
+		<Level>2</Level>
+		<Strength>5</Strength>
+		<GoodPenalty>2</GoodPenalty>
+		<VictoryPointPenalty>1</VictoryPointPenalty>
+		<GoldReward>1</GoldReward>
+		<Type>Barbarians</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Zombies</Name>
+		<Description></Description>
+		<Level>2</Level>
+		<Strength>5</Strength>
+		<VictoryPointPenalty>2</VictoryPointPenalty>
+		<VictoryPointReward>1</VictoryPointReward>
+		<Type>Zombies</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Goblins</Name>
+		<Description></Description>
+		<Level>3</Level>
+		<Strength>4</Strength>
+		<WoodPenalty>3</WoodPenalty>
+		<StonePenalty>3</StonePenalty>
+		<VictoryPointPenalty>1</VictoryPointPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<WoodReward>1</WoodReward>
+		<Type>Goblins</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Goblins</Name>
+		<Description></Description>
+		<Level>3</Level>
+		<Strength>5</Strength>
+		<GoldPenalty>3</GoldPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<StoneReward>1</StoneReward>
+		<Type>Goblins</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Orcs</Name>
+		<Description></Description>
+		<Level>3</Level>
+		<Strength>5</Strength>
+		<GoodPenalty>2</GoodPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<GoldReward>1</GoldReward>
+		<Type>Orcs</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Zombies</Name>
+		<Description></Description>
+		<Level>3</Level>
+		<Strength>6</Strength>
+		<VictoryPointPenalty>2</VictoryPointPenalty>
+		<VictoryPointReward>1</VictoryPointReward>
+		<Type>Zombies</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Demons</Name>
+		<Description></Description>
+		<Level>3</Level>
+		<Strength>6</Strength>
+		<GoldPenalty>2</GoldPenalty>
+		<WoodPenalty>1</WoodPenalty>
+		<StonePenalty>1</StonePenalty>
+		<VictoryPointPenalty>1</VictoryPointPenalty>
+		<VictoryPointReward>1</VictoryPointReward>
+		<Type>Demons</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Goblins</Name>
+		<Description></Description>
+		<Level>4</Level>
+		<Strength>5</Strength>
+		<WoodPenalty>4</WoodPenalty>
+		<StonePenalty>4</StonePenalty>
+		<VictoryPointPenalty>1</VictoryPointPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<WoodReward>1</WoodReward>
+		<Type>Goblins</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Goblins</Name>
+		<Description></Description>
+		<Level>4</Level>
+		<Strength>6</Strength>
+		<GoldPenalty>4</GoldPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<StoneReward>1</StoneReward>
+		<VictoryPointReward>0</VictoryPointReward>
+		<Type>Goblins</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Demons</Name>
+		<Description></Description>
+		<Level>4</Level>
+		<Strength>6</Strength>
+		<GoodPenalty>4</GoodPenalty>
+		<VictoryPointPenalty>1</VictoryPointPenalty>
+		<GoldReward>1</GoldReward>
+		<VictoryPointReward>1</VictoryPointReward>
+		<Type>Demons</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Orcs</Name>
+		<Description></Description>
+		<Level>4</Level>
+		<Strength>7</Strength>
+		<GoodPenalty>2</GoodPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<GoodReward>1</GoodReward>
+		<Type>Orcs</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Zombies</Name>
+		<Description></Description>
+		<Level>4</Level>
+		<Strength>7</Strength>
+		<VictoryPointPenalty>2</VictoryPointPenalty>
+		<VictoryPointReward>1</VictoryPointReward>
+		<Type>Zombies</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Barbarians</Name>
+		<Description></Description>
+		<Level>5</Level>
+		<Strength>7</Strength>
+		<VictoryPointPenalty>8</VictoryPointPenalty>
+		<VictoryPointReward>1</VictoryPointReward>
+		<Type>Barbarians</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Barbarians</Name>
+		<Description></Description>
+		<Level>5</Level>
+		<Strength>8</Strength>
+		<BuildingPenalty>1</BuildingPenalty>
+		<VictoryPointReward>1</VictoryPointReward>
+		<Type>Barbarians</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Demons</Name>
+		<Description></Description>
+		<Level>5</Level>
+		<Strength>8</Strength>
+		<VictoryPointPenalty>2</VictoryPointPenalty>
+		<BuildingPenalty>1</BuildingPenalty>
+		<VictoryPointReward>2</VictoryPointReward>
+		<Type>Demons</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Demons</Name>
+		<Description></Description>
+		<Level>5</Level>
+		<Strength>9</Strength>
+		<BuildingPenalty>1</BuildingPenalty>
+		<VictoryPointReward>2</VictoryPointReward>
+		<Type>Demons</Type>
+	</Enemy>
+
+	<Enemy>
+		<Name>Dragons</Name>
+		<Description></Description>
+		<Level>5</Level>
+		<Strength>9</Strength>
+		<VictoryPointPenalty>5</VictoryPointPenalty>
+		<VictoryPointReward>3</VictoryPointReward>
+		<Type>Dragons</Type>
+	</Enemy>
+
+
+</ArrayOfEnemy>

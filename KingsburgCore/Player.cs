@@ -7,10 +7,10 @@ namespace TylerButler.Kingsburg.Core
     public class Player : Character
     {
         private Inventory inventory = new Inventory();
-        private List<Building> buildings = new List<Building>();
+        private BuildingCollection buildings = new BuildingCollection();
         public bool Envoy = false;
         public int VictoryPoints = 0, Soldiers = 0, PlusTwoTokens = 0;
-        private DiceBag<KingsburgDie> dice = new DiceBag<KingsburgDie>(3, 6);
+        private DiceBag<KingsburgDie> dice = new DiceBag<KingsburgDie>( 3, 6 );
         public DiceValues MostRecentDiceRoll;//,UsedDice,RemainingDice;
         //private bool hasUsedAllDice = false;
         HashSet<Advisor> influencedAdvisors = new HashSet<Advisor>();
@@ -47,7 +47,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal List<Building> Buildings
+        internal BuildingCollection Buildings
         {
             get
             {
@@ -90,7 +90,7 @@ namespace TylerButler.Kingsburg.Core
 
         internal void AddDie()
         {
-            Dice.AddDie( new KingsburgDie(KingsburgDie.DieTypes.White));
+            Dice.AddDie( new KingsburgDie( KingsburgDie.DieTypes.White ) );
         }
 
         internal void AddGood( GoodsChoiceOptions good )
@@ -121,7 +121,7 @@ namespace TylerButler.Kingsburg.Core
                 case GoodsChoiceOptions.None:
                     throw new ArgumentException( "Why are you trying to add no goods to a player?" );
                 default:
-                    throw new ArgumentException("Arguments passed into AddGood method were not valid.");
+                    throw new ArgumentException( "Arguments passed into AddGood method were not valid." );
             }
         }
 
@@ -192,7 +192,17 @@ namespace TylerButler.Kingsburg.Core
 
         public bool CanBuild( Building b )
         {
-            throw new NotImplementedException();
+            if( this.Goods["Gold"] >= b.GoldCost &&
+                this.Goods["Wood"] >= b.WoodCost &&
+                this.Goods["Stone"] >= b.StoneCost &&
+                this.HasPrerequisiteBuildings( b ) )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         internal void AllocateDie( int die )
@@ -212,6 +222,58 @@ namespace TylerButler.Kingsburg.Core
             {
                 AllocateDie( i );
             }
+        }
+
+        internal List<Building> BuildableBuildings
+        {
+            get
+            {
+                List<Building> toReturn = new List<Building>();
+                foreach( Building b in GameManager.Instance.Buildings )
+                {
+                    if( this.CanBuild( b ) )
+                    {
+                        toReturn.Add( b );
+                    }
+                }
+                return toReturn;
+            }
+        }
+
+        internal bool HasPrerequisiteBuildings( Building b )
+        {
+            for( int c = b.Column - 1; c >= 0; c-- )
+            {
+                if( !this.Buildings.Contains( GameManager.Instance.Buildings.GetBuilding( b.Row, c ) ) )
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        internal int NumBuildings
+        {
+            get
+            {
+                int toReturn = 0;
+                foreach( Building b in this.Buildings )
+                {
+                    if( b != null )
+                    {
+                        toReturn++;
+                    }
+                }
+                return toReturn;
+            }
+        }
+
+        internal bool HasBuilding( Building b )
+        {
+            if( this.Buildings.Contains( b ) )
+                return true;
+            else
+                return false;
         }
     }
 
@@ -242,11 +304,13 @@ namespace TylerButler.Kingsburg.Core
     internal class PlayerCollection : List<Player>
     {
 
-        internal PlayerCollection() : base()
+        internal PlayerCollection()
+            : base()
         {
         }
 
-        internal PlayerCollection( IEnumerable<Player> collection ) : base( collection )
+        internal PlayerCollection( IEnumerable<Player> collection )
+            : base( collection )
         {
         }
     }

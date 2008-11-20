@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TylerButler.GameToolkit;
+using TylerButler.Kingsburg.Utilities;
 
 namespace TylerButler.Kingsburg.Core.UI
 {
@@ -83,7 +84,7 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        internal Advisor DisplayAllocateDice( Player p )
+        internal Advisor DisplayChooseAdvisorToInfluence( Player p )
         {
             // case:4
             Advisor chosenAdvisor = null;
@@ -91,7 +92,7 @@ namespace TylerButler.Kingsburg.Core.UI
             {
                 case graphicsMode.CLI:
                     AdvisorCollection CanBeInfluenced = DiceAllocationManager.Instance.InfluenceableAdvisors( p );
-                    Console.WriteLine( "{0}, choose an advisor to influence.", p.Name );
+                    Console.WriteLine( "\n{0}, choose an advisor to influence.", p.Name );
                     Console.WriteLine( "You may influence:" );
                     foreach( Advisor a in CanBeInfluenced )
                     {
@@ -107,7 +108,7 @@ namespace TylerButler.Kingsburg.Core.UI
                             Console.WriteLine( "{0} passed." );
                             p.AllocateAllDice();
                         }
-                        // Ticket:3 Need to add a check for this value (should be > 0 and < 18 )
+                        // TODO: Add a check for this value (should be > 0 and < 18 )
                         //
                         chosenAdvisor = GameManager.Instance.Advisors[int.Parse( choice ) - 1];
                         if( CanBeInfluenced.Contains( chosenAdvisor ) )
@@ -167,9 +168,38 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        internal void DisplayBuildingCard( Player p, bool canBuild )
+        internal Building DisplayBuildingCard( Player p, bool canBuild )
         {
             //displays the building card for a given player. The boolean argument specifies whether or not the player can build a building. When false, the player can only see what he's built.
+
+            Building toReturn=null;
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    foreach( Building b in GameManager.Instance.Buildings )
+                    {
+                        string ownedStar = p.HasBuilding( b ) ? "*" : string.Empty;
+                        Console.WriteLine( "{0}{5}: {1} Gold, {2} Wood, {3} Stone, {4} VP", b.Name, b.GoldCost,
+                            b.WoodCost, b.StoneCost, b.VictoryPointValue, ownedStar );
+                    }
+                    if( canBuild )
+                    {
+                        Console.WriteLine( "{0}, you may build the following buildings: ", p.Name );
+                        foreach( Building bu in p.BuildableBuildings )
+                        {
+                            Console.WriteLine( "{0},{1}: {2}", bu.Row, bu.Column, bu.Name );
+                        }
+                        string choice = Console.ReadLine();
+                        string[] parsedChoice = choice.Split( ',' );
+                        int chosenRow = int.Parse( parsedChoice[0] );
+                        int chosenColumn = int.Parse( parsedChoice[1] );
+                        toReturn = (Building)GameManager.Instance.Buildings.GetBuilding( chosenRow, chosenColumn ).Clone();
+                    }
+                    return toReturn;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+
             throw new NotImplementedException();
         }
 
@@ -411,6 +441,14 @@ namespace TylerButler.Kingsburg.Core.UI
                     break;
             }
             return toReturn;
+        }
+
+        internal DiceBag<KingsburgDie> DisplayChooseDice( Player p, Advisor a )
+        {
+            //Console.WriteLine( "\n{0}, pick which dice to use:", p.Name );
+            //Helpers.SumComboFinder sc = new Helpers.SumComboFinder();
+            //sc.Find(p.MostRecentDiceRollTotalValue, p.Re
+            throw new NotImplementedException();
         }
 
         #endregion

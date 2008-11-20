@@ -9,13 +9,13 @@ namespace TylerButler.Kingsburg.Utilities
     {
         private static XmlSerializer serializer;
 
-        public static List<Building> LoadBuildings(string pathToFile)
+        public static BuildingCollection LoadBuildings(string pathToFile)
         {
             serializer = new XmlSerializer(typeof(List<Building>));
             TextReader reader = new StreamReader(pathToFile);
             List<Building> toReturn = (List<Building>)serializer.Deserialize(reader);
             reader.Close();
-            return toReturn;
+            return new BuildingCollection(toReturn);
         }
 
         public static AdvisorCollection LoadAdvisors(string pathToFile)
@@ -28,11 +28,11 @@ namespace TylerButler.Kingsburg.Utilities
             return new AdvisorCollection(toReturn);
         }
 
-        public static Dictionary<Enemy, int> LoadEnemies(string pathToFile)
+        public static EnemyCollection LoadEnemies(string pathToFile)
         {
-            serializer = new XmlSerializer(typeof(SerializableDictionary<Enemy, int>));
+            serializer = new XmlSerializer(typeof(EnemyCollection));
             TextReader reader = new StreamReader(pathToFile);
-            Dictionary<Enemy, int> toReturn = (SerializableDictionary<Enemy, int>)serializer.Deserialize(reader);
+            EnemyCollection toReturn = (EnemyCollection)serializer.Deserialize( reader );
             reader.Close();
             return toReturn;
         }

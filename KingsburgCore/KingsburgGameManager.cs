@@ -13,9 +13,9 @@ namespace TylerButler.Kingsburg.Core
         private PlayerCollection playerOrderPrimary;
         private PlayerCollection playerOrderSecondary;
         private PlayerCollection allPlayers;
-        private readonly List<Building> buildings = DataLoader.LoadBuildings( Path.Combine( Properties.Settings.Default.DataPath, "Buildings.xml" ) );
+        private readonly BuildingCollection buildings = DataLoader.LoadBuildings( Path.Combine( Properties.Settings.Default.DataPath, "Buildings.xml" ) );
         private readonly AdvisorCollection advisors = DataLoader.LoadAdvisors( Path.Combine( Properties.Settings.Default.DataPath, "Advisors.xml" ) );
-        private readonly Dictionary<Enemy, int> enemies = DataLoader.LoadEnemies( Path.Combine( Properties.Settings.Default.DataPath, "Enemies.xml" ) );
+        private readonly EnemyCollection enemies = DataLoader.LoadEnemies( Path.Combine( Properties.Settings.Default.DataPath, "Enemies.xml" ) );
         private Enemy[] enemiesForGame = new Enemy[5];
         private int currentYear = 0;
 
@@ -44,7 +44,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal Dictionary<Enemy, int> Enemies
+        internal EnemyCollection Enemies
         {
             get
             {
@@ -60,7 +60,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal List<Building> Buildings
+        internal BuildingCollection Buildings
         {
             get
             {
@@ -153,11 +153,12 @@ namespace TylerButler.Kingsburg.Core
         {
             for( int i = 0; i < 5; i++ )
             {
-                Dictionary<Enemy,int> queryResult = ( from e in Enemies
-                                                      where e.Value == ( i + 1 )
-                                                      select e ).ToDictionary( kv => kv.Key, kv => kv.Value );
-                Enemy[] enemiesForYear = queryResult.Keys.ToArray<Enemy>();
-                int roll = new Die( 0, queryResult.Count ).Roll();
+                IEnumerable<Enemy> queryResult = from e in Enemies
+                                                      where e.Level == ( i + 1 )
+                                                      select e;
+                Enemy[] enemiesForYear = queryResult.ToArray<Enemy>();
+                //int roll = new Die( 0, queryResult.Count ).Roll();
+                int roll = RandomNumber.GetRandom(0, queryResult.Count<Enemy>());
                 this.EnemiesForGame[i] = enemiesForYear[roll];
             }
         }
@@ -168,12 +169,12 @@ namespace TylerButler.Kingsburg.Core
             toReturn.Add( PlayersToCheck[0] );
             for( int i = 1; /* skipping the first player in the list */ i < PlayersToCheck.Count; i++ )
             {
-                if( PlayersToCheck[i].Buildings.Count < toReturn[0].Buildings.Count )
+                if( PlayersToCheck[i].NumBuildings < toReturn[0].NumBuildings )
                 {
                     toReturn.Clear();
                     toReturn.Add( PlayersToCheck[i] );
                 }
-                else if( PlayersToCheck[i].Buildings.Count == toReturn[0].Buildings.Count )
+                else if( PlayersToCheck[i].NumBuildings == toReturn[0].NumBuildings )
                 {
                     toReturn.Add( PlayersToCheck[i] );
                 }
@@ -190,12 +191,12 @@ namespace TylerButler.Kingsburg.Core
             toReturn.Add( PlayersToCheck[0] );
             for( int i = 1; i < PlayersToCheck.Count; i++ )
             {
-                if( PlayersToCheck[i].Buildings.Count > toReturn[0].Buildings.Count )
+                if( PlayersToCheck[i].NumBuildings > toReturn[0].NumBuildings )
                 {
                     toReturn.Clear();
                     toReturn.Add( PlayersToCheck[i] );
                 }
-                else if( PlayersToCheck[i].Buildings.Count == toReturn[0].Buildings.Count )
+                else if( PlayersToCheck[i].NumBuildings == toReturn[0].NumBuildings )
                 {
                     toReturn.Add( PlayersToCheck[i] );
                 }
@@ -223,7 +224,7 @@ namespace TylerButler.Kingsburg.Core
                 }
                 else // do nothing
                 {
-                } 
+                }
             }
             return toReturn;
         }
@@ -240,8 +241,6 @@ namespace TylerButler.Kingsburg.Core
         public void InfluenceAdvisors()
         {
             // Walk through all the advisors, and do their actions
-            //bug:3
-
             foreach( Advisor a in Advisors )
             {
                 if( a.IsInfluenced )
@@ -252,8 +251,6 @@ namespace TylerButler.Kingsburg.Core
                     }
                 }
             }
-
-            throw new System.NotImplementedException();
         }
 
         public void RemoveEnvoyFromPlayers()
@@ -261,6 +258,14 @@ namespace TylerButler.Kingsburg.Core
             foreach( Player p in this.AllPlayers )
             {
                 p.Envoy = false;
+            }
+        }
+
+        internal void ConstructBuildings()
+        {
+            foreach( Player p in Instance.AllPlayers )
+            {
+                UIManager.Instance.DisplayBuildingCard( p, true /* can build */);
             }
         }
 
@@ -274,11 +279,6 @@ namespace TylerButler.Kingsburg.Core
                 next = next.Execute();
             }
             while( !this.IsGameOver );
-        }
-
-        internal void ConstructBuildings()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

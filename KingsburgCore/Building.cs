@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TylerButler.Kingsburg.Core
 {
     [Serializable]
-    public class Building : GameToolkit.GameComponent
+    public class Building : GameToolkit.GameComponent, ICloneable
     {
         private int goldCost=0, woodCost=0, stoneCost=0, battleValue=0, vpValue=0;
         private int row=1, column=1;
@@ -139,6 +141,50 @@ namespace TylerButler.Kingsburg.Core
                     throw new ArgumentOutOfRangeException();
                 }
             }
+        }
+
+        #region ICloneable Members
+
+        public object Clone()
+        {
+            //Building clone = new Building( this.Name, this.Description, this.Row, this.Column );
+            //clone.BattleValue = this.BattleValue;
+            //clone.GoldCost = this.GoldCost;
+            //clone.StoneCost = this.StoneCost;
+            //clone.VictoryPointValue = this.VictoryPointValue;
+            //clone.WoodCost = this.WoodCost
+            return this.MemberwiseClone();
+        }
+
+        #endregion
+    }
+
+    [Serializable]
+    internal class BuildingCollection : List<Building>
+    {
+        internal BuildingCollection() : base()
+        {
+        }
+
+        internal BuildingCollection( IEnumerable<Building> collection )
+            : base( collection )
+        {
+        }
+
+        internal Building GetBuilding( int row, int column )
+        {
+            IEnumerable<Building> r = from b in this
+                                      where b.Row == row && b.Column == column
+                                      select b;
+            return r.ToArray<Building>()[0];
+        }
+
+        internal Building GetBuilding( string Name )
+        {
+            IEnumerable<Building> r = from b in this
+                                      where b.Name == Name
+                                      select b;
+            return r.ToArray<Building>()[0];
         }
     }
 }

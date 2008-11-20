@@ -4,7 +4,7 @@
 namespace TylerButler.GameToolkit
 {
     // This code based on sample at http://dotnetperls.com/Content/Random-Number-Class.aspx
-    static class RandomNumber
+    public static class RandomNumber
     {
         /// <summary>
         /// The random object. It is automatically initialized with a time

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TylerButler.GameToolkit;
 
 namespace TylerButler.Kingsburg.Core
@@ -7,7 +8,7 @@ namespace TylerButler.Kingsburg.Core
     public class Enemy : Character
     {
         private int level = 1, strength = 1, goodPenalty = 0, goldPenalty = 0, woodPenalty = 0, stonePenalty = 0, victoryPointPenalty = 0,
-            buildingPenalty = 0, goldReward = 0, woodReward = 0, stoneReward = 0, victoryPointReward = 0;
+            buildingPenalty = 0, goodReward = 0, goldReward = 0, woodReward = 0, stoneReward = 0, victoryPointReward = 0;
 
         public Enemy(string nameIn, string descriptionIn)
             : base(nameIn, descriptionIn)
@@ -115,6 +116,18 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
+        public int GoodReward
+        {
+            get
+            {
+                return goodReward;
+            }
+            set
+            {
+                goodReward = value;
+            }
+        }
+        
         public int GoldReward
         {
             get
@@ -164,7 +177,7 @@ namespace TylerButler.Kingsburg.Core
         }
         private EnemyType type;
 
-        internal EnemyType Type
+        public EnemyType Type
         {
             get
             {
@@ -178,7 +191,17 @@ namespace TylerButler.Kingsburg.Core
 
     }
 
-    internal enum EnemyType
+    // Public because that's necesarry to serialize
+    [Serializable]
+    public class EnemyCollection : List<Enemy>
+    {
+        internal EnemyCollection()
+        {
+        }
+    }
+
+    [Serializable]
+    public enum EnemyType
     {
         Barbarians,
         Goblins,

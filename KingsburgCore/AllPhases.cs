@@ -85,7 +85,8 @@ namespace TylerButler.Kingsburg.Core
                 {
                     if( !p.HasUsedAllDice )
                     {
-                        Advisor influenced = UIManager.Instance.DisplayAllocateDice(p);
+                        Advisor influenced = UIManager.Instance.DisplayChooseAdvisorToInfluence(p);
+                        DiceBag<KingsburgDie> spent = UIManager.Instance.DisplayChooseDice( p, influenced );
                         
                         // do we need this line? 
                         //p.InfluencedAdvisors.Add( influenced );
