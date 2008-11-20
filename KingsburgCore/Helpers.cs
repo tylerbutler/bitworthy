@@ -16,7 +16,7 @@ namespace TylerButler.Kingsburg.Utilities
             // For actions that require return data from the UI
             List<object> returnData;
             GoodsChoiceOptions choice;
-            
+
             // TODO: Finish this
             switch( a.AdvisorNameEnum )
             {
@@ -39,7 +39,7 @@ namespace TylerButler.Kingsburg.Utilities
                     // Take 1 wood OR 1 gold from the supply.
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p, out returnData );
                     choice = (GoodsChoiceOptions)returnData[0];
-                    p.AddGood(choice);
+                    p.AddGood( choice );
                     break;
                 case Advisors.Sergeant:
                     // Recruit 1 soldier.
@@ -169,9 +169,9 @@ namespace TylerButler.Kingsburg.Utilities
         {
             private List<List<KingsburgDie>> mResults;
 
-            public List<List<KingsburgDie>> Find( int targetSum, List<KingsburgDie> elements )
+            public List<List<KingsburgDie>> Find( int targetSum, DiceBag bag )
             {
-
+                List<KingsburgDie> elements = bag.GetListOfDice().ConvertAll<KingsburgDie>( TypeConverter.DownCast<Die, KingsburgDie>() );
                 mResults = new List<List<KingsburgDie>>();
                 RecursiveFind( targetSum, 0, new List<KingsburgDie>(), elements, 0 );
 
@@ -192,7 +192,6 @@ namespace TylerButler.Kingsburg.Utilities
             private void RecursiveFind( int targetSum, int currentSum,
                 List<KingsburgDie> included, List<KingsburgDie> notIncluded, int startIndex )
             {
-
                 for( int index = startIndex; index < notIncluded.Count; index++ )
                 {
 
@@ -217,15 +216,15 @@ namespace TylerButler.Kingsburg.Utilities
         }
 
         // This is a horrible way to do this but I am sick of trying to do the right algorithm to find all subset sums
-        internal static HashSet<int> Sums( DiceValues diceVals )
+        internal static HashSet<int> Sums( DiceBag diceVals )
         {
 
             HashSet<int> toReturn = new HashSet<int>();
-            DiceBag<KingsburgDie> bag = new DiceBag<KingsburgDie>( 0, 6 );
+            DiceBag bag = new DiceBag( 0, 6 );
             SumComboFinder comboFinder = new SumComboFinder();
 
             int j= 0;
-            foreach( int i in diceVals )
+            foreach( KingsburgDie i in diceVals )
             {
                 KingsburgDie d;
                 if( j < 3 )
@@ -236,14 +235,14 @@ namespace TylerButler.Kingsburg.Utilities
                 {
                     d = new KingsburgDie( KingsburgDie.DieTypes.White );
                 }
-                d.Value = i;
-                bag.AddDie( d );
+                d.Value = i.Value;
+                bag.Add( d );
                 j++;
             }
 
             foreach( int i in new Range( 1, 18 ) )
             {
-                if( comboFinder.Find( i, bag.Dice ).Count > 0 )
+                if( comboFinder.Find( i, bag ).Count > 0 )
                 {
                     toReturn.Add( i );
                 }

@@ -67,15 +67,15 @@ namespace TylerButler.Kingsburg.Core.UI
             DisplayDiceRoll( p, p.MostRecentDiceRoll );
         }
 
-        public void DisplayDiceRoll( Player p, List<int> roll )
+        public void DisplayDiceRoll( Player p, DiceBag roll )
         {
             switch( this.Mode )
             {
                 case graphicsMode.CLI:
                     Console.Write( "{0} rolled ", p.Name );
-                    foreach( int i in roll )
+                    foreach( KingsburgDie d in roll )
                     {
-                        Console.Write( i + " " );
+                        Console.Write( d.Value + " " );
                     }
                     Console.WriteLine();
                     break;
@@ -443,7 +443,7 @@ namespace TylerButler.Kingsburg.Core.UI
             return toReturn;
         }
 
-        internal DiceBag<KingsburgDie> DisplayChooseDice( Player p, Advisor a )
+        internal DiceBag DisplayChooseDice( Player p, Advisor a )
         {
             //Console.WriteLine( "\n{0}, pick which dice to use:", p.Name );
             //Helpers.SumComboFinder sc = new Helpers.SumComboFinder();

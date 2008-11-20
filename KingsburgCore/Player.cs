@@ -10,8 +10,8 @@ namespace TylerButler.Kingsburg.Core
         private BuildingCollection buildings = new BuildingCollection();
         public bool Envoy = false;
         public int VictoryPoints = 0, Soldiers = 0, PlusTwoTokens = 0;
-        private DiceBag<KingsburgDie> dice = new DiceBag<KingsburgDie>( 3, 6 );
-        public DiceValues MostRecentDiceRoll;//,UsedDice,RemainingDice;
+        private DiceBag dice = new DiceBag( 6, 3 );
+        public DiceBag MostRecentDiceRoll;//,UsedDice,RemainingDice;
         //private bool hasUsedAllDice = false;
         HashSet<Advisor> influencedAdvisors = new HashSet<Advisor>();
 
@@ -59,7 +59,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        private DiceBag<KingsburgDie> Dice
+        private DiceBag Dice
         {
             get
             {
@@ -80,9 +80,9 @@ namespace TylerButler.Kingsburg.Core
             get
             {
                 int sum = 0;
-                foreach( int i in this.MostRecentDiceRoll )
+                foreach( KingsburgDie d in this.MostRecentDiceRoll )
                 {
-                    sum += i;
+                    sum += d.Value;
                 }
                 return sum;
             }
@@ -90,7 +90,7 @@ namespace TylerButler.Kingsburg.Core
 
         internal void AddDie()
         {
-            Dice.AddDie( new KingsburgDie( KingsburgDie.DieTypes.White ) );
+            Dice.Add( new KingsburgDie( KingsburgDie.DieTypes.White ) );
         }
 
         internal void AddGood( GoodsChoiceOptions good )
@@ -128,35 +128,35 @@ namespace TylerButler.Kingsburg.Core
         internal void RollDice()
         {
             Dice.RollAllDice();
-            MostRecentDiceRoll = Dice.Values;
+            MostRecentDiceRoll = (DiceBag)Dice.Clone();
         }
 
-        internal DiceValues RemainingDice
+        internal DiceBag RemainingDice
         {
             get
             {
-                DiceValues dv = new DiceValues();
+                DiceBag dv = new DiceBag();
                 foreach( KingsburgDie die in this.Dice )
                 {
                     if( !die.IsUsed )
                     {
-                        dv.Add( die.Value );
+                        dv.Add( (KingsburgDie)die.Clone() );
                     }
                 }
                 return dv;
             }
         }
 
-        internal DiceValues UsedDice
+        internal DiceBag UsedDice
         {
             get
             {
-                DiceValues dv = new DiceValues();
+                DiceBag dv = new DiceBag();
                 foreach( KingsburgDie die in this.Dice )
                 {
                     if( die.IsUsed )
                     {
-                        dv.Add( die.Value );
+                        dv.Add( (KingsburgDie)die.Clone() );
                     }
                 }
                 return dv;
@@ -205,7 +205,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal void AllocateDie( int die )
+        internal void AllocateDie( KingsburgDie die )
         {
             RemainingDice.Remove( die );
             UsedDice.Add( die );
@@ -218,9 +218,9 @@ namespace TylerButler.Kingsburg.Core
 
         internal void AllocateAllDice()
         {
-            foreach( int i in RemainingDice )
+            foreach( KingsburgDie d in RemainingDice )
             {
-                AllocateDie( i );
+                AllocateDie( d );
             }
         }
 
