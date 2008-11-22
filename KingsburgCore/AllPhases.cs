@@ -71,21 +71,23 @@ namespace TylerButler.Kingsburg.Core
         public override Phase Execute()
         {
             GameManager gm = GameManager.Instance;
-            DiceAllocationManager dam = DiceAllocationManager.Instance;
-            //LoadAdvisors();
+
+            // Reset advisor state just in case
+            gm.ClearInfluencedAdvisors();
+
             foreach( Player p in gm.AllPlayers )
             {
                 p.RollDice();
                 UIManager.Instance.DisplayDiceRoll( p );
             }
             gm.DeterminePlayerOrder();
-            while( dam.PlayersHaveDiceToAllocate() )
+            while( DiceAllocationManager.Instance.PlayersHaveDiceToAllocate() )
             {
                 foreach( Player p in gm.AllPlayers )
                 {
                     if( !p.HasUsedAllDice )
                     {
-                        Advisor influenced = UIManager.Instance.DisplayChooseAdvisorToInfluence(p);
+                        Advisor influenced = UIManager.Instance.DisplayChooseAdvisorToInfluence( p );
                         if( influenced != null ) // player has passed if influenced==null
                         {
                             influenced.InfluencingPlayers.Add( p );
@@ -101,44 +103,131 @@ namespace TylerButler.Kingsburg.Core
 
             gm.InfluenceAdvisors();
             gm.ConstructBuildings();
-            // TODO: reset data for next phase (or should the next phase do that?)
 
+            // Phase is complete, reset the advisors
+            gm.ClearInfluencedAdvisors();
 
-            /*All players roll dice, influence advisors, receive help and construct buildings.
+            return new Phase3();
+        }
+    }
 
-Pop up phase info message
-foreach Player in Game
-    UI.DisplayDiceRoll(Player.RollDice())
-DeterminePlayerOrder()
-while Players have dice to allocate
-    for each player in the player order
-        allocate dice or pass
-InfluenceAdvisors()
-ConstructBuildings()
-    UI.DisplayBuildingCard(Player, canBuild=true)
-GO TO PHASE 3*/
-            throw new NotImplementedException();
+    internal class Phase3 : Phase
+    {
+        internal Phase3()
+        {
+            this.Title = "Phase 3 - The King's Reward";
+            this.Description = "The player with the most buildings receives 1 Victory Point. If there is a tie, every tied player receives 1 Victory Point.";
         }
 
-        //private void LoadAdvisors()
-        //{
-        //    foreach( Advisor a in GameManager.Instance.Advisors )
-        //    {
-        //        AvailableAdvisors.Add( a, null );
-        //    }
-        //}
+        public override Phase Execute()
+        {
+            /*
+             * PHASE 3 - The King's Reward
+                The Player with the most buildings receives 1 Victory Point. If there is a tie, every tied player receives 1 Victory Point.
 
-        //private List<Advisor> TakenAdvisors()
-        //{
-        //    List<Advisor> toReturn = new List<Advisor>();
-        //    foreach( Advisor a in this.AvailableAdvisors.Keys )
-        //    {
-        //        if( AvailableAdvisors[a] != null )
-        //        {
-        //            toReturn.Add( a );
-        //        }
-        //    }
-        //    return toReturn;
-        //}
+                highPlayers = GetPlayersWithHighestBuildingCount( Game.Players ) returns ArrayList of Players
+                foreach Player in highPlayers
+                    Player.VictoryPoints++;
+                UI.DisplayKingsReward( highPlayers )
+                GO TO PHASE 4
+             */
+
+            GameManager gm = GameManager.Instance;
+            PlayerCollection players = gm.PlayersWithHighestBuildingCount( gm.AllPlayers );
+            UIManager.Instance.DisplayKingsReward( players );
+            foreach( Player p in players )
+            {
+                p.VictoryPoints++;
+            }
+
+            return new Phase4();
+        }
+    }
+
+    /// <summary>
+    /// Phase 4 is the same as phase 2.
+    /// </summary>
+    internal class Phase4 : Phase2
+    {
+        internal Phase4()
+            : base()
+        {
+            this.Title = "Phase 4 - Summer";
+        }
+
+        public override Phase Execute()
+        {
+            // Do all of phase 2's actions, then finish it up by calculateing the tokens for players with inns
+            base.Execute();
+
+            foreach( Player p in GameManager.Instance.AllPlayers )
+            {
+                if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Inn" ) ) )
+                {
+                    UIManager.Instance.DisplayInnReward( p );
+                    p.PlusTwoTokens++;
+                }
+            }
+
+            //return new Phase5();
+
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class Phase5 : Phase
+    {
+        internal Phase5()
+        {
+            this.Title = "Phase 3 - The King's Envoy";
+            this.Description = "The player with the fewest buildings receives help from the King's Envoy. If there is a tie, the player with the least number of goods. If that is also a tie, nobody receives help.";
+        }
+
+        public override Phase Execute()
+        {
+
+            /*
+             * PHASE 5 - The King's Envoy
+                The Player with the fewest buildings receives help from the King's Envoy. If there is a tie, the player with the least number of goods. If that is also a tie, nobody receives help.
+
+                Pop up phase info message
+                RemoveEnvoyFromPlayers()
+                lowPlayers = GetPlayersWithLowestBuildingCount( Game.Players ) returns ArrayList of Players
+                if LeastBuildingPlayers.Count = 1
+                    LeastBuildingPlayers[0].Envoy = true
+                else
+                    LeastGoodsPlayers = GetPlayersWithLowestGoodsCount(LeastBuildingPlayers) returns ArrayList of Players
+                    if LeastGoodsPlayers.Count = 1
+                        LeastGoodsPlayers[0].Envoy = true
+                    else // nothing
+                UI.DisplayKingsEnvoy( Player p )
+                GO TO PHASE 6
+             * */
+            GameManager gm = GameManager.Instance;
+            gm.ClearEnvoyFromAllPlayers();
+            Player PlayerReceivingEnvoy;
+            PlayerCollection LeastBuildingsPlayers = gm.PlayersWithLowestBuildingCount( gm.AllPlayers );
+
+            if( LeastBuildingsPlayers.Count == 1 )
+            {
+                PlayerReceivingEnvoy = LeastBuildingsPlayers[0];
+            }
+            else
+            {
+                PlayerCollection LeastGoodsPlayers = gm.PlayersWithLowestGoodsCount( LeastBuildingsPlayers );
+                if( LeastGoodsPlayers.Count == 1 )
+                {
+                    PlayerReceivingEnvoy = LeastGoodsPlayers[0];
+                }
+                else
+                {
+                    PlayerReceivingEnvoy = null;
+                }
+            }
+
+            UIManager.Instance.DisplayKingsEnvoy( PlayerReceivingEnvoy );
+
+            throw new NotImplementedException();
+        }
     }
 }

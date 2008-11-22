@@ -84,6 +84,11 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
+        internal void DisplayPlayerInfo( Player p )
+        {
+            throw new NotImplementedException();
+        }
+
         internal Advisor DisplayChooseAdvisorToInfluence( Player p )
         {
             // case:4
@@ -169,10 +174,14 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
+        /// <summary>
+        /// Displays the building card for a given player. The boolean argument specifies whether or not the player can build a building. When false, the player can only see what he's built.
+        /// </summary>
+        /// <param name="p">The player whose building card should be displayed.</param>
+        /// <param name="canBuild">Whether or not the player can actually build or not.</param>
+        /// <returns>The building the player chooses to build.</returns>
         internal Building DisplayBuildingCard( Player p, bool canBuild )
         {
-            //displays the building card for a given player. The boolean argument specifies whether or not the player can build a building. When false, the player can only see what he's built.
-
             Building toReturn=null;
             switch( this.Mode )
             {
@@ -185,6 +194,7 @@ namespace TylerButler.Kingsburg.Core.UI
                     }
                     if( canBuild )
                     {
+                        //bug:14
                         Console.WriteLine( "{0}, you may build the following buildings: ", p.Name );
                         foreach( Building bu in p.BuildableBuildings )
                         {
@@ -204,9 +214,25 @@ namespace TylerButler.Kingsburg.Core.UI
             throw new NotImplementedException();
         }
 
+        internal void DisplayBuildingCard( Player p )
+        {
+            this.DisplayBuildingCard( p, false );
+        }
+
         internal void DisplayKingsReward( PlayerCollection players )
         {
             //Displays the confirmation that the players in the playerlist have received a 1VP bonus.
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    foreach( Player p in players )
+                    {
+                        Console.WriteLine( "{0} receives the King's reward of 1 Victory Point.", p.Name );
+                    }
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
         }
 
         internal void DisplayPhaseInfo( Phase phase )
@@ -353,10 +379,27 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
+        /// <summary>
+        /// Displays a report that the kings envoy was rewarded to a specific player
+        /// </summary>
+        /// <param name="p">The player receiving the envoy. If null, no one is receiving the envoy.</param>
         internal void DisplayKingsEnvoy( Player p )
         {
-            //Displays a report that the kings envoy was rewarded to a specific player
-            throw new NotImplementedException();
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    if( p != null )
+                    {
+                        Console.WriteLine( "{0} receives the King's Envoy.", p.Name );
+                    }
+                    else
+                    {
+                        Console.WriteLine( "No player receives the King's Envoy." );
+                    }
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
         }
 
         internal void DisplaySoldierRecruitment( Player p )
@@ -372,7 +415,7 @@ namespace TylerButler.Kingsburg.Core.UI
             List<GoodsChoiceOptions> validOptions = new List<GoodsChoiceOptions>( available );
             validOptions.RemoveAll( delegate( GoodsChoiceOptions none )
             {
-                return none.Equals(GoodsChoiceOptions.None);
+                return none.Equals( GoodsChoiceOptions.None );
             }
                 );
             switch( this.Mode )
@@ -486,5 +529,17 @@ namespace TylerButler.Kingsburg.Core.UI
 
         #endregion
 
+
+        internal void DisplayInnReward(Player p)
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "{0} receives a \"+2\" token from his inn." );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
     }
 }

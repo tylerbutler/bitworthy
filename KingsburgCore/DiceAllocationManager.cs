@@ -6,15 +6,15 @@ namespace TylerButler.Kingsburg.Core
     internal sealed class DiceAllocationManager
     {
         private static DiceAllocationManager instance = new DiceAllocationManager();
-        private Dictionary<Advisor, PlayerCollection> AdvisorPlayerMap = new Dictionary<Advisor,PlayerCollection>();
+        //private Dictionary<Advisor, PlayerCollection> AdvisorPlayerMap = new Dictionary<Advisor,PlayerCollection>();
 
         private DiceAllocationManager()
         {
             // Singleton
-            foreach( Advisor a in GameManager.Instance.Advisors)
-            {
-                AdvisorPlayerMap[a] = a.InfluencingPlayers;
-            }
+            //foreach( Advisor a in GameManager.Instance.Advisors)
+            //{
+            //    AdvisorPlayerMap[a] = a.InfluencingPlayers;
+            //}
         }
 
         internal static DiceAllocationManager Instance

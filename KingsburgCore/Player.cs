@@ -293,7 +293,7 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    public class PlayerDiceRollComparer : IComparer<Player>
+    internal class PlayerDiceRollComparer : IComparer<Player>
     {
 
         #region IComparer<Player> Members

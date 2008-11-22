@@ -31,6 +31,10 @@ namespace TylerButler.GameToolkit
             }
         }
 
+        /// <summary>
+        /// All of the logic that occurs when the phase is invoked.
+        /// </summary>
+        /// <returns>The next phase to run.</returns>
         public abstract Phase Execute();
 
         #endregion

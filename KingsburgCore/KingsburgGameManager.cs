@@ -4,6 +4,7 @@ using System.Linq;
 using TylerButler.GameToolkit;
 using TylerButler.Kingsburg.Core.UI;
 using TylerButler.Kingsburg.Utilities;
+using System;
 
 namespace TylerButler.Kingsburg.Core
 {
@@ -133,8 +134,8 @@ namespace TylerButler.Kingsburg.Core
         {
             get
             {
-                //TODO implement ticket:1
-                return false;
+                // Bug:17
+                throw new NotImplementedException();
             }
         }
 
@@ -279,6 +280,22 @@ namespace TylerButler.Kingsburg.Core
                 next = next.Execute();
             }
             while( !this.IsGameOver );
+        }
+
+        internal void ClearInfluencedAdvisors()
+        {
+            foreach( Advisor a in this.Advisors )
+            {
+                a.InfluencingPlayers.Clear();
+            }
+        }
+
+        internal void ClearEnvoyFromAllPlayers()
+        {
+            foreach( Player p in this.AllPlayers )
+            {
+                p.Envoy = false;
+            }
         }
     }
 }
