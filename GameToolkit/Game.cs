@@ -73,6 +73,7 @@ namespace TylerButler.GameToolkit
         public abstract bool IsGameOver
         {
             get;
+            set;
         }
     }
 }

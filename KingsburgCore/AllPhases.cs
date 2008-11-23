@@ -303,7 +303,21 @@ namespace TylerButler.Kingsburg.Core
                 }
             }
 
-            throw new NotImplementedException();
+            // Reset stuff for the next year.
+            foreach( Player p in GameManager.Instance.AllPlayers )
+            {
+                p.Soldiers = 0;
+            }
+
+            if( GameManager.Instance.CurrentYear == 5 )
+            {
+                GameManager.Instance.IsGameOver = true;
+                return new EndPhase();
+            }
+            else
+            {
+                return new Phase1();
+            }
         }
 
         /// <summary>
@@ -391,6 +405,14 @@ namespace TylerButler.Kingsburg.Core
 
             player.DestroyBuildings( enemy.BuildingPenalty );
             player.WasVictorious = false;
+        }
+    }
+
+    internal class EndPhase : Phase
+    {
+        public override Phase Execute()
+        {
+            throw new NotImplementedException();
         }
     }
 

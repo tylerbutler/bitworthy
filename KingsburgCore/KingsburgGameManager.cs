@@ -19,6 +19,7 @@ namespace TylerButler.Kingsburg.Core
         private readonly EnemyCollection enemies = DataLoader.LoadEnemies( Path.Combine( Properties.Settings.Default.DataPath, "Enemies.xml" ) );
         private Enemy[] enemiesForGame = new Enemy[5];
         private int currentYear = 0;
+        private bool isGameOver = false;
 
         static GameManager()
         {
@@ -134,8 +135,12 @@ namespace TylerButler.Kingsburg.Core
         {
             get
             {
-                // Bug:17
-                throw new NotImplementedException();
+                return isGameOver;
+            }
+
+            set
+            {
+                isGameOver = value;
             }
         }
 
@@ -146,8 +151,6 @@ namespace TylerButler.Kingsburg.Core
 
             // Add Phases
             Instance.GameStart.Add( new StartPhase() );
-            //Instance.Phases.Add( new Phase1() );
-
         }
 
         private void SelectEnemies()
