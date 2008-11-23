@@ -90,7 +90,7 @@ namespace TylerButler.Kingsburg.Core.UI
 
         internal Advisor DisplayChooseAdvisorToInfluence( Player p )
         {
-            // case:4
+            // case:4 FIXED
             Advisor chosenAdvisor = null;
             switch( this.Mode )
             {
@@ -127,36 +127,26 @@ namespace TylerButler.Kingsburg.Core.UI
                         }
                     }
                     while( !exitLoop );
+
+                    //Bug:26 FIXED
+                    // If the chosen advisor is already influenced, the player must be using the envoy, so we remove it
+                    if( chosenAdvisor.IsInfluenced )
+                    {
+                        if( p.Envoy == true )
+                        {
+                            p.Envoy = false;
+                        }
+                        else
+                        {
+                            throw new Exception( "A player tried to influence an advisor that was already influenced, but he didn't have the envoy" );
+                        }
+                    }
+
                     Console.WriteLine( "{0} chose to influence the {1}.", p.Name, chosenAdvisor.Name );
                     break;
             }
             return chosenAdvisor;
         }
-
-        //private List<Advisor> InfluenceableAdvisors( Player p, List<Advisor> unavailableAdvisors )
-        //{
-        //    List<Advisor> toReturn = new List<Advisor>(GameManager.Instance.Advisors);
-        //    foreach( Advisor a in unavailableAdvisors )
-        //    {
-        //        toReturn.Remove( a );
-        //    }
-
-        //    List<Advisor>copy = new List<Advisor>(toReturn);
-        //    foreach( Advisor a in copy )
-        //    {
-        //        if( !p.Sums.Contains( a.Order ) )
-        //        {
-        //            toReturn.Remove( a );
-        //        }
-        //    }
-
-        //    return toReturn;
-        //}
-
-        //private List<Advisor> InfluenceableAdvisors( Player p )
-        //{
-        //    return InfluenceableAdvisors( p, new List<Advisor>() );
-        //}
 
         internal void DisplayPlayerOrder( PlayerCollection order )
         {
