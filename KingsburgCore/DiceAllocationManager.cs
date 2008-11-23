@@ -6,15 +6,10 @@ namespace TylerButler.Kingsburg.Core
     internal sealed class DiceAllocationManager
     {
         private static DiceAllocationManager instance = new DiceAllocationManager();
-        //private Dictionary<Advisor, PlayerCollection> AdvisorPlayerMap = new Dictionary<Advisor,PlayerCollection>();
 
         private DiceAllocationManager()
         {
             // Singleton
-            //foreach( Advisor a in GameManager.Instance.Advisors)
-            //{
-            //    AdvisorPlayerMap[a] = a.InfluencingPlayers;
-            //}
         }
 
         internal static DiceAllocationManager Instance
@@ -67,7 +62,7 @@ namespace TylerButler.Kingsburg.Core
             AdvisorCollection copy = new AdvisorCollection( toReturn );
             foreach( Advisor a in copy )
             {
-                HashSet<int> sums = Helpers.Sums( p.RemainingDice );
+                HashSet<int> sums = SumComboFinder.Sums( p.RemainingDice );
                 if( !sums.Contains( a.Order ) )
                 {
                     toReturn.Remove( a );

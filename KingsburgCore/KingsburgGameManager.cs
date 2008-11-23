@@ -256,36 +256,6 @@ namespace TylerButler.Kingsburg.Core
             return toReturn;
         }
 
-        internal void DeterminePlayerOrder()
-        {
-            // SORT THE PLAYERS BASED ON MostRecentDiceRollValue()
-            this.AllPlayers.Sort( new PlayerDiceRollComparer() );
-            UIManager.Instance.DisplayPlayerOrder( this.AllPlayers );
-        }
-
-        public void InfluenceAdvisors()
-        {
-            // Walk through all the advisors, and do their actions
-            foreach( Advisor a in Advisors )
-            {
-                if( a.IsInfluenced )
-                {
-                    foreach( Player p in a.InfluencingPlayers )
-                    {
-                        a.DoAction( p );
-                    }
-                }
-            }
-        }
-
-        public void RemoveEnvoyFromPlayers()
-        {
-            foreach( Player p in this.AllPlayers )
-            {
-                p.Envoy = false;
-            }
-        }
-
         /// <summary>
         /// A convenience method to get a building reference from the name of the building.
         /// </summary>
@@ -306,28 +276,6 @@ namespace TylerButler.Kingsburg.Core
                 next = next.Execute();
             }
             while( !this.IsGameOver );
-        }
-
-        /// <summary>
-        /// Mark all the advisors as uninfluenced in preparation for a new round.
-        /// </summary>
-        internal void ClearInfluencedAdvisors()
-        {
-            foreach( Advisor a in this.Advisors )
-            {
-                a.InfluencingPlayers.Clear();
-            }
-        }
-
-        /// <summary>
-        /// Remove the envoy from all players.
-        /// </summary>
-        internal void ClearEnvoyFromAllPlayers()
-        {
-            foreach( Player p in this.AllPlayers )
-            {
-                p.Envoy = false;
-            }
         }
     }
 }

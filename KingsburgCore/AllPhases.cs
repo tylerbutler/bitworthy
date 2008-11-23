@@ -82,20 +82,20 @@ namespace TylerButler.Kingsburg.Core
 
         public override Phase Execute()
         {
-            GameManager gm = GameManager.Instance;
+            //GameManager gm = GameManager.Instance;
 
             // Reset advisor state just in case
-            gm.ClearInfluencedAdvisors();
+            ClearInfluencedAdvisors();
 
-            foreach( Player p in gm.AllPlayers )
+            foreach( Player p in GameManager.Instance.AllPlayers )
             {
                 p.RollDice();
                 UIManager.Instance.DisplayDiceRoll( p );
             }
-            gm.DeterminePlayerOrder();
+            DeterminePlayerOrder();
             while( DiceAllocationManager.Instance.PlayersHaveDiceToAllocate() )
             {
-                foreach( Player p in gm.AllPlayers )
+                foreach( Player p in GameManager.Instance.AllPlayers )
                 {
                     if( !p.HasUsedAllDice )
                     {
@@ -110,11 +110,11 @@ namespace TylerButler.Kingsburg.Core
                 }
             }
 
-            gm.InfluenceAdvisors();
+            InfluenceAdvisors();
             ConstructBuildings();
 
             // Phase is complete, reset the advisors
-            gm.ClearInfluencedAdvisors();
+            ClearInfluencedAdvisors();
 
             return new Phase3();
         }
@@ -134,6 +134,39 @@ namespace TylerButler.Kingsburg.Core
                     // Give VP to player
                     p.VictoryPoints += built.VictoryPointValue;
                 }
+            }
+        }
+
+        internal void DeterminePlayerOrder()
+        {
+            // SORT THE PLAYERS BASED ON MostRecentDiceRollValue()
+            GameManager.Instance.AllPlayers.Sort( new PlayerDiceRollComparer() );
+            UIManager.Instance.DisplayPlayerOrder( GameManager.Instance.AllPlayers );
+        }
+
+        internal void InfluenceAdvisors()
+        {
+            // Walk through all the advisors, and do their actions
+            foreach( Advisor a in GameManager.Instance.Advisors )
+            {
+                if( a.IsInfluenced )
+                {
+                    foreach( Player p in a.InfluencingPlayers )
+                    {
+                        a.DoAction( p );
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Mark all the advisors as uninfluenced in preparation for a new round.
+        /// </summary>
+        internal void ClearInfluencedAdvisors()
+        {
+            foreach( Advisor a in GameManager.Instance.Advisors )
+            {
+                a.InfluencingPlayers.Clear();
             }
         }
     }
@@ -210,25 +243,8 @@ namespace TylerButler.Kingsburg.Core
 
         public override Phase Execute()
         {
-            /*
-             * PHASE 5 - The King's Envoy
-                The Player with the fewest buildings receives help from the King's Envoy. If there is a tie, the player with the least number of goods. If that is also a tie, nobody receives help.
-
-                Pop up phase info message
-                RemoveEnvoyFromPlayers()
-                lowPlayers = GetPlayersWithLowestBuildingCount( Game.Players ) returns ArrayList of Players
-                if LeastBuildingPlayers.Count = 1
-                    LeastBuildingPlayers[0].Envoy = true
-                else
-                    LeastGoodsPlayers = GetPlayersWithLowestGoodsCount(LeastBuildingPlayers) returns ArrayList of Players
-                    if LeastGoodsPlayers.Count = 1
-                        LeastGoodsPlayers[0].Envoy = true
-                    else // nothing
-                UI.DisplayKingsEnvoy( Player p )
-                GO TO PHASE 6
-             * */
             GameManager gm = GameManager.Instance;
-            gm.ClearEnvoyFromAllPlayers();
+            RemoveEnvoyFromPlayers();
             Player PlayerReceivingEnvoy;
             PlayerCollection LeastBuildingsPlayers = gm.PlayersWithLowestBuildingCount( gm.AllPlayers );
 
@@ -253,6 +269,17 @@ namespace TylerButler.Kingsburg.Core
 
             UIManager.Instance.DisplayKingsEnvoy( PlayerReceivingEnvoy );
             return new Phase6();
+        }
+
+        /// <summary>
+        /// Remove the envoy from all players.
+        /// </summary>
+        public void RemoveEnvoyFromPlayers()
+        {
+            foreach( Player p in GameManager.Instance.AllPlayers )
+            {
+                p.Envoy = false;
+            }
         }
     }
 

@@ -510,7 +510,7 @@ namespace TylerButler.Kingsburg.Core.UI
             {
                 case graphicsMode.CLI:
                     DiceCollection toReturn;
-                    Helpers.SumComboFinder sc = new Helpers.SumComboFinder();
+                    SumComboFinder sc = new SumComboFinder();
                     List<List<KingsburgDie>> combos = sc.Find( a.Order, p.RemainingDice );
 
                     // Return the only combo if there is only one
