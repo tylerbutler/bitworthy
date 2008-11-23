@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TylerButler.GameToolkit;
+using System.Diagnostics;
 
 namespace TylerButler.Kingsburg.Core
 {
@@ -18,6 +19,23 @@ namespace TylerButler.Kingsburg.Core
         public Player( string nameIn, string descriptionIn )
             : base( nameIn, descriptionIn )
         {
+        }
+
+        // DEBUG: take this out after debugging is over
+        //Bug: 22
+        public new string Name
+        {
+            get
+            {
+                string toReturn = String.Format( "{0} ({1}G, {2}W, {3}S, {4}T, {7}VP - Soldiers: {5} - Buildings: {6})",
+                    base.Name, this.Goods["Gold"], this.Goods["Wood"], this.Goods["Stone"], this.PlusTwoTokens,
+                    this.Soldiers, this.NumBuildings, this.VictoryPoints );
+                return toReturn;
+            }
+            set
+            {
+                base.Name = value;
+            }
         }
 
         public bool HasUsedAllDice
