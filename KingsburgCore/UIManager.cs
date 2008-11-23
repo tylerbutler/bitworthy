@@ -187,8 +187,8 @@ namespace TylerButler.Kingsburg.Core.UI
                 case graphicsMode.CLI:
                     foreach( Building b in GameManager.Instance.Buildings )
                     {
-                        string ownedStar = p.HasBuilding( b ) ? "*" : string.Empty;
-                        Console.WriteLine( "{0}{5}: {1} Gold, {2} Wood, {3} Stone, {4} VP", b.Name, b.GoldCost,
+                        string ownedStar = p.HasBuilding( b ) ? "***" : string.Empty;
+                        Console.WriteLine( "{5}\t{0}: {1} Gold, {2} Wood, {3} Stone, {4} VP", b.Name, b.GoldCost,
                             b.WoodCost, b.StoneCost, b.VictoryPointValue, ownedStar );
                     }
                     if( canBuild )
