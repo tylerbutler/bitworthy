@@ -282,9 +282,9 @@ namespace TylerButler.Kingsburg.Core.UI
                         case Advisors.Alchemist:
                             Console.WriteLine( "{0} influences the Alchemist and can transmute 1 good.", p.Name );
                             GoodsChoiceOptions[] availableGoods = new GoodsChoiceOptions[3];
-                            availableGoods[0] = p.Goods["Gold"] > 0 ? GoodsChoiceOptions.Gold : GoodsChoiceOptions.None;
-                            availableGoods[1] = p.Goods["Wood"] > 0 ? GoodsChoiceOptions.Wood : GoodsChoiceOptions.None;
-                            availableGoods[2] = p.Goods["Stone"] > 0 ? GoodsChoiceOptions.Stone : GoodsChoiceOptions.None;
+                            availableGoods[0] = p.Gold > 0 ? GoodsChoiceOptions.Gold : GoodsChoiceOptions.None;
+                            availableGoods[1] = p.Wood > 0 ? GoodsChoiceOptions.Wood : GoodsChoiceOptions.None;
+                            availableGoods[2] = p.Stone > 0 ? GoodsChoiceOptions.Stone : GoodsChoiceOptions.None;
                             choice = DisplayChooseAGood( p, availableGoods );
                             returnData.Add( choice );
                             break;

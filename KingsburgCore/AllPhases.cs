@@ -127,9 +127,9 @@ namespace TylerButler.Kingsburg.Core
                 if( built != null )
                 {
                     p.Buildings.Add( built );
-                    p.Goods["Gold"] -= built.GoldCost;
-                    p.Goods["Wood"] -= built.WoodCost;
-                    p.Goods["Stone"] -= built.StoneCost;
+                    p.Gold -= built.GoldCost;
+                    p.Wood -= built.WoodCost;
+                    p.Stone -= built.StoneCost;
 
                     // Give VP to player
                     p.VictoryPoints += built.VictoryPointValue;
@@ -396,9 +396,9 @@ namespace TylerButler.Kingsburg.Core
         /// <param name="enemy">The enemy</param>
         internal void AwardPlayerAfterBattle( Player player, Enemy enemy )
         {
-            player.Goods["Gold"] += enemy.GoldReward;
-            player.Goods["Wood"] += enemy.WoodReward;
-            player.Goods["Stone"] += enemy.StoneReward;
+            player.Gold += enemy.GoldReward;
+            player.Wood += enemy.WoodReward;
+            player.Stone += enemy.StoneReward;
             player.VictoryPoints += enemy.VictoryPointReward;
 
             if( enemy.GoodReward > 0 )
@@ -417,9 +417,9 @@ namespace TylerButler.Kingsburg.Core
         internal void PenalizePlayerAfterBattle( Player player, Enemy enemy )
         {
             //Bug:19
-            player.Goods["Gold"] -= enemy.GoldPenalty;
-            player.Goods["Wood"] -= enemy.WoodPenalty;
-            player.Goods["Stone"] -= enemy.StonePenalty;
+            player.Gold -= enemy.GoldPenalty;
+            player.Wood -= enemy.WoodPenalty;
+            player.Stone -= enemy.StonePenalty;
             player.VictoryPoints -= enemy.VictoryPointPenalty;
 
             if( enemy.GoodPenalty >= player.GoodsCount )

@@ -26,12 +26,12 @@ namespace TylerButler.Kingsburg.Utilities
                     break;
                 case Advisors.Squire:
                     // Take 1 gold from the supply.
-                    p.Goods["Gold"]++;
+                    p.Gold++;
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p );
                     break;
                 case Advisors.Architect:
                     // Take 1 wood from the supply.
-                    p.Goods["Wood"]++;
+                    p.Wood++;
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p );
                     break;
                 case Advisors.Merchant:
@@ -52,19 +52,19 @@ namespace TylerButler.Kingsburg.Utilities
                     switch( choice )
                     {
                         case GoodsChoiceOptions.Gold:
-                            p.Goods["Gold"]--;
-                            p.Goods["Wood"]++;
-                            p.Goods["Stone"]++;
+                            p.Gold--;
+                            p.Wood++;
+                            p.Stone++;
                             break;
                         case GoodsChoiceOptions.Wood:
-                            p.Goods["Wood"]--;
-                            p.Goods["Gold"]++;
-                            p.Goods["Stone"]++;
+                            p.Wood--;
+                            p.Gold++;
+                            p.Stone++;
                             break;
                         case GoodsChoiceOptions.Stone:
-                            p.Goods["Stone"]--;
-                            p.Goods["Gold"]++;
-                            p.Goods["Wood"]++;
+                            p.Stone--;
+                            p.Gold++;
+                            p.Wood++;
                             break;
                     }
                     break;
@@ -78,7 +78,7 @@ namespace TylerButler.Kingsburg.Utilities
                 case Advisors.Treasurer:
                     // Receive 2 gold
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p );
-                    p.Goods["Gold"] += 2;
+                    p.Gold += 2;
                     break;
                 case Advisors.MasterHunter:
                     // Take a wood and a gold, or a wood and a stone
@@ -107,7 +107,7 @@ namespace TylerButler.Kingsburg.Utilities
                 case Advisors.Champion:
                     // Take 3 stone
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p );
-                    p.Goods["Stone"] += 3;
+                    p.Stone += 3;
                     break;
                 case Advisors.Smuggler:
                     // Pay a VP to take 3 goods of choice.
@@ -120,14 +120,14 @@ namespace TylerButler.Kingsburg.Utilities
                 case Advisors.Inventor:
                     // receive 1 of each good
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p );
-                    p.Goods["Gold"]++;
-                    p.Goods["Wood"]++;
-                    p.Goods["Stone"]++;
+                    p.Gold++;
+                    p.Wood++;
+                    p.Stone++;
                     break;
                 case Advisors.Wizard:
                     // Take 4 gold
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p );
-                    p.Goods["Gold"] += 4;
+                    p.Gold += 4;
                     break;
                 case Advisors.Queen:
                     // Take 2 goods of choice, spy on the enemy, and get 3 VP
@@ -139,9 +139,9 @@ namespace TylerButler.Kingsburg.Utilities
                 case Advisors.King:
                     // take one of each good and a soldier
                     UIManager.Instance.DisplayInfluenceAdvisor( a, p );
-                    p.Goods["Gold"]++;
-                    p.Goods["Wood"]++;
-                    p.Goods["Stone"]++;
+                    p.Gold++;
+                    p.Wood++;
+                    p.Stone++;
                     p.Soldiers++;
                     break;
                 default:

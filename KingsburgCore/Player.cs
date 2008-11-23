@@ -7,13 +7,13 @@ namespace TylerButler.Kingsburg.Core
 {
     public class Player : Character
     {
-        private Inventory inventory = new Inventory();
+        //private Inventory inventory = new Inventory();
         private BuildingCollection buildings = new BuildingCollection();
+        private int gold=0,wood=0,stone=0;
         public bool Envoy = false, WasVictorious = false;
         public int VictoryPoints = 0, Soldiers = 0, PlusTwoTokens = 0;
         private DiceCollection dice = new DiceCollection( 3, 6 );
-        internal DiceCollection MostRecentDiceRoll;//,UsedDice,RemainingDice;
-        //private bool hasUsedAllDice = false;
+        internal DiceCollection MostRecentDiceRoll;
         HashSet<Advisor> influencedAdvisors = new HashSet<Advisor>();
         internal KingsburgDie KingsAidDie = null;
 
@@ -30,9 +30,9 @@ namespace TylerButler.Kingsburg.Core
             {
                 string toReturn = String.Format( "{0} ({1}G, {2}W, {3}S, {4}T, {7}VP - Soldiers: {5} - Buildings: {6}, {10} - Dice Roll: {8} {9})",
                     /*0*/ base.Name,
-                    /*1*/ this.Goods["Gold"],
-                    /*2*/ this.Goods["Wood"],
-                    /*3*/ this.Goods["Stone"],
+                    /*1*/ this.Gold,
+                    /*2*/ this.Wood,
+                    /*3*/ this.Stone,
                     /*4*/ this.PlusTwoTokens,
                     /*5*/ this.Soldiers,
                     /*6*/ this.NumBuildings,
@@ -45,6 +45,63 @@ namespace TylerButler.Kingsburg.Core
             set
             {
                 base.Name = value;
+            }
+        }
+
+        public int Stone
+        {
+            get
+            {
+                return stone;
+            }
+            set
+            {
+                if( stone - value < 0 )
+                {
+                    stone = 0;
+                }
+                else
+                {
+                    stone = value;
+                }
+            }
+        }
+
+        public int Wood
+        {
+            get
+            {
+                return wood;
+            }
+            set
+            {
+                if( wood - value < 0 )
+                {
+                    wood = 0;
+                }
+                else
+                {
+                    wood = value;
+                }
+            }
+        }
+
+        public int Gold
+        {
+            get
+            {
+                return gold;
+            }
+            set
+            {
+                if( gold - value < 0 )
+                {
+                    gold = 0;
+                }
+                else
+                {
+                    gold = value;
+                }
             }
         }
 
@@ -63,17 +120,17 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        public Inventory Goods
-        {
-            get
-            {
-                return this.inventory;
-            }
-            set
-            {
-                this.inventory = value;
-            }
-        }
+        //public Inventory Goods
+        //{
+        //    get
+        //    {
+        //        return this.inventory;
+        //    }
+        //    set
+        //    {
+        //        this.inventory = value;
+        //    }
+        //}
 
         internal BuildingCollection Buildings
         {
@@ -99,7 +156,7 @@ namespace TylerButler.Kingsburg.Core
         {
             get
             {
-                return Goods["Gold"] + Goods["Wood"] + Goods["Stone"];
+                return this.Gold + this.Wood + this.Stone;
             }
         }
 
@@ -132,25 +189,25 @@ namespace TylerButler.Kingsburg.Core
             switch( good )
             {
                 case GoodsChoiceOptions.Gold:
-                    this.Goods["Gold"]++;
+                    this.Gold++;
                     break;
                 case GoodsChoiceOptions.Wood:
-                    this.Goods["Wood"]++;
+                    this.Wood++;
                     break;
                 case GoodsChoiceOptions.Stone:
-                    this.Goods["Stone"]++;
+                    this.Stone++;
                     break;
                 case GoodsChoiceOptions.GoldAndStone:
-                    this.Goods["Gold"]++;
-                    this.Goods["Stone"]++;
+                    this.Gold++;
+                    this.Stone++;
                     break;
                 case GoodsChoiceOptions.GoldAndWood:
-                    this.Goods["Gold"]++;
-                    this.Goods["Wood"]++;
+                    this.Gold++;
+                    this.Wood++;
                     break;
                 case GoodsChoiceOptions.WoodAndStone:
-                    this.Goods["Wood"]++;
-                    this.Goods["Stone"]++;
+                    this.Wood++;
+                    this.Stone++;
                     break;
                 case GoodsChoiceOptions.None:
                     throw new ArgumentException( "Why are you trying to add no goods to a player?" );
@@ -168,25 +225,25 @@ namespace TylerButler.Kingsburg.Core
             switch( good )
             {
                 case GoodsChoiceOptions.Gold:
-                    this.Goods["Gold"]--;
+                    this.Gold--;
                     break;
                 case GoodsChoiceOptions.Wood:
-                    this.Goods["Wood"]--;
+                    this.Wood--;
                     break;
                 case GoodsChoiceOptions.Stone:
-                    this.Goods["Stone"]--;
+                    this.Stone--;
                     break;
                 case GoodsChoiceOptions.GoldAndStone:
-                    this.Goods["Gold"]--;
-                    this.Goods["Stone"]--;
+                    this.Gold--;
+                    this.Stone--;
                     break;
                 case GoodsChoiceOptions.GoldAndWood:
-                    this.Goods["Gold"]--;
-                    this.Goods["Wood"]--;
+                    this.Gold--;
+                    this.Wood--;
                     break;
                 case GoodsChoiceOptions.WoodAndStone:
-                    this.Goods["Wood"]--;
-                    this.Goods["Stone"]--;
+                    this.Wood--;
+                    this.Stone--;
                     break;
                 case GoodsChoiceOptions.None:
                     throw new ArgumentException( "Why are you trying to remove no goods from a player?" );
@@ -263,9 +320,9 @@ namespace TylerButler.Kingsburg.Core
 
         public bool CanBuild( Building b )
         {
-            if( this.Goods["Gold"] >= b.GoldCost &&
-                this.Goods["Wood"] >= b.WoodCost &&
-                this.Goods["Stone"] >= b.StoneCost &&
+            if( this.Gold >= b.GoldCost &&
+                this.Wood >= b.WoodCost &&
+                this.Stone >= b.StoneCost &&
                 this.HasPrerequisiteBuildings( b ) )
             {
                 return true;
@@ -453,9 +510,9 @@ namespace TylerButler.Kingsburg.Core
         /// </summary>
         internal void RemoveAllGoods()
         {
-            this.Goods["Gold"] = 0;
-            this.Goods["Wood"] = 0;
-            this.Goods["Stone"] = 0;
+            this.Gold = 0;
+            this.Wood = 0;
+            this.Stone = 0;
         }
 
         /// <summary>
@@ -466,17 +523,17 @@ namespace TylerButler.Kingsburg.Core
             get
             {
                 List<GoodsChoiceOptions> toReturn = new List<GoodsChoiceOptions>();
-                if( this.Goods["Gold"] > 0 )
+                if( this.Gold > 0 )
                 {
                     toReturn.Add( GoodsChoiceOptions.Gold );
                 }
 
-                if( this.Goods["Wood"] > 0 )
+                if( this.Wood > 0 )
                 {
                     toReturn.Add( GoodsChoiceOptions.Wood );
                 }
 
-                if( this.Goods["Stone"] > 0 )
+                if( this.Stone > 0 )
                 {
                     toReturn.Add( GoodsChoiceOptions.Stone );
                 }
