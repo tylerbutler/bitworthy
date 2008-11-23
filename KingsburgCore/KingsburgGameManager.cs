@@ -155,11 +155,11 @@ namespace TylerButler.Kingsburg.Core
             for( int i = 0; i < 5; i++ )
             {
                 IEnumerable<Enemy> queryResult = from e in Enemies
-                                                      where e.Level == ( i + 1 )
-                                                      select e;
+                                                 where e.Level == ( i + 1 )
+                                                 select e;
                 Enemy[] enemiesForYear = queryResult.ToArray<Enemy>();
                 //int roll = new Die( 0, queryResult.Count ).Roll();
-                int roll = RandomNumber.GetRandom(0, queryResult.Count<Enemy>());
+                int roll = RandomNumber.GetRandom( 0, queryResult.Count<Enemy>() );
                 this.EnemiesForGame[i] = enemiesForYear[roll];
             }
         }
@@ -230,6 +230,29 @@ namespace TylerButler.Kingsburg.Core
             return toReturn;
         }
 
+        internal PlayerCollection PlayersWithHighestStrength( PlayerCollection PlayersToCheck )
+        {
+            PlayerCollection toReturn = new PlayerCollection();
+            toReturn.Add( PlayersToCheck[0] );
+            for( int i = 1; i < PlayersToCheck.Count; i++ )
+            {
+
+                if( PlayersToCheck[i].TotalStrength > toReturn[0].TotalStrength )
+                {
+                    toReturn.Clear();
+                    toReturn.Add( PlayersToCheck[i] );
+                }
+                else if( PlayersToCheck[i].NumBuildings == toReturn[0].NumBuildings )
+                {
+                    toReturn.Add( PlayersToCheck[i] );
+                }
+                else
+                {
+                } // do nothing
+            }
+            return toReturn;
+        }
+
         internal void DeterminePlayerOrder()
         {
             // int[] toReturn = new int[Players.Count]
@@ -270,6 +293,16 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
+        /// <summary>
+        /// A convenience method to get a building reference from the name of the building.
+        /// </summary>
+        /// <param name="name">Name of the building.</param>
+        /// <returns>A Building object representing that building.</returns>
+        internal Building GetBuilding( string name )
+        {
+            return this.Buildings.GetBuilding( name );
+        }
+
         public void MainExecutionMethod()
         {
             Phase next = ( this.GameStart.Count > 0 ? this.GameStart[0] : this.Phases[0] );
@@ -282,6 +315,9 @@ namespace TylerButler.Kingsburg.Core
             while( !this.IsGameOver );
         }
 
+        /// <summary>
+        /// Mark all the advisors as uninfluenced in preparation for a new round.
+        /// </summary>
         internal void ClearInfluencedAdvisors()
         {
             foreach( Advisor a in this.Advisors )
@@ -290,6 +326,9 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
+        /// <summary>
+        /// Remove the envoy from all players.
+        /// </summary>
         internal void ClearEnvoyFromAllPlayers()
         {
             foreach( Player p in this.AllPlayers )

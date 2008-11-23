@@ -167,7 +167,8 @@ namespace TylerButler.Kingsburg.Core
     [Serializable]
     internal class BuildingCollection : List<Building>
     {
-        internal BuildingCollection() : base()
+        internal BuildingCollection()
+            : base()
         {
         }
 
@@ -190,6 +191,24 @@ namespace TylerButler.Kingsburg.Core
                                       where b.Name == Name
                                       select b;
             return r.ToArray<Building>()[0];
+        }
+
+        internal Building RightmostUpperBuilding
+        {
+            get
+            {
+                int maxColumn = ( from b in this
+                                  select b.Column ).Max();
+
+                IEnumerable<Building> inColumn = from b in this
+                                                 where b.Column == maxColumn
+                                                 select b;
+
+                int row = ( from b in this
+                            select b.Row ).Min();
+
+                return this.GetBuilding( row, maxColumn );
+            }
         }
     }
 }

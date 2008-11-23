@@ -108,10 +108,17 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAEAAAABAAAAgAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="TylerButler.Kingsburg.Core.UI.UIManager" Collapsed="true">
-    <Position X="22" Y="2.5" Width="1.5" />
+  <Class Name="TylerButler.Kingsburg.Core.UI.UIManager">
+    <Position X="22" Y="2.5" Width="3.25" />
+    <NestedTypes>
+      <Enum Name="TylerButler.Kingsburg.Core.UI.UIManager.graphicsMode" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>UIManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>CAAIAAAAEIAAAACAIAAQAAEAABBAAAFBQECAACAAAAA=</HashCode>
+      <HashCode>CACIAQAAEIAAAACAIAAQAAEBABBAAIFBQECAACAAAAA=</HashCode>
       <FileName>UIManager.cs</FileName>
     </TypeIdentifier>
   </Class>

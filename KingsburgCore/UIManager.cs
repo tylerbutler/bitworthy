@@ -61,7 +61,6 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        #region Methods
         public void DisplayDiceRoll( Player p )
         {
             DisplayDiceRoll( p, p.MostRecentDiceRoll );
@@ -206,12 +205,11 @@ namespace TylerButler.Kingsburg.Core.UI
                         int chosenColumn = int.Parse( parsedChoice[1] );
                         toReturn = (Building)GameManager.Instance.Buildings.GetBuilding( chosenRow, chosenColumn ).Clone();
                     }
-                    return toReturn;
+                    break;
                 case graphicsMode.GUI:
                     throw new NotImplementedException();
             }
-
-            throw new NotImplementedException();
+            return toReturn;
         }
 
         internal void DisplayBuildingCard( Player p )
@@ -357,7 +355,7 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        private void DisplayPeekAtEnemy( Player p )
+        internal void DisplayPeekAtEnemy( Player p )
         {
             switch( this.Mode )
             {
@@ -365,14 +363,30 @@ namespace TylerButler.Kingsburg.Core.UI
                     Console.WriteLine( "{0} may now spy on the enemy. All other players should look away. Press any key when ready.", p.Name );
                     Console.ReadLine();
                     Enemy e = GameManager.Instance.EnemiesForGame[GameManager.Instance.CurrentYear - 1];
-                    Console.WriteLine( "Enemy Name: {0}", e.Name );
-                    Console.WriteLine( "Strength: {0}", e.Strength );
-                    Console.WriteLine( "Penalties:" );
-                    Console.WriteLine( "Goods of choice: {0}, Gold: {1}, Wood: {2}, Stone: {3}, VP: {4}, Buildings: {5}", e.GoodPenalty, e.GoldPenalty, e.WoodPenalty, e.StonePenalty, e.VictoryPointPenalty, e.BuildingPenalty );
-                    Console.WriteLine( "Rewards:" );
-                    Console.WriteLine( "Gold: {0}, Wood: {1}, Stone: {2}, VP: {3}", e.GoldReward, e.WoodReward, e.StoneReward, e.VictoryPointReward );
+                    this.DisplayEnemyInfo( e );
                     Console.WriteLine( "\nPress any key to continue." );
                     Console.ReadLine();
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Displays information about an enemy.
+        /// </summary>
+        /// <param name="enemy">The enemy to display.</param>
+        internal void DisplayEnemyInfo( Enemy enemy )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "Enemy Name: {0}", enemy.Name );
+                    Console.WriteLine( "Strength: {0}", enemy.Strength );
+                    Console.WriteLine( "Penalties:" );
+                    Console.WriteLine( "Goods of choice: {0}, Gold: {1}, Wood: {2}, Stone: {3}, VP: {4}, Buildings: {5}", enemy.GoodPenalty, enemy.GoldPenalty, enemy.WoodPenalty, enemy.StonePenalty, enemy.VictoryPointPenalty, enemy.BuildingPenalty );
+                    Console.WriteLine( "Rewards:" );
+                    Console.WriteLine( "Gold: {0}, Wood: {1}, Stone: {2}, VP: {3}\n", enemy.GoldReward, enemy.WoodReward, enemy.StoneReward, enemy.VictoryPointReward );
                     break;
                 case graphicsMode.GUI:
                     throw new NotImplementedException();
@@ -527,15 +541,167 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        #endregion
-
-
-        internal void DisplayInnReward(Player p)
+        internal void DisplayInnReward( Player p )
         {
             switch( this.Mode )
             {
                 case graphicsMode.CLI:
                     Console.WriteLine( "{0} receives a \"+2\" token from his inn." );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Displays information on the current year in the game.
+        /// </summary>
+        internal void DisplayYearInfo()
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "This is year {0} of 5.", GameManager.Instance.CurrentYear );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Allows the player to recruit soldiers.
+        /// </summary>
+        /// <param name="p">The player recruiting soldiers.</param>
+        /// <returns>The number of soldiers recruited.</returns>
+        internal int DisplayRecruitSoldiers( Player p )
+        {
+            int numToRecruit = 0;
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    DisplayPlayerInfo( p );
+                    Console.WriteLine( "{0}, you may recruit {1} soldiers. How many would you like to recruit?", p.Name, p.RecruitableSoldiers );
+                    do
+                    {
+                        numToRecruit = int.Parse( Console.ReadLine() );
+                    }
+                    while( numToRecruit <= p.RecruitableSoldiers );
+
+                    if( numToRecruit == 0 )
+                    {
+                        Console.WriteLine( "{0} recruits no soldiers." );
+                        //return 0;
+                    }
+                    else if( numToRecruit == p.RecruitableSoldiers )
+                    {
+                        p.RemoveAllGoods();
+                        //return numToRecruit;
+                    }
+                    else
+                    {
+                        Console.WriteLine( "You must now choose which goods to spend to recruit your soldiers. You must choose {0} goods.", numToRecruit * p.SoldierCost );
+                        foreach( int i in new Range( 1, numToRecruit * p.SoldierCost ) )
+                        {
+                            GoodsChoiceOptions good = this.DisplayChooseAGood( p, p.GoodTypesPlayerHas.ToArray() );
+                            p.RemoveGood( good );
+                        }
+                    }
+                    Console.WriteLine( "{0} recruits {1} soldiers.", p.Name, numToRecruit );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+            return numToRecruit;
+        }
+
+        /// <summary>
+        /// Displays information about the attacker that is attacking during phase 8.
+        /// </summary>
+        internal void DisplayBattleInfo()
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Enemy attacker = GameManager.Instance.EnemiesForGame[GameManager.Instance.CurrentYear - 1];
+                    Console.WriteLine( "We are under attack by {0}! Prepare to defend yourselves!\n", attacker.Name );
+                    this.DisplayEnemyInfo( attacker );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Displays the number of reinforcements the king has sent.
+        /// </summary>
+        /// <param name="reinforcements">The number of reinforcements sent.</param>
+        internal void DisplayKingsReinforcements( int reinforcements )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "The King sends {0} reinforcements.", reinforcements );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Displays the results of a battle.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="enemy">The enemy.</param>
+        /// <param name="battleResults">Whether the player won, lost or tied the battle.</param>
+        internal void DisplayBattleResults( Player player, Enemy enemy, BattleResults battleResults )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    switch( battleResults )
+                    {
+                        case BattleResults.Victory:
+                            Console.WriteLine( "{0} is victorious over the {1}! The kingdom is safe!", player.Name, enemy.Name );
+                            break;
+                        case BattleResults.Tie:
+                            Console.WriteLine( "{0} has barely defeated the {1}. The battle was fierce and long, and the losses great, but the kingdom is safe.", player.Name, enemy.Name );
+                            break;
+                        case BattleResults.Loss:
+                            Console.WriteLine( "{0} has suffered defeat at the hands of the {1}. The kingdom will suffer at the enemy's hand for another year.", player.Name, enemy.Name );
+                            break;
+                    }
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Displays information that a player was awarded a VP for being the most glorious player in battle.
+        /// </summary>
+        /// <param name="p">The player.</param>
+        internal void DisplayMostGloriousVictory( Player p )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "{0} decimated the enemy in a most glorious fashion and was awarded a Victory Point!", p.Name );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Displays info that a player is receiving a victory point from his fortress.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        internal void DisplayFortressBonus(Player player)
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "{0} receives a Victory Point from his fortress.", player.Name );
                     break;
                 case graphicsMode.GUI:
                     throw new NotImplementedException();

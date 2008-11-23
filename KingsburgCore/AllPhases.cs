@@ -33,6 +33,7 @@ namespace TylerButler.Kingsburg.Core
             GameManager k = GameManager.Instance;
             k.CurrentYear++;
             //TODO: Pop up phase info message
+            UIManager.Instance.DisplayYearInfo();
             PlayerCollection LeastBuildingPlayers = k.PlayersWithLowestBuildingCount( k.AllPlayers );
             if( LeastBuildingPlayers.Count == 1 )
             {
@@ -157,21 +158,19 @@ namespace TylerButler.Kingsburg.Core
 
         public override Phase Execute()
         {
-            // Do all of phase 2's actions, then finish it up by calculateing the tokens for players with inns
+            // Do all of phase 2's actions, then finish it up by calculating the tokens for players with inns
             base.Execute();
 
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
-                if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Inn" ) ) )
+                if( p.HasBuilding( GameManager.Instance.GetBuilding( "Inn" ) ) )
                 {
                     UIManager.Instance.DisplayInnReward( p );
                     p.PlusTwoTokens++;
                 }
             }
 
-            //return new Phase5();
-
-            throw new NotImplementedException();
+            return new Phase5();
         }
     }
 
@@ -185,7 +184,6 @@ namespace TylerButler.Kingsburg.Core
 
         public override Phase Execute()
         {
-
             /*
              * PHASE 5 - The King's Envoy
                 The Player with the fewest buildings receives help from the King's Envoy. If there is a tie, the player with the least number of goods. If that is also a tie, nobody receives help.
@@ -226,8 +224,180 @@ namespace TylerButler.Kingsburg.Core
             }
 
             UIManager.Instance.DisplayKingsEnvoy( PlayerReceivingEnvoy );
+            return new Phase6();
+        }
+    }
+
+    internal class Phase6 : Phase2
+    {
+        public Phase6()
+            : base()
+        {
+            this.Title = "Phase 6 - Autumn";
+        }
+
+        // Don't need to implement the execute method since it's exactly the same as in phase 2
+        //public override Phase Execute()
+        //{
+        //    return base.Execute();
+        //}
+    }
+
+    internal class Phase7 : Phase
+    {
+        internal Phase7()
+        {
+            this.Title = "Phase 7 - Recruit Soldiers";
+            this.Description = "Each player may pay goods to hire additional soldiers.";
+        }
+
+        public override Phase Execute()
+        {
+            foreach( Player p in GameManager.Instance.AllPlayers )
+            {
+                int numRecruited = UIManager.Instance.DisplayRecruitSoldiers( p );
+                p.Soldiers += numRecruited;
+            }
+
+            return new Phase8();
+        }
+    }
+
+    internal class Phase8 : Phase
+    {
+        internal Phase8()
+        {
+            this.Title = "Phase 8 - Winter - The Battle";
+            this.Description = "Enemies are attacking! All players must defeat the invaders!";
+        }
+
+        public override Phase Execute()
+        {
+            UIManager.Instance.DisplayBattleInfo();
+            Enemy e= GameManager.Instance.Enemies[GameManager.Instance.CurrentYear - 1];
+
+            int reinforcements = GetKingsReinforcements();
+            UIManager.Instance.DisplayKingsReinforcements( reinforcements );
+
+            foreach( Player p in GameManager.Instance.AllPlayers )
+            {
+                DoPlayerBattle( p, e );
+            }
+
+            foreach( Player p in GameManager.Instance.PlayersWithHighestStrength( GameManager.Instance.AllPlayers ) )
+            {
+                if( p.WasVictorious )
+                {
+                    p.VictoryPoints++;
+                    UIManager.Instance.DisplayMostGloriousVictory( p );
+                }
+            }
+
+            // Handle the Fortress special ability
+            foreach( Player p in GameManager.Instance.AllPlayers )
+            {
+                if( p.HasBuilding( GameManager.Instance.GetBuilding( "Fortress" ) ) )
+                {
+                    p.VictoryPoints++;
+                    UIManager.Instance.DisplayFortressBonus( p );
+                }
+            }
 
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Gets a number of reinforcements that the king sends.
+        /// </summary>
+        /// <returns>An int between 1 and 6 representing the number of reinforcements the king has sent.</returns>
+        internal int GetKingsReinforcements()
+        {
+            return RandomNumber.GetRandom( 1, 6 );
+        }
+
+        /// <summary>
+        /// Execute a battle between the player and an enemy.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="enemy"></param>
+        internal void DoPlayerBattle( Player player, Enemy enemy )
+        {
+            int totalStrength = player.TotalStrength + player.BonusStrengthAgainstEnemy( enemy );
+            if( totalStrength > enemy.Strength ) // player wins
+            {
+                UIManager.Instance.DisplayBattleResults( player, enemy, BattleResults.Victory );
+                this.AwardPlayerAfterBattle( player, enemy );
+            }
+            else if( totalStrength == enemy.Strength ) // player ties
+            {
+                // Check if the player has the stone wall, which allows a tie to count as a victory
+                if( player.HasBuilding( GameManager.Instance.GetBuilding( "Stone Wall" ) ) )
+                {
+                    UIManager.Instance.DisplayBattleResults( player, enemy, BattleResults.Victory );
+                    this.AwardPlayerAfterBattle( player, enemy );
+                }
+                else
+                {
+                    UIManager.Instance.DisplayBattleResults( player, enemy, BattleResults.Tie );
+                }
+            }
+            else // player loses
+            {
+                UIManager.Instance.DisplayBattleResults( player, enemy, BattleResults.Loss );
+            }
+        }
+
+        /// <summary>
+        /// Awards the player after a victory against the enemy.
+        /// </summary>
+        /// <param name="player">The player</param>
+        /// <param name="enemy">The enemy</param>
+        internal void AwardPlayerAfterBattle( Player player, Enemy enemy )
+        {
+            player.Goods["Gold"] += enemy.GoldReward;
+            player.Goods["Wood"] += enemy.WoodReward;
+            player.Goods["Stone"] += enemy.StoneReward;
+            player.VictoryPoints += enemy.VictoryPointReward;
+
+            if( enemy.GoodReward > 0 )
+            {
+                player.AddGood( UIManager.Instance.DisplayChooseAGood( player, GoodsChoiceOptions.Gold, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone ) );
+            }
+
+            player.WasVictorious = true;
+        }
+
+        /// <summary>
+        /// Penalizes the player after a loss to the enemy.
+        /// </summary>
+        /// <param name="player">The player</param>
+        /// <param name="enemy">The enemy</param>
+        internal void PenalizePlayerAfterBattle( Player player, Enemy enemy )
+        {
+            //Bug:19
+            player.Goods["Gold"] -= enemy.GoldPenalty;
+            player.Goods["Wood"] -= enemy.WoodPenalty;
+            player.Goods["Stone"] -= enemy.StonePenalty;
+            player.VictoryPoints -= enemy.VictoryPointPenalty;
+
+            if( enemy.GoodPenalty >= player.GoodsCount )
+            {
+                player.RemoveAllGoods();
+            }
+            else
+            {
+                player.RemoveGood( UIManager.Instance.DisplayChooseAGood( player, player.GoodTypesPlayerHas.ToArray() ) );
+            }
+
+            player.DestroyBuildings( enemy.BuildingPenalty );
+            player.WasVictorious = false;
+        }
+    }
+
+    internal enum BattleResults
+    {
+        Victory,
+        Tie,
+        Loss,
     }
 }

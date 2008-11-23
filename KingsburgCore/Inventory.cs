@@ -8,7 +8,6 @@ namespace TylerButler.Kingsburg.Core
             this.Add("Gold", 0);
             this.Add("Wood", 0);
             this.Add("Stone", 0);
-            this.Add("PlusTwoTokens", 0);
         }
     }
 }
