@@ -191,7 +191,7 @@
 	<Building>
 		<Name>Town Hall</Name>
 		<Description>At the end of each productive season, you may pay a "+2" token or one good (any kind) to get 1 VP (only once per season).</Description>
-		<GoldCost>1</GoldCost>
+		<GoldCost>2</GoldCost>
 		<WoodCost>1</WoodCost>
 		<StoneCost>1</StoneCost>
 		<VictoryPointValue>2</VictoryPointValue>
@@ -202,7 +202,7 @@
 	<Building>
 		<Name>Embassy</Name>
 		<Description>At the end of each productive season you get 1 VP.</Description>
-		<GoldCost>1</GoldCost>
+		<GoldCost>2</GoldCost>
 		<WoodCost>2</WoodCost>
 		<StoneCost>2</StoneCost>
 		<VictoryPointValue>4</VictoryPointValue>

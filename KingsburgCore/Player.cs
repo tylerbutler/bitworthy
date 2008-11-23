@@ -27,9 +27,10 @@ namespace TylerButler.Kingsburg.Core
         {
             get
             {
-                string toReturn = String.Format( "{0} ({1}G, {2}W, {3}S, {4}T, {7}VP - Soldiers: {5} - Buildings: {6})",
+                string toReturn = String.Format( "{0} ({1}G, {2}W, {3}S, {4}T, {7}VP - Soldiers: {5} - Buildings: {6} - Dice Roll: {8})",
                     base.Name, this.Goods["Gold"], this.Goods["Wood"], this.Goods["Stone"], this.PlusTwoTokens,
-                    this.Soldiers, this.NumBuildings, this.VictoryPoints );
+                    this.Soldiers, this.NumBuildings, this.VictoryPoints,
+                    this.MostRecentDiceRoll == null ? "NONE" : this.MostRecentDiceRoll.ToString() );
                 return toReturn;
             }
             set
@@ -483,7 +484,9 @@ namespace TylerButler.Kingsburg.Core
         {
             foreach( int i in new Range( 1, num ) )
             {
-                this.Buildings.Remove( this.Buildings.RightmostUpperBuilding );
+                Building toDestroy = this.Buildings.RightmostUpperBuilding;
+                this.Buildings.Remove( toDestroy );
+                this.VictoryPoints -= toDestroy.VictoryPointValue;
             }
         }
     }

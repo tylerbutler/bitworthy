@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TylerButler.GameToolkit;
+using System.Text;
 
 namespace TylerButler.Kingsburg.Core
 {
@@ -95,6 +96,17 @@ namespace TylerButler.Kingsburg.Core
             {
                 die.IsUsed = false;
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach( KingsburgDie die in this )
+            {
+                sb.Append( die.Value + " " );
+            }
+
+            return sb.ToString();
         }
 
         //public List<KingsburgDie> GetListOfDice()

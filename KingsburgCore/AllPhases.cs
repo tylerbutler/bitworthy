@@ -122,6 +122,9 @@ namespace TylerButler.Kingsburg.Core
                     p.Goods["Gold"] -= built.GoldCost;
                     p.Goods["Wood"] -= built.WoodCost;
                     p.Goods["Stone"] -= built.StoneCost;
+
+                    // Give VP to player
+                    p.VictoryPoints += built.VictoryPointValue;
                 }
             }
         }
@@ -253,11 +256,11 @@ namespace TylerButler.Kingsburg.Core
             this.Title = "Phase 6 - Autumn";
         }
 
-        // Don't need to implement the execute method since it's exactly the same as in phase 2
-        //public override Phase Execute()
-        //{
-        //    return base.Execute();
-        //}
+        public override Phase Execute()
+        {
+            base.Execute();
+            return new Phase7();
+        }
     }
 
     internal class Phase7 : Phase
