@@ -258,11 +258,9 @@ namespace TylerButler.Kingsburg.Core
 
         internal void DeterminePlayerOrder()
         {
-            // int[] toReturn = new int[Players.Count]
-            // toReturn[0] = Players[0]
             // SORT THE PLAYERS BASED ON MostRecentDiceRollValue()
-
             this.AllPlayers.Sort( new PlayerDiceRollComparer() );
+            UIManager.Instance.DisplayPlayerOrder( this.AllPlayers );
         }
 
         public void InfluenceAdvisors()

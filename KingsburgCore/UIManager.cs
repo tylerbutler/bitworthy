@@ -597,23 +597,23 @@ namespace TylerButler.Kingsburg.Core.UI
             switch( this.Mode )
             {
                 case graphicsMode.CLI:
-                    DisplayPlayerInfo( p );
+                    //DisplayPlayerInfo( p );
                     Console.WriteLine( "{0}, you may recruit {1} soldiers. How many would you like to recruit?", p.Name, p.RecruitableSoldiers );
                     do
                     {
                         numToRecruit = int.Parse( Console.ReadLine() );
                     }
-                    while( numToRecruit <= p.RecruitableSoldiers );
+                    while( numToRecruit > p.RecruitableSoldiers );
 
                     if( numToRecruit == 0 )
                     {
-                        Console.WriteLine( "{0} recruits no soldiers." );
-                        //return 0;
+                        Console.WriteLine( "{0} recruits no soldiers.", p.Name );
+                        return 0;
                     }
-                    else if( numToRecruit == p.RecruitableSoldiers )
+                    else if( numToRecruit == p.RecruitableSoldiers && p.GoodsCount % p.SoldierCost == 0 )
                     {
+                        // Bug:23 FIXED
                         p.RemoveAllGoods();
-                        //return numToRecruit;
                     }
                     else
                     {

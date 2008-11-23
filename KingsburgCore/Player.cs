@@ -15,6 +15,7 @@ namespace TylerButler.Kingsburg.Core
         internal DiceCollection MostRecentDiceRoll;//,UsedDice,RemainingDice;
         //private bool hasUsedAllDice = false;
         HashSet<Advisor> influencedAdvisors = new HashSet<Advisor>();
+        internal KingsburgDie KingsAidDie = null;
 
         public Player( string nameIn, string descriptionIn )
             : base( nameIn, descriptionIn )
@@ -22,15 +23,23 @@ namespace TylerButler.Kingsburg.Core
         }
 
         // DEBUG: take this out after debugging is over
-        //Bug: 22
+        //Bug:22
         public new string Name
         {
             get
             {
-                string toReturn = String.Format( "{0} ({1}G, {2}W, {3}S, {4}T, {7}VP - Soldiers: {5} - Buildings: {6} - Dice Roll: {8})",
-                    base.Name, this.Goods["Gold"], this.Goods["Wood"], this.Goods["Stone"], this.PlusTwoTokens,
-                    this.Soldiers, this.NumBuildings, this.VictoryPoints,
-                    this.MostRecentDiceRoll == null ? "NONE" : this.MostRecentDiceRoll.ToString() );
+                string toReturn = String.Format( "{0} ({1}G, {2}W, {3}S, {4}T, {7}VP - Soldiers: {5} - Buildings: {6}, {10} - Dice Roll: {8} {9})",
+                    /*0*/ base.Name,
+                    /*1*/ this.Goods["Gold"],
+                    /*2*/ this.Goods["Wood"],
+                    /*3*/ this.Goods["Stone"],
+                    /*4*/ this.PlusTwoTokens,
+                    /*5*/ this.Soldiers,
+                    /*6*/ this.NumBuildings,
+                    /*7*/ this.VictoryPoints,
+                    /*8*/ this.MostRecentDiceRoll == null ? "NONE" : this.MostRecentDiceRoll.ToString(),
+                    /*9*/ this.Envoy == true ? "*E*" : "",
+                    /*10*/ this.CurrentBuildingStrength );
                 return toReturn;
             }
             set
@@ -107,9 +116,11 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal void AddDie()
+        internal KingsburgDie AddDie()
         {
-            Dice.Add( new KingsburgDie( KingsburgDie.DieTypes.White ) );
+            KingsburgDie die = new KingsburgDie( KingsburgDie.DieTypes.White );
+            Dice.Add( die );
+            return die;
         }
 
         /// <summary>
@@ -308,9 +319,8 @@ namespace TylerButler.Kingsburg.Core
                 foreach( Building b in GameManager.Instance.Buildings )
                 {
                     if( this.CanBuild( b ) )
-                    {
-                        toReturn.Add( b );
-                    }
+                        if( !this.HasBuilding( b ) )
+                            toReturn.Add( b );
                 }
                 return toReturn;
             }
@@ -488,6 +498,11 @@ namespace TylerButler.Kingsburg.Core
                 this.Buildings.Remove( toDestroy );
                 this.VictoryPoints -= toDestroy.VictoryPointValue;
             }
+        }
+
+        internal void RemoveDie( KingsburgDie die )
+        {
+            this.Dice.Remove( die );
         }
     }
 

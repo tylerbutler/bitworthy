@@ -37,14 +37,14 @@ namespace TylerButler.Kingsburg.Core
             PlayerCollection LeastBuildingPlayers = k.PlayersWithLowestBuildingCount( k.AllPlayers );
             if( LeastBuildingPlayers.Count == 1 )
             {
-                LeastBuildingPlayers[0].AddDie();
+                LeastBuildingPlayers[0].KingsAidDie = LeastBuildingPlayers[0].AddDie();
             }
             else
             {
                 PlayerCollection LeastGoodsPlayers = k.PlayersWithLowestGoodsCount( LeastBuildingPlayers );
                 if( LeastGoodsPlayers.Count == 1 )
                 {
-                    LeastGoodsPlayers[0].AddDie();
+                    LeastBuildingPlayers[0].KingsAidDie = LeastGoodsPlayers[0].AddDie();
                 }
                 else
                 {
@@ -54,6 +54,17 @@ namespace TylerButler.Kingsburg.Core
                             GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone );
                         p.AddGood( choice );
                     }
+                }
+            }
+
+            //Bug:24 FIXED
+            // Remove the kings aid die from a player
+            foreach( Player p in k.AllPlayers )
+            {
+                if( p.KingsAidDie != null )
+                {
+                    p.RemoveDie( p.KingsAidDie );
+                    p.KingsAidDie = null;
                 }
             }
 
@@ -95,9 +106,6 @@ namespace TylerButler.Kingsburg.Core
                             DiceCollection spent = UIManager.Instance.DisplayChooseDice( p, influenced );
                             p.AllocateDice( spent );
                         }
-
-                        // do we need this line? 
-                        //p.InfluencedAdvisors.Add( influenced );
                     }
                 }
             }
@@ -196,7 +204,7 @@ namespace TylerButler.Kingsburg.Core
     {
         internal Phase5()
         {
-            this.Title = "Phase 3 - The King's Envoy";
+            this.Title = "Phase 5 - The King's Envoy";
             this.Description = "The player with the fewest buildings receives help from the King's Envoy. If there is a tie, the player with the least number of goods. If that is also a tie, nobody receives help.";
         }
 
@@ -301,7 +309,7 @@ namespace TylerButler.Kingsburg.Core
 
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
-                DoPlayerBattle( p, e );
+                DoPlayerBattle( p, e, reinforcements );
             }
 
             foreach( Player p in GameManager.Instance.PlayersWithHighestStrength( GameManager.Instance.AllPlayers ) )
@@ -354,9 +362,9 @@ namespace TylerButler.Kingsburg.Core
         /// </summary>
         /// <param name="player"></param>
         /// <param name="enemy"></param>
-        internal void DoPlayerBattle( Player player, Enemy enemy )
+        internal void DoPlayerBattle( Player player, Enemy enemy, int reinforcements )
         {
-            int totalStrength = player.TotalStrength + player.BonusStrengthAgainstEnemy( enemy );
+            int totalStrength = player.TotalStrength + player.BonusStrengthAgainstEnemy( enemy ) + reinforcements;
             if( totalStrength > enemy.Strength ) // player wins
             {
                 UIManager.Instance.DisplayBattleResults( player, enemy, BattleResults.Victory );
