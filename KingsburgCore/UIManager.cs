@@ -199,7 +199,15 @@ namespace TylerButler.Kingsburg.Core.UI
                         {
                             Console.WriteLine( "{0},{1}: {2}", bu.Row, bu.Column, bu.Name );
                         }
+                        Console.WriteLine( "Enter 'p' to pass." );
                         string choice = Console.ReadLine();
+
+                        if( choice.Equals( "p", StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            Console.WriteLine( "{0} passed without building a building.", p.Name );
+                            return null;
+                        }
+
                         string[] parsedChoice = choice.Split( ',' );
                         int chosenRow = int.Parse( parsedChoice[0] );
                         int chosenColumn = int.Parse( parsedChoice[1] );

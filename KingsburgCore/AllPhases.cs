@@ -116,10 +116,13 @@ namespace TylerButler.Kingsburg.Core
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
                 Building built = UIManager.Instance.DisplayBuildingCard( p, true /* can build */);
-                p.Buildings.Add( built );
-                p.Goods["Gold"] -= built.GoldCost;
-                p.Goods["Wood"] -= built.WoodCost;
-                p.Goods["Stone"] -= built.StoneCost;
+                if( built != null )
+                {
+                    p.Buildings.Add( built );
+                    p.Goods["Gold"] -= built.GoldCost;
+                    p.Goods["Wood"] -= built.WoodCost;
+                    p.Goods["Stone"] -= built.StoneCost;
+                }
             }
         }
     }
