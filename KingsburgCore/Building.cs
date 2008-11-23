@@ -24,6 +24,18 @@ namespace TylerButler.Kingsburg.Core
             this.GoldCost = this.WoodCost = this.StoneCost = 0;
         }
 
+        #region Equality overrides
+        public override bool Equals( object obj )
+        {
+            return ((Building)obj).Name.Equals(this.Name);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        #endregion
+
         public int GoldCost
         {
             get

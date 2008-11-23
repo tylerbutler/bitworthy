@@ -86,6 +86,17 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
+        /// <summary>
+        /// Resets all the dice in the collection to be "unused" (IsUsed == false).
+        /// </summary>
+        internal void ResetDiceUsage()
+        {
+            foreach( KingsburgDie die in this )
+            {
+                die.IsUsed = false;
+            }
+        }
+
         //public List<KingsburgDie> GetListOfDice()
         //{
         //    return this;

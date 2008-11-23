@@ -103,12 +103,24 @@ namespace TylerButler.Kingsburg.Core
             }
 
             gm.InfluenceAdvisors();
-            gm.ConstructBuildings();
+            ConstructBuildings();
 
             // Phase is complete, reset the advisors
             gm.ClearInfluencedAdvisors();
 
             return new Phase3();
+        }
+
+        internal void ConstructBuildings()
+        {
+            foreach( Player p in GameManager.Instance.AllPlayers )
+            {
+                Building built = UIManager.Instance.DisplayBuildingCard( p, true /* can build */);
+                p.Buildings.Add( built );
+                p.Goods["Gold"] -= built.GoldCost;
+                p.Goods["Wood"] -= built.WoodCost;
+                p.Goods["Stone"] -= built.StoneCost;
+            }
         }
     }
 
@@ -209,6 +221,7 @@ namespace TylerButler.Kingsburg.Core
             if( LeastBuildingsPlayers.Count == 1 )
             {
                 PlayerReceivingEnvoy = LeastBuildingsPlayers[0];
+                PlayerReceivingEnvoy.Envoy = true;
             }
             else
             {
@@ -216,6 +229,7 @@ namespace TylerButler.Kingsburg.Core
                 if( LeastGoodsPlayers.Count == 1 )
                 {
                     PlayerReceivingEnvoy = LeastGoodsPlayers[0];
+                    PlayerReceivingEnvoy.Envoy = true;
                 }
                 else
                 {

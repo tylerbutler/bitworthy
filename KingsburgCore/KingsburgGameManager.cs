@@ -288,14 +288,6 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal void ConstructBuildings()
-        {
-            foreach( Player p in Instance.AllPlayers )
-            {
-                UIManager.Instance.DisplayBuildingCard( p, true /* can build */);
-            }
-        }
-
         /// <summary>
         /// A convenience method to get a building reference from the name of the building.
         /// </summary>

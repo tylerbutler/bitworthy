@@ -511,28 +511,38 @@ namespace TylerButler.Kingsburg.Core.UI
             switch( this.Mode )
             {
                 case graphicsMode.CLI:
-                    Console.WriteLine( "\n{0}, pick which dice combo to use:", p.Name );
+                    DiceCollection toReturn;
                     Helpers.SumComboFinder sc = new Helpers.SumComboFinder();
                     List<List<KingsburgDie>> combos = sc.Find( a.Order, p.RemainingDice );
-                    foreach( List<KingsburgDie> combo in combos )
+
+                    // Return the only combo if there is only one
+                    if( combos.Count == 1 )
                     {
-                        Console.Write( "{0}: ", combos.IndexOf( combo ) );
-                        foreach( KingsburgDie d in combo )
+                        toReturn = new DiceCollection( combos[0] );
+                    }
+                    else
+                    {
+                        Console.WriteLine( "\n{0}, pick which dice combo to use:", p.Name );
+                        foreach( List<KingsburgDie> combo in combos )
                         {
-                            string isWhite = d.Type == KingsburgDie.DieTypes.White ? "*" : string.Empty;
-                            Console.Write( "{0}{1}, ", d.Value, isWhite );
+                            Console.Write( "{0}: ", combos.IndexOf( combo ) );
+                            foreach( KingsburgDie d in combo )
+                            {
+                                string isWhite = d.Type == KingsburgDie.DieTypes.White ? "*" : string.Empty;
+                                Console.Write( "{0}{1}, ", d.Value, isWhite );
+                            }
+                            Console.WriteLine();
                         }
-                        Console.WriteLine();
+                        Console.WriteLine( "\"*\" indicates a white die." );
+                        int chosenCombo = -1;
+                        do
+                        {
+                            string input = Console.ReadLine();
+                            chosenCombo = int.Parse( input );
+                        }
+                        while( chosenCombo == -1 || chosenCombo + 1 > combos.Count );
+                        toReturn = new DiceCollection( combos[chosenCombo] );
                     }
-                    Console.WriteLine( "\"*\" indicates a white die." );
-                    int chosenCombo = -1;
-                    do
-                    {
-                        string input = Console.ReadLine();
-                        chosenCombo = int.Parse( input );
-                    }
-                    while( chosenCombo == -1 || chosenCombo + 1 > combos.Count );
-                    DiceCollection toReturn = new DiceCollection( combos[chosenCombo] );
                     return toReturn;
                 case graphicsMode.GUI:
                     throw new NotImplementedException();

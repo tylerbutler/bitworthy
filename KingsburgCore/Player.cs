@@ -168,6 +168,7 @@ namespace TylerButler.Kingsburg.Core
         internal void RollDice()
         {
             Dice.RollAllDice();
+            Dice.ResetDiceUsage();
             MostRecentDiceRoll = (DiceCollection)Dice.Clone();
         }
 
