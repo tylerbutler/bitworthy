@@ -1,0 +1,26 @@
+
+LIST ALL BRANCHES
+git branch -a
+
+DELETE A LOCAL BRANCH (MERGED)
+git branch -d <branch>
+
+DELETE A LOCAL UNMERGED BRANCH
+git branch -D <branch>
+
+PUSH A LOCAL BRANCH TO GITHUB
+git push origin <branch>
+
+TO MERGE CHANGES FROM MASTER TO A BRANCH
+git co <branch>
+git rebase master
+
+TO MERGE CHANGES FROM BRANCH A TO BRANCH B (including master)
+git co <branch b>
+git merge <branch a>
+
+ADD A STASH
+git stash save <optional-name>
+
+TO DELETE THE STASH (ERASE THE “CLIPBOARD” FROM MEMORY)
+git stash clear
