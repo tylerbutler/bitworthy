@@ -2,6 +2,9 @@
 LIST ALL BRANCHES
 git branch -a
 
+CREATE A LOCAL BRANCH FROM A REMOTE ONE
+git branch --track <branch> <repository>/<remote-branch>
+
 DELETE A LOCAL BRANCH (MERGED)
 git branch -d <branch>
 
@@ -10,6 +13,9 @@ git branch -D <branch>
 
 PUSH A LOCAL BRANCH TO GITHUB
 git push origin <branch>
+
+DELETE A REMOTE BRANCH
+git push <repository> :heads/<branch>
 
 TO MERGE CHANGES FROM MASTER TO A BRANCH
 git co <branch>
