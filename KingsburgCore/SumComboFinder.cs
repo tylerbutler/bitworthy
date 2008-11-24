@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using TylerButler.GameToolkit;
 using TylerButler.Kingsburg.Core;
 
@@ -22,10 +22,19 @@ namespace TylerButler.Kingsburg.Utilities
             {
                 if( list.Count == 1 )
                 {
-                    if( list[0].Type == KingsburgDie.DieTypes.White )
+                    if( list[0].Type != KingsburgDie.DieTypes.Regular )
                     {
                         mResults.Remove( list );
                     }
+                }
+
+                IEnumerable<KingsburgDie> linq = from r in list
+                                                 where r.Type == KingsburgDie.DieTypes.MarketNegative || r.Type == KingsburgDie.DieTypes.MarketPositive
+                                                 select r;
+                List<KingsburgDie> marketDice = new List<KingsburgDie>( linq );
+                if( marketDice.Count > 1 )
+                {
+                    mResults.Remove( list );
                 }
             }
             return mResults;
@@ -55,7 +64,7 @@ namespace TylerButler.Kingsburg.Utilities
                 }
             }
         }
-    
+
         // This is a horrible way to do this but I am sick of trying to do the right algorithm to find all subset sums
         internal static HashSet<int> Sums( DiceCollection diceVals )
         {
@@ -64,21 +73,12 @@ namespace TylerButler.Kingsburg.Utilities
             DiceCollection bag = new DiceCollection( 0, 6 );
             SumComboFinder comboFinder = new SumComboFinder();
 
-            int j= 0;
             foreach( KingsburgDie i in diceVals )
             {
                 KingsburgDie d;
-                if( j < 3 )
-                {
-                    d = new KingsburgDie( KingsburgDie.DieTypes.Regular );
-                }
-                else
-                {
-                    d = new KingsburgDie( KingsburgDie.DieTypes.White );
-                }
+                d = new KingsburgDie( i.Type );
                 d.Value = i.Value;
                 bag.Add( d );
-                j++;
             }
 
             foreach( int i in new Range( 1, 18 ) )

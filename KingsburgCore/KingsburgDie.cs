@@ -15,7 +15,8 @@ namespace TylerButler.Kingsburg.Core
         {
             Regular,
             White,
-            Market, // Special type
+            MarketPositive, // Special type
+            MarketNegative, //Special type
             PlusTwo, // Special type
         }
 
@@ -59,15 +60,38 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
+        new internal int Value
+        {
+            get
+            {
+                switch( this.Type )
+                {
+                    case DieTypes.MarketNegative:
+                        return -1;
+                    case DieTypes.MarketPositive:
+                        return 1;
+                    default:
+                        return base.Value;
+                }
+            }
+            set
+            {
+                base.Value = value;
+            }
+        }
+
         public override string ToString()
         {
-            string toReturn=this.Value.ToString();
+            string toReturn = Value.ToString();
             switch( this.Type )
             {
                 case DieTypes.White:
                     toReturn += "*";
                     break;
-                case DieTypes.Market:
+                case DieTypes.MarketPositive:
+                    toReturn += "M";
+                    break;
+                case DieTypes.MarketNegative:
                     toReturn += "M";
                     break;
             }
@@ -140,10 +164,10 @@ namespace TylerButler.Kingsburg.Core
             return true;
         }
 
-        internal void RemoveAllWhiteDice()
+        internal void RemoveNonRegularDice()
         {
             IEnumerable<KingsburgDie> toRemove = from b in this
-                                                 where b.Type == KingsburgDie.DieTypes.White
+                                                 where b.Type != KingsburgDie.DieTypes.Regular
                                                  select b;
             foreach( KingsburgDie d in toRemove )
             {
@@ -161,27 +185,4 @@ namespace TylerButler.Kingsburg.Core
 
         #endregion
     }
-
-    internal sealed class MarketDiePositive : KingsburgDie
-    {
-        new internal int Value
-        {
-            get
-            {
-                return 1;
-            }
-        }
-    }
-
-    internal sealed class MarketDieNegative : KingsburgDie
-    {
-        new internal int Value
-        {
-            get
-            {
-                return -1;
-            }
-        }
-    }
-
 }

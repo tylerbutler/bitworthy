@@ -93,8 +93,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Reference Material\Kingsburg_ENG-1.pdf" />
-    <None Include="Reference Material\Monster Cards.docx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Advisors.xml">

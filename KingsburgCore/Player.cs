@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TylerButler.GameToolkit;
-using System.Diagnostics;
 
 namespace TylerButler.Kingsburg.Core
 {
@@ -56,13 +56,10 @@ namespace TylerButler.Kingsburg.Core
             }
             set
             {
-                if( stone - value < 0 )
+                stone = value;
+                if( stone < 0 )
                 {
                     stone = 0;
-                }
-                else
-                {
-                    stone = value;
                 }
             }
         }
@@ -75,13 +72,10 @@ namespace TylerButler.Kingsburg.Core
             }
             set
             {
-                if( wood - value < 0 )
+                wood = value;
+                if( wood < 0 )
                 {
                     wood = 0;
-                }
-                else
-                {
-                    wood = value;
                 }
             }
         }
@@ -94,13 +88,10 @@ namespace TylerButler.Kingsburg.Core
             }
             set
             {
-                if( gold - value < 0 )
+                gold = value;
+                if( gold < 0 )
                 {
                     gold = 0;
-                }
-                else
-                {
-                    gold = value;
                 }
             }
         }
@@ -188,8 +179,13 @@ namespace TylerButler.Kingsburg.Core
         internal KingsburgDie AddDie()
         {
             KingsburgDie die = new KingsburgDie( KingsburgDie.DieTypes.White );
-            Dice.Add( die );
+            this.AddDie( die );
             return die;
+        }
+
+        internal void AddDie( KingsburgDie die )
+        {
+            Dice.Add( die );
         }
 
         /// <summary>
@@ -343,6 +339,19 @@ namespace TylerButler.Kingsburg.Core
             else
             {
                 die.IsUsed = true;
+            }
+
+            if( die.Type == KingsburgDie.DieTypes.MarketPositive || die.Type == KingsburgDie.DieTypes.MarketNegative )
+            {
+                IEnumerable<KingsburgDie> dc = from r in this.Dice
+                                               where r.Type == KingsburgDie.DieTypes.MarketPositive || r.Type == KingsburgDie.DieTypes.MarketNegative
+                                               select r;
+                foreach( KingsburgDie d in dc )
+                {
+                    d.IsUsed = true;
+                }
+
+                this.HasUsedMarket = true;
             }
         }
 
@@ -559,9 +568,9 @@ namespace TylerButler.Kingsburg.Core
             this.Dice.Remove( die );
         }
 
-        internal void RemoveAllWhiteDice()
+        internal void RemoveNonRegularDice()
         {
-            this.Dice.RemoveAllWhiteDice();
+            this.Dice.RemoveNonRegularDice();
         }
     }
 

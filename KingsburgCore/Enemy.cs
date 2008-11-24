@@ -189,6 +189,11 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
+        public override string ToString()
+        {
+            return this.Name + ", " + this.Strength;
+        }
+
     }
 
     // Public because that's necesarry to serialize

@@ -16,6 +16,7 @@ namespace TylerButler.Kingsburg.Core
         {
             // Add Players
             GameManager.Instance.AllPlayers = UIManager.Instance.DisplayGetPlayers();
+            GameManager.DebugSetup();
             return new Phase1();
         }
     }
@@ -38,6 +39,7 @@ namespace TylerButler.Kingsburg.Core
             if( LeastBuildingPlayers.Count == 1 )
             {
                 //LeastBuildingPlayers[0].KingsAidDie = 
+                UIManager.Instance.DisplayKingsAid( LeastBuildingPlayers[0] );
                 LeastBuildingPlayers[0].AddDie();
             }
             else
@@ -46,6 +48,7 @@ namespace TylerButler.Kingsburg.Core
                 if( LeastGoodsPlayers.Count == 1 )
                 {
                     //LeastBuildingPlayers[0].KingsAidDie = 
+                    UIManager.Instance.DisplayKingsAid( LeastGoodsPlayers[0] );
                     LeastGoodsPlayers[0].AddDie();
                 }
                 else
@@ -88,6 +91,7 @@ namespace TylerButler.Kingsburg.Core
             {
                 HandleMerchantsGuild( p );
                 HandleFarms( p );
+                HandleMarket( p );
                 p.RollDice();
                 UIManager.Instance.DisplayDiceRoll( p );
                 HandleStatueAction( p );
@@ -114,29 +118,17 @@ namespace TylerButler.Kingsburg.Core
             InfluenceAdvisors();
             ConstructBuildings();
 
-            // Phase is complete, reset the advisors
+            // Phase is complete, reset the advisors and the players
             ClearInfluencedAdvisors();
-
-            // Remove the kings aid die from a player
-            //foreach( Player p in k.AllPlayers )
-            //{
-            //    if( p.KingsAidDie != null )
-            //    {
-            //        p.RemoveDie( p.KingsAidDie );
-            //        p.KingsAidDie = null;
-            //    }
-            //}
-
 
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
-                //Bug:24 FIXED
-                // Remove all white dice. Farms re-add their die at the beginning of each productive phase, and the kings aid die
-                // should be removed after the single phase in which it's used.
-                p.RemoveAllWhiteDice();
+                p.RemoveNonRegularDice(); //They'll be added back to appropriate players before the next production phase
 
                 HandleTownHall( p );
                 HandleEmbassy( p );
+
+                p.HasUsedMarket = false;
             }
 
             return new Phase3();
@@ -300,6 +292,15 @@ namespace TylerButler.Kingsburg.Core
             return false;
         }
 
+        private void HandleMarket( Player p )
+        {
+            if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Market" ) ) )
+            {
+                p.AddDie( new KingsburgDie( KingsburgDie.DieTypes.MarketPositive ) );
+                p.AddDie( new KingsburgDie( KingsburgDie.DieTypes.MarketNegative ) );
+                p.HasUsedMarket = false;
+            }
+        }
     }
 
     internal class Phase3 : Phase
@@ -482,6 +483,7 @@ namespace TylerButler.Kingsburg.Core
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
                 p.Soldiers = 0;
+                p.WasVictorious = false;
             }
 
             if( GameManager.Instance.CurrentYear == 5 )

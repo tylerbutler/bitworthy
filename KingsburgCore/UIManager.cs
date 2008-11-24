@@ -890,5 +890,17 @@ namespace TylerButler.Kingsburg.Core.UI
                     throw new NotImplementedException();
             }
         }
+
+        internal void DisplayKingsAid( Player player )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "{0} received a white die for the spring season because the king gave him aid.", player.Name );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
     }
 }

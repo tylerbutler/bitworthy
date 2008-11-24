@@ -5,6 +5,7 @@ using TylerButler.GameToolkit;
 using TylerButler.Kingsburg.Core.UI;
 using TylerButler.Kingsburg.Utilities;
 using System;
+using System.Diagnostics;
 
 namespace TylerButler.Kingsburg.Core
 {
@@ -276,6 +277,28 @@ namespace TylerButler.Kingsburg.Core
                 next = next.Execute();
             }
             while( !this.IsGameOver );
+        }
+
+        [Conditional( "DEBUG" )]
+        public static void DebugSetup()
+        {
+            //GameManager.Instance.AllPlayers[0].AddDie( new KingsburgDie( KingsburgDie.DieTypes.MarketPositive ) );
+            //GameManager.Instance.AllPlayers[0].AddDie( new KingsburgDie( KingsburgDie.DieTypes.MarketNegative ) );
+
+            //SumComboFinder s = new SumComboFinder();
+            //DiceCollection bag = new DiceCollection();
+            //bag.Add( new KingsburgDie( KingsburgDie.DieTypes.MarketNegative ) );
+            //bag.Add( new KingsburgDie( KingsburgDie.DieTypes.MarketPositive ) );
+            //KingsburgDie d = new KingsburgDie();
+            //d.Value = 3;
+            //bag.Add( d );
+            //d = new KingsburgDie();
+            //d.Value = 1;
+            //bag.Add( d );
+            //KingsburgDie w = new KingsburgDie( KingsburgDie.DieTypes.White );
+            //w.Value = 4;
+            //List<List<KingsburgDie>> results = s.Find( 3, bag );
+            //int i =0;
         }
     }
 }
