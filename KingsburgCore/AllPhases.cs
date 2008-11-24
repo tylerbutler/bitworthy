@@ -37,14 +37,16 @@ namespace TylerButler.Kingsburg.Core
             PlayerCollection LeastBuildingPlayers = k.PlayersWithLowestBuildingCount( k.AllPlayers );
             if( LeastBuildingPlayers.Count == 1 )
             {
-                LeastBuildingPlayers[0].KingsAidDie = LeastBuildingPlayers[0].AddDie();
+                //LeastBuildingPlayers[0].KingsAidDie = 
+                LeastBuildingPlayers[0].AddDie();
             }
             else
             {
                 PlayerCollection LeastGoodsPlayers = k.PlayersWithLowestGoodsCount( LeastBuildingPlayers );
                 if( LeastGoodsPlayers.Count == 1 )
                 {
-                    LeastBuildingPlayers[0].KingsAidDie = LeastGoodsPlayers[0].AddDie();
+                    //LeastBuildingPlayers[0].KingsAidDie = 
+                    LeastGoodsPlayers[0].AddDie();
                 }
                 else
                 {
@@ -57,21 +59,18 @@ namespace TylerButler.Kingsburg.Core
                 }
             }
 
-            //Bug:24 FIXED
-            // Remove the kings aid die from a player
-            foreach( Player p in k.AllPlayers )
-            {
-                if( p.KingsAidDie != null )
-                {
-                    p.RemoveDie( p.KingsAidDie );
-                    p.KingsAidDie = null;
-                }
-            }
-
             return new Phase2();
         }
     }
 
+    /// <summary>
+    /// Phase 2 is the first productive phase of the year, and this class serves as a model for all productive seasons.
+    /// The following actions are taken in phase 2:
+    /// a) Roll Dice and determine the player order
+    /// b) Influence Advisors
+    /// c) Receive the rewards from the advisors
+    /// d) Construct buildings
+    /// </summary>
     internal class Phase2 : Phase
     {
         public Phase2()
@@ -82,15 +81,17 @@ namespace TylerButler.Kingsburg.Core
 
         public override Phase Execute()
         {
-            //GameManager gm = GameManager.Instance;
-
             // Reset advisor state just in case
             ClearInfluencedAdvisors();
 
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
+                HandleMerchantsGuild( p );
+                HandleFarms( p );
                 p.RollDice();
                 UIManager.Instance.DisplayDiceRoll( p );
+                HandleStatueAction( p );
+                HandleChapelAction( p );
             }
             DeterminePlayerOrder();
             while( DiceAllocationManager.Instance.PlayersHaveDiceToAllocate() )
@@ -116,10 +117,32 @@ namespace TylerButler.Kingsburg.Core
             // Phase is complete, reset the advisors
             ClearInfluencedAdvisors();
 
+            // Remove the kings aid die from a player
+            //foreach( Player p in k.AllPlayers )
+            //{
+            //    if( p.KingsAidDie != null )
+            //    {
+            //        p.RemoveDie( p.KingsAidDie );
+            //        p.KingsAidDie = null;
+            //    }
+            //}
+
+
+            foreach( Player p in GameManager.Instance.AllPlayers )
+            {
+                //Bug:24 FIXED
+                // Remove all white dice. Farms re-add their die at the beginning of each productive phase, and the kings aid die
+                // should be removed after the single phase in which it's used.
+                p.RemoveAllWhiteDice();
+
+                HandleTownHall( p );
+                HandleEmbassy( p );
+            }
+
             return new Phase3();
         }
 
-        internal void ConstructBuildings()
+        private void ConstructBuildings()
         {
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
@@ -127,9 +150,17 @@ namespace TylerButler.Kingsburg.Core
                 if( built != null )
                 {
                     p.Buildings.Add( built );
-                    p.Gold -= built.GoldCost;
                     p.Wood -= built.WoodCost;
                     p.Stone -= built.StoneCost;
+
+                    if( HandleCrane( p, built ) )
+                    {
+                        p.Gold -= ( built.GoldCost - 1 );
+                    }
+                    else
+                    {
+                        p.Gold -= built.GoldCost;
+                    }
 
                     // Give VP to player
                     p.VictoryPoints += built.VictoryPointValue;
@@ -137,14 +168,14 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal void DeterminePlayerOrder()
+        private void DeterminePlayerOrder()
         {
             // SORT THE PLAYERS BASED ON MostRecentDiceRollValue()
             GameManager.Instance.AllPlayers.Sort( new PlayerDiceRollComparer() );
             UIManager.Instance.DisplayPlayerOrder( GameManager.Instance.AllPlayers );
         }
 
-        internal void InfluenceAdvisors()
+        private void InfluenceAdvisors()
         {
             // Walk through all the advisors, and do their actions
             foreach( Advisor a in GameManager.Instance.Advisors )
@@ -162,13 +193,113 @@ namespace TylerButler.Kingsburg.Core
         /// <summary>
         /// Mark all the advisors as uninfluenced in preparation for a new round.
         /// </summary>
-        internal void ClearInfluencedAdvisors()
+        private void ClearInfluencedAdvisors()
         {
             foreach( Advisor a in GameManager.Instance.Advisors )
             {
                 a.InfluencingPlayers.Clear();
             }
         }
+
+        /// <summary>
+        /// Allow the player to use his statue if possible.
+        /// </summary>
+        /// <param name="p">The player.</param>
+        private void HandleStatueAction( Player p )
+        {
+            if( !p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Statue" ) ) )
+            {
+                return;
+            }
+            else if( !p.MostRecentDiceRoll.AllSameRoll() )
+            {
+                return;
+            }
+            else
+            {
+                UIManager.Instance.DisplayUseStatue( p );
+            }
+        }
+
+        private void HandleChapelAction( Player p )
+        {
+            if( !p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Chapel" ) ) )
+            {
+                return;
+            }
+            else if( p.MostRecentDiceRollTotalValue > 7 )
+            {
+                return;
+            }
+            else
+            {
+                UIManager.Instance.DisplayUseChapel( p );
+            }
+        }
+
+        private void HandleFarms( Player p )
+        {
+            if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Farms" ) ) )
+            {
+                UIManager.Instance.DisplayFarmBonus( p );
+                p.AddDie();
+            }
+        }
+
+        private void HandleMerchantsGuild( Player p )
+        {
+            if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Merchants' Guild" ) ) )
+            {
+                UIManager.Instance.DisplayMerchantsGuildBonus( p );
+                p.Gold++;
+            }
+        }
+
+        private void HandleTownHall( Player p )
+        {
+            if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Town Hall" ) ) )
+            {
+                GoodsChoiceOptions choice = UIManager.Instance.DisplayGetTownHallChoice( p );
+
+                if( choice == GoodsChoiceOptions.None ) // player chose not to use their town hall
+                {
+                    return;
+                }
+                else if( choice == GoodsChoiceOptions.PlusTwoToken ) // player chose a plus two token
+                {
+                    p.PlusTwoTokens--;
+                    p.VictoryPoints++;
+                }
+                else
+                {
+                    p.RemoveGood( choice );
+                    p.VictoryPoints++;
+                }
+            }
+        }
+
+        private void HandleEmbassy( Player p )
+        {
+            if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Embassy" ) ) )
+            {
+                UIManager.Instance.DisplayEmbassyBonus( p );
+                p.VictoryPoints++;
+            }
+        }
+
+        private bool HandleCrane( Player p, Building built )
+        {
+            if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Crane" ) ) )
+            {
+                if( built.Column == 3 || built.Column == 4 )
+                {
+                    UIManager.Instance.DisplayUseCrane( p );
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 
     internal class Phase3 : Phase
@@ -181,17 +312,6 @@ namespace TylerButler.Kingsburg.Core
 
         public override Phase Execute()
         {
-            /*
-             * PHASE 3 - The King's Reward
-                The Player with the most buildings receives 1 Victory Point. If there is a tie, every tied player receives 1 Victory Point.
-
-                highPlayers = GetPlayersWithHighestBuildingCount( Game.Players ) returns ArrayList of Players
-                foreach Player in highPlayers
-                    Player.VictoryPoints++;
-                UI.DisplayKingsReward( highPlayers )
-                GO TO PHASE 4
-             */
-
             GameManager gm = GameManager.Instance;
             PlayerCollection players = gm.PlayersWithHighestBuildingCount( gm.AllPlayers );
             UIManager.Instance.DisplayKingsReward( players );
@@ -465,8 +585,27 @@ namespace TylerButler.Kingsburg.Core
 
     internal class EndPhase : Phase
     {
+        internal EndPhase()
+        {
+            this.Title = "Game Over - Final Scoring";
+            this.Description = "The game has come to an end! Commence the final scoring!";
+        }
+
         public override Phase Execute()
         {
+            foreach( Player p in GameManager.Instance.AllPlayers )
+            {
+                HandleCathedral( p );
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private void HandleCathedral( Player p )
+        {
+            int VPEarned = p.GoodsCount / 2;
+            UIManager.Instance.DisplayCathedralBonus( p, VPEarned );
+            p.VictoryPoints += VPEarned;
             throw new NotImplementedException();
         }
     }

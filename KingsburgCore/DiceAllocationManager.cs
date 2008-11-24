@@ -25,11 +25,11 @@ namespace TylerButler.Kingsburg.Core
             get
             {
                 AdvisorCollection toReturn = new AdvisorCollection();
-                foreach( Advisor a in GameManager.Instance.Advisors)
+                foreach( Advisor a in GameManager.Instance.Advisors )
                 {
-                    if(a.IsInfluenced)
+                    if( a.IsInfluenced )
                     {
-                        toReturn.Add(a);
+                        toReturn.Add( a );
                     }
                 }
                 return toReturn;
@@ -59,10 +59,19 @@ namespace TylerButler.Kingsburg.Core
                 }
             }
 
+            HashSet<int> sums = SumComboFinder.Sums( p.RemainingDice );
+
+            //// If the player has the market, he can influence the 
+            //if( p.HasBuilding( GameManager.Instance.GetBuilding( "Market" ) ) && !p.HasUsedMarket )
+            //{
+            //    foreach( int sum in sums )
+            //    {
+            //    }
+            //}
+
             AdvisorCollection copy = new AdvisorCollection( toReturn );
             foreach( Advisor a in copy )
             {
-                HashSet<int> sums = SumComboFinder.Sums( p.RemainingDice );
                 if( !sums.Contains( a.Order ) )
                 {
                     toReturn.Remove( a );

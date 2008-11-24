@@ -74,7 +74,7 @@ namespace TylerButler.Kingsburg.Core.UI
                     Console.Write( "{0} rolled ", p.Name );
                     foreach( KingsburgDie d in roll )
                     {
-                        Console.Write( d.Value + " " );
+                        Console.Write( d.ToString() + " " );
                     }
                     Console.WriteLine();
                     break;
@@ -90,7 +90,6 @@ namespace TylerButler.Kingsburg.Core.UI
 
         internal Advisor DisplayChooseAdvisorToInfluence( Player p )
         {
-            // case:4 FIXED
             Advisor chosenAdvisor = null;
             switch( this.Mode )
             {
@@ -188,6 +187,12 @@ namespace TylerButler.Kingsburg.Core.UI
                         foreach( Building bu in p.BuildableBuildings )
                         {
                             Console.WriteLine( "{0},{1}: {2}", bu.Row, bu.Column, bu.Name );
+                        }
+                        Console.WriteLine();
+                        if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Crane" ) ) )
+                        {
+                            Console.WriteLine( "You have a crane so gold prices of buildings in columns 3 and 4 are reduced by 1." );
+                            Console.WriteLine();
                         }
                         Console.WriteLine( "Enter 'p' to pass." );
                         string choice = Console.ReadLine();
@@ -526,8 +531,7 @@ namespace TylerButler.Kingsburg.Core.UI
                             Console.Write( "{0}: ", combos.IndexOf( combo ) );
                             foreach( KingsburgDie d in combo )
                             {
-                                string isWhite = d.Type == KingsburgDie.DieTypes.White ? "*" : string.Empty;
-                                Console.Write( "{0}{1}, ", d.Value, isWhite );
+                                Console.Write( "{0}, ", d );
                             }
                             Console.WriteLine();
                         }
@@ -554,7 +558,7 @@ namespace TylerButler.Kingsburg.Core.UI
             switch( this.Mode )
             {
                 case graphicsMode.CLI:
-                    Console.WriteLine( "{0} receives a \"+2\" token from his inn." );
+                    Console.WriteLine( "{0} receives a \"+2\" token from his Inn." );
                     break;
                 case graphicsMode.GUI:
                     throw new NotImplementedException();
@@ -704,12 +708,183 @@ namespace TylerButler.Kingsburg.Core.UI
         /// Displays info that a player is receiving a victory point from his fortress.
         /// </summary>
         /// <param name="player">The player.</param>
-        internal void DisplayFortressBonus(Player player)
+        internal void DisplayFortressBonus( Player player )
         {
             switch( this.Mode )
             {
                 case graphicsMode.CLI:
                     Console.WriteLine( "{0} receives a Victory Point from his fortress.", player.Name );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Lets the player use the ability of their Statue to reroll.
+        /// </summary>
+        /// <param name="p">The player.</param>
+        internal void DisplayUseStatue( Player p )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    string response;
+                    Console.WriteLine( "{0}, you have rolled the same number on all your dice. Would you like to use your Statue and re-roll? (y/n)", p.Name );
+                    do
+                    {
+                        response = Console.ReadLine();
+                    }
+                    while( !response.Equals( "y", StringComparison.OrdinalIgnoreCase ) &&
+                        !response.Equals( "n", StringComparison.OrdinalIgnoreCase ) );
+
+                    if( response.Equals( "y", StringComparison.OrdinalIgnoreCase ) )
+                    {
+                        p.RollDice();
+                        this.DisplayDiceRoll( p );
+                    }
+                    else
+                        return;
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Lets the player use the ability of their Chapel to reroll.
+        /// </summary>
+        /// <param name="p">The player.</param>
+        internal void DisplayUseChapel( Player p )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    string response;
+                    Console.WriteLine( "{0}, your total dice roll is less than 7. Would you like to use your Chapel and re-roll? (y/n)", p.Name );
+                    do
+                    {
+                        response = Console.ReadLine();
+                    }
+                    while( !response.Equals( "y", StringComparison.OrdinalIgnoreCase ) &&
+                        !response.Equals( "n", StringComparison.OrdinalIgnoreCase ) );
+
+                    if( response.Equals( "y", StringComparison.OrdinalIgnoreCase ) )
+                    {
+                        p.RollDice();
+                        this.DisplayDiceRoll( p );
+                    }
+                    else
+                        return;
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Displays info that a player is receiving victory points from his cathedral.
+        /// </summary>
+        /// <param name="p">The player.</param>
+        /// <param name="VPEarned">The number of victory points earned.</param>
+        internal void DisplayCathedralBonus( Player p, int VPEarned )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "{0} receives {1} Victory Points from his Cathedral.", p.Name, VPEarned );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Displays info that a player is receiving an extra die from his farms.
+        /// </summary>
+        /// <param name="p">The player.</param>
+        internal void DisplayFarmBonus( Player p )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "{0} receives an extra white die from his Farms.", p.Name );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        internal void DisplayMerchantsGuildBonus( Player p )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "{0} receives a Gold from his Merchants' Guild.", p.Name );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        internal void DisplayStableBonus( Player p )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "{0} receives an extra Soldier from his Stable.", p.Name );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        internal GoodsChoiceOptions DisplayGetTownHallChoice( Player p )
+        {
+            GoodsChoiceOptions toReturn = GoodsChoiceOptions.None;
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    if( p.GoodsCount > 0 || p.PlusTwoTokens > 0 )
+                    {
+                        Console.WriteLine( "{0}, you may exchange a good or a \"+2\" Token for a Victory Point. What would you like to exchange?", p.Name );
+                        List<GoodsChoiceOptions> choices = p.GoodTypesPlayerHas;
+                        choices.Add( GoodsChoiceOptions.None );
+                        if( p.PlusTwoTokens > 0 )
+                        {
+                            choices.Add( GoodsChoiceOptions.PlusTwoToken );
+                        }
+                        this.DisplayChooseAGood( p, choices.ToArray() );
+                    }
+                    else
+                    {
+                        Console.WriteLine( "{0}, cannot use your Town Hall because you have no goods or \"+2\" Tokens to exchange.", p.Name );
+                    }
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+            return toReturn;
+        }
+
+        internal void DisplayEmbassyBonus( Player p )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "{0} receives a Victory Point from his Embassy.", p.Name );
+                    break;
+                case graphicsMode.GUI:
+                    throw new NotImplementedException();
+            }
+        }
+
+        internal void DisplayUseCrane( Player p )
+        {
+            switch( this.Mode )
+            {
+                case graphicsMode.CLI:
+                    Console.WriteLine( "{0} had the price of his building reduced by 1 Gold because he has a Crane.", p.Name );
                     break;
                 case graphicsMode.GUI:
                     throw new NotImplementedException();

@@ -72,7 +72,6 @@
     <Compile Include="DiceAllocationManager.cs" />
     <Compile Include="KingsburgDie.cs" />
     <Compile Include="Enemy.cs" />
-    <Compile Include="Helpers.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="KingsburgGameManager.cs" />
     <Compile Include="Player.cs" />
@@ -84,6 +83,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="SumComboFinder.cs" />
     <Compile Include="UIManager.cs" />
   </ItemGroup>
   <ItemGroup>

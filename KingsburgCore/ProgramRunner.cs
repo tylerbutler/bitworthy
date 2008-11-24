@@ -48,7 +48,6 @@ namespace TylerButler.Kingsburg.Core
             //}
             //List<List<KingsburgDie>> temp = d[2];
             //temp = d[3];
-
         }
     }
 }

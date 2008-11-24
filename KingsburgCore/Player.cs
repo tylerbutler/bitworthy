@@ -15,7 +15,7 @@ namespace TylerButler.Kingsburg.Core
         private DiceCollection dice = new DiceCollection( 3, 6 );
         internal DiceCollection MostRecentDiceRoll;
         HashSet<Advisor> influencedAdvisors = new HashSet<Advisor>();
-        internal KingsburgDie KingsAidDie = null;
+        private bool hasUsedMarket = false;
 
         public Player( string nameIn, string descriptionIn )
             : base( nameIn, descriptionIn )
@@ -102,6 +102,18 @@ namespace TylerButler.Kingsburg.Core
                 {
                     gold = value;
                 }
+            }
+        }
+
+        public bool HasUsedMarket
+        {
+            get
+            {
+                return hasUsedMarket;
+            }
+            set
+            {
+                hasUsedMarket = value;
             }
         }
 
@@ -299,28 +311,17 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        //internal HashSet<int> Sums
-        //{
-        //    get
-        //    {
-        //        // returns all the sums of the players dice
-        //        HashSet<int> toReturn = new HashSet<int>();
-        //        for( int i = 0; i < this.MostRecentDiceRoll.Count; i++ )
-        //        {
-        //            toReturn.Add( this.MostRecentDiceRoll[i] );
-        //            for( int j = i + 1; j < this.MostRecentDiceRoll.Count; j++ )
-        //            {
-        //                toReturn.Add( this.MostRecentDiceRoll[i] + this.MostRecentDiceRoll[j] );
-        //            }
-        //        }
-        //        toReturn.Add( MostRecentDiceRollTotalValue );
-        //        return toReturn;
-        //    }
-        //}
-
         public bool CanBuild( Building b )
         {
-            if( this.Gold >= b.GoldCost &&
+            int goldCost = b.GoldCost;
+
+            // Adjust gold cost if player has the crane
+            if( this.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Crane" ) ) )
+            {
+                goldCost--;
+            }
+
+            if( this.Gold >= goldCost &&
                 this.Wood >= b.WoodCost &&
                 this.Stone >= b.StoneCost &&
                 this.HasPrerequisiteBuildings( b ) )
@@ -335,8 +336,6 @@ namespace TylerButler.Kingsburg.Core
 
         internal void AllocateDie( KingsburgDie die )
         {
-            //RemainingDice.Remove( die );
-            //UsedDice.Add( die );
             if( die.IsUsed == true )
             {
                 throw new Exception( "A used die was tried to be used. Something went wrong." );
@@ -426,13 +425,12 @@ namespace TylerButler.Kingsburg.Core
         {
             get
             {
-                // TODO: make sure this does the right thing and rounds down
                 return this.GoodsCount / this.SoldierCost;
             }
         }
 
         /// <summary>
-        /// The cost of a soldier for the player, tyaking into account whether or not he has a Barracks.
+        /// The cost of a soldier for the player, taking into account whether or not he has a Barracks.
         /// </summary>
         internal int SoldierCost
         {
@@ -540,7 +538,6 @@ namespace TylerButler.Kingsburg.Core
 
                 return toReturn;
             }
-
         }
 
         /// <summary>
@@ -560,6 +557,11 @@ namespace TylerButler.Kingsburg.Core
         internal void RemoveDie( KingsburgDie die )
         {
             this.Dice.Remove( die );
+        }
+
+        internal void RemoveAllWhiteDice()
+        {
+            this.Dice.RemoveAllWhiteDice();
         }
     }
 
@@ -584,6 +586,7 @@ namespace TylerButler.Kingsburg.Core
         GoldAndWood,
         GoldAndStone,
         WoodAndStone,
+        PlusTwoToken,
         None,
     }
 

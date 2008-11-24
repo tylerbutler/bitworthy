@@ -115,8 +115,9 @@ namespace TylerButler.Kingsburg.Core
                     break;
                 case Advisors.Sergeant:
                     // Recruit 1 soldier.
-                    p.Soldiers++;
                     UIManager.Instance.DisplayInfluenceAdvisor( this, p );
+                    p.Soldiers++;
+                    HandleStable( p );
                     break;
                 case Advisors.Alchemist:
                     //trade a single good for one of each of the other two goods
@@ -163,6 +164,7 @@ namespace TylerButler.Kingsburg.Core
                     // recruit two soliders and secretly look at the enemy card
                     UIManager.Instance.DisplayInfluenceAdvisor( this, p );
                     p.Soldiers += 2;
+                    HandleStable( p );
                     break;
                 case Advisors.Swordsmith:
                     // receive a stone and a wood or a stone and a gold
@@ -216,9 +218,19 @@ namespace TylerButler.Kingsburg.Core
                     p.Wood++;
                     p.Stone++;
                     p.Soldiers++;
+                    HandleStable( p );
                     break;
                 default:
-                    throw new Exception( "Something went wrong when running the ExecuteAdvisor method. Advisor={0}, Player={1}" );
+                    throw new Exception( "Something went wrong when running the DoAction method. Advisor={0}, Player={1}" );
+            }
+        }
+
+        private void HandleStable( Player p )
+        {
+            if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Stable" ) ) )
+            {
+                UIManager.Instance.DisplayStableBonus( p );
+                p.Soldiers++;
             }
         }
 
@@ -226,7 +238,7 @@ namespace TylerButler.Kingsburg.Core
         {
             return this.Order + ". " + this.Name;
         }
-        
+
         //Code for this method came from http://www.csharper.net/blog/getting_the_text_name_of_an_enum_value_with_spaces.aspx
         private string ProperSpace( string text )
         {

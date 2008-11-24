@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TylerButler.GameToolkit;
 using System.Text;
+using System.Linq;
 
 namespace TylerButler.Kingsburg.Core
 {
@@ -14,6 +15,8 @@ namespace TylerButler.Kingsburg.Core
         {
             Regular,
             White,
+            Market, // Special type
+            PlusTwo, // Special type
         }
 
         public KingsburgDie()
@@ -54,6 +57,21 @@ namespace TylerButler.Kingsburg.Core
             {
                 type = value;
             }
+        }
+
+        public override string ToString()
+        {
+            string toReturn=this.Value.ToString();
+            switch( this.Type )
+            {
+                case DieTypes.White:
+                    toReturn += "*";
+                    break;
+                case DieTypes.Market:
+                    toReturn += "M";
+                    break;
+            }
+            return toReturn;
         }
     }
 
@@ -103,16 +121,35 @@ namespace TylerButler.Kingsburg.Core
             StringBuilder sb = new StringBuilder();
             foreach( KingsburgDie die in this )
             {
-                sb.Append( die.Value + " " );
+                sb.Append( die + " " );
             }
 
             return sb.ToString();
         }
 
-        //public List<KingsburgDie> GetListOfDice()
-        //{
-        //    return this;
-        //}
+        internal bool AllSameRoll()
+        {
+            KingsburgDie d = this[0];
+            foreach( KingsburgDie die in this )
+            {
+                if( die.Value != d.Value )
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        internal void RemoveAllWhiteDice()
+        {
+            IEnumerable<KingsburgDie> toRemove = from b in this
+                                                 where b.Type == KingsburgDie.DieTypes.White
+                                                 select b;
+            foreach( KingsburgDie d in toRemove )
+            {
+                this.Remove( d );
+            }
+        }
 
         #region ICloneable Members
 
@@ -123,6 +160,28 @@ namespace TylerButler.Kingsburg.Core
         }
 
         #endregion
+    }
+
+    internal sealed class MarketDiePositive : KingsburgDie
+    {
+        new internal int Value
+        {
+            get
+            {
+                return 1;
+            }
+        }
+    }
+
+    internal sealed class MarketDieNegative : KingsburgDie
+    {
+        new internal int Value
+        {
+            get
+            {
+                return -1;
+            }
+        }
     }
 
 }
