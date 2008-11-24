@@ -8,3 +8,5 @@ bin
 *.cachefile
 *~
 *.swp
+Thumbs.db
+thumbs.db
