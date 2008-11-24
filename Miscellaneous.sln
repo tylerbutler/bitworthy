@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTunes XML Feeder", "iTunes RSS Feeder\iTunes XML Feeder.csproj", "{12194968-96CC-494A-9A03-408226BA8F19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTunes Tagger", "iTunes Tagger\iTunes Tagger.csproj", "{6ABE6204-EB83-41FC-9744-9F52B9C92911}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTunesConsoleMonitor", "iTunesConsoleMonitor\iTunesConsoleMonitor.csproj", "{1D6CE935-7089-4866-9479-577AB4A297B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifier", "Notifier\Notifier.csproj", "{D2B0E7D9-594F-4BDC-BF7D-30661A0FC53D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NowPlaying", "NowPlaying\NowPlaying.csproj", "{4BA15E31-A026-451C-9A13-CFD7E3C17FEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodcastMaker", "PodcastMaker\PodcastMaker.csproj", "{53985E92-8594-408B-82C8-F4BE384E01E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speech", "Speech\Speech.csproj", "{68145AAC-4158-4A23-BF83-96D6B28D6E7C}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12194968-96CC-494A-9A03-408226BA8F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12194968-96CC-494A-9A03-408226BA8F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12194968-96CC-494A-9A03-408226BA8F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12194968-96CC-494A-9A03-408226BA8F19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ABE6204-EB83-41FC-9744-9F52B9C92911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ABE6204-EB83-41FC-9744-9F52B9C92911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ABE6204-EB83-41FC-9744-9F52B9C92911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABE6204-EB83-41FC-9744-9F52B9C92911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D6CE935-7089-4866-9479-577AB4A297B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D6CE935-7089-4866-9479-577AB4A297B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D6CE935-7089-4866-9479-577AB4A297B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D6CE935-7089-4866-9479-577AB4A297B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2B0E7D9-594F-4BDC-BF7D-30661A0FC53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2B0E7D9-594F-4BDC-BF7D-30661A0FC53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2B0E7D9-594F-4BDC-BF7D-30661A0FC53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2B0E7D9-594F-4BDC-BF7D-30661A0FC53D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BA15E31-A026-451C-9A13-CFD7E3C17FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BA15E31-A026-451C-9A13-CFD7E3C17FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BA15E31-A026-451C-9A13-CFD7E3C17FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BA15E31-A026-451C-9A13-CFD7E3C17FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53985E92-8594-408B-82C8-F4BE384E01E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53985E92-8594-408B-82C8-F4BE384E01E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53985E92-8594-408B-82C8-F4BE384E01E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53985E92-8594-408B-82C8-F4BE384E01E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68145AAC-4158-4A23-BF83-96D6B28D6E7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68145AAC-4158-4A23-BF83-96D6B28D6E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68145AAC-4158-4A23-BF83-96D6B28D6E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68145AAC-4158-4A23-BF83-96D6B28D6E7C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
