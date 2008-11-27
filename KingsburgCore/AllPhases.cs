@@ -89,6 +89,7 @@ namespace TylerButler.Kingsburg.Core
 
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
+                HandlePlusTwo(p);
                 HandleMerchantsGuild( p );
                 HandleFarms( p );
                 HandleMarket( p );
@@ -110,6 +111,10 @@ namespace TylerButler.Kingsburg.Core
                             influenced.InfluencingPlayers.Add( p );
                             DiceCollection spent = UIManager.Instance.DisplayChooseDice( p, influenced );
                             p.AllocateDice( spent );
+                            if ( !p.HasUsedPlusTwo &&  spent.GetAllDiceOfType(KingsburgDie.DieTypes.PlusTwo).Count > 0 )
+                            {
+                                p.HasUsedPlusTwo = false;
+                            }
                         }
                     }
                 }
@@ -129,6 +134,7 @@ namespace TylerButler.Kingsburg.Core
                 HandleEmbassy( p );
 
                 p.HasUsedMarket = false;
+                p.HasUsedPlusTwo = false;
             }
 
             return new Phase3();
@@ -299,6 +305,15 @@ namespace TylerButler.Kingsburg.Core
                 p.AddDie( new KingsburgDie( KingsburgDie.DieTypes.MarketPositive ) );
                 p.AddDie( new KingsburgDie( KingsburgDie.DieTypes.MarketNegative ) );
                 p.HasUsedMarket = false;
+            }
+        }
+
+        private void HandlePlusTwo(Player p)
+        {
+            if (p.PlusTwoTokens > 0)
+            {
+                p.AddDie(new KingsburgDie(KingsburgDie.DieTypes.PlusTwo));
+                p.HasUsedPlusTwo = false;
             }
         }
     }

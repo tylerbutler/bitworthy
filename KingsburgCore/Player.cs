@@ -9,16 +9,16 @@ namespace TylerButler.Kingsburg.Core
     {
         //private Inventory inventory = new Inventory();
         private BuildingCollection buildings = new BuildingCollection();
-        private int gold=0,wood=0,stone=0;
+        private int gold = 0, wood = 0, stone = 0;
         public bool Envoy = false, WasVictorious = false;
         public int VictoryPoints = 0, Soldiers = 0, PlusTwoTokens = 0;
-        private DiceCollection dice = new DiceCollection( 3, 6 );
+        private DiceCollection dice = new DiceCollection(3, 6);
         internal DiceCollection MostRecentDiceRoll;
         HashSet<Advisor> influencedAdvisors = new HashSet<Advisor>();
-        private bool hasUsedMarket = false;
+        private bool hasUsedMarket = false, hasUsedPlusTwo = false;
 
-        public Player( string nameIn, string descriptionIn )
-            : base( nameIn, descriptionIn )
+        public Player(string nameIn, string descriptionIn)
+            : base(nameIn, descriptionIn)
         {
         }
 
@@ -28,7 +28,7 @@ namespace TylerButler.Kingsburg.Core
         {
             get
             {
-                string toReturn = String.Format( "{0} ({1}G, {2}W, {3}S, {4}T, {7}VP - Soldiers: {5} - Buildings: {6}, {10} - Dice Roll: {8} {9})",
+                string toReturn = String.Format("{0} ({1}G, {2}W, {3}S, {4}T, {7}VP - Soldiers: {5} - Buildings: {6}, {10} - Dice Roll: {8} {9})",
                     /*0*/ base.Name,
                     /*1*/ this.Gold,
                     /*2*/ this.Wood,
@@ -39,7 +39,7 @@ namespace TylerButler.Kingsburg.Core
                     /*7*/ this.VictoryPoints,
                     /*8*/ this.MostRecentDiceRoll == null ? "NONE" : this.MostRecentDiceRoll.ToString(),
                     /*9*/ this.Envoy == true ? "*E*" : "",
-                    /*10*/ this.CurrentBuildingStrength );
+                    /*10*/ this.CurrentBuildingStrength);
                 return toReturn;
             }
             set
@@ -57,7 +57,7 @@ namespace TylerButler.Kingsburg.Core
             set
             {
                 stone = value;
-                if( stone < 0 )
+                if (stone < 0)
                 {
                     stone = 0;
                 }
@@ -73,7 +73,7 @@ namespace TylerButler.Kingsburg.Core
             set
             {
                 wood = value;
-                if( wood < 0 )
+                if (wood < 0)
                 {
                     wood = 0;
                 }
@@ -89,7 +89,7 @@ namespace TylerButler.Kingsburg.Core
             set
             {
                 gold = value;
-                if( gold < 0 )
+                if (gold < 0)
                 {
                     gold = 0;
                 }
@@ -104,7 +104,33 @@ namespace TylerButler.Kingsburg.Core
             }
             set
             {
+                //switch (value)
+                //{
+                //    case true:
+                //        this.Dice.RemoveAllDiceOfType(KingsburgDie.DieTypes.MarketNegative);
+                //        this.Dice.RemoveAllDiceOfType(KingsburgDie.DieTypes.MarketPositive);
+                //        break;
+                //}
+
                 hasUsedMarket = value;
+            }
+        }
+
+        public bool HasUsedPlusTwo
+        {
+            get { return hasUsedPlusTwo; }
+            set
+            {
+                //switch (value)
+                //{
+                //    case true:
+                //        this.Dice.RemoveAllDiceOfType(KingsburgDie.DieTypes.PlusTwo);
+                //        break;
+                //    case false:
+
+                //        break;
+                //}
+                this.hasUsedPlusTwo = value;
             }
         }
 
@@ -112,7 +138,7 @@ namespace TylerButler.Kingsburg.Core
         {
             get
             {
-                if( RemainingDice.Count == 0 )
+                if (RemainingDice.Count == 0)
                 {
                     return true;
                 }
@@ -122,18 +148,6 @@ namespace TylerButler.Kingsburg.Core
                 }
             }
         }
-
-        //public Inventory Goods
-        //{
-        //    get
-        //    {
-        //        return this.inventory;
-        //    }
-        //    set
-        //    {
-        //        this.inventory = value;
-        //    }
-        //}
 
         internal BuildingCollection Buildings
         {
@@ -168,9 +182,12 @@ namespace TylerButler.Kingsburg.Core
             get
             {
                 int sum = 0;
-                foreach( KingsburgDie d in this.MostRecentDiceRoll )
+                foreach (KingsburgDie d in this.MostRecentDiceRoll)
                 {
-                    sum += d.Value;
+                    if (d.Type == KingsburgDie.DieTypes.Regular || d.Type == KingsburgDie.DieTypes.White)
+                    {
+                        sum += d.Value;
+                    }
                 }
                 return sum;
             }
@@ -178,23 +195,23 @@ namespace TylerButler.Kingsburg.Core
 
         internal KingsburgDie AddDie()
         {
-            KingsburgDie die = new KingsburgDie( KingsburgDie.DieTypes.White );
-            this.AddDie( die );
+            KingsburgDie die = new KingsburgDie(KingsburgDie.DieTypes.White);
+            this.AddDie(die);
             return die;
         }
 
-        internal void AddDie( KingsburgDie die )
+        internal void AddDie(KingsburgDie die)
         {
-            Dice.Add( die );
+            Dice.Add(die);
         }
 
         /// <summary>
         /// Adds a good to the player.
         /// </summary>
         /// <param name="good">The type of good to add to the player.</param>
-        internal void AddGood( GoodsChoiceOptions good )
+        internal void AddGood(GoodsChoiceOptions good)
         {
-            switch( good )
+            switch (good)
             {
                 case GoodsChoiceOptions.Gold:
                     this.Gold++;
@@ -218,9 +235,9 @@ namespace TylerButler.Kingsburg.Core
                     this.Stone++;
                     break;
                 case GoodsChoiceOptions.None:
-                    throw new ArgumentException( "Why are you trying to add no goods to a player?" );
+                    throw new ArgumentException("Why are you trying to add no goods to a player?");
                 default:
-                    throw new ArgumentException( "Arguments passed into AddGood method were not valid." );
+                    throw new ArgumentException("Arguments passed into AddGood method were not valid.");
             }
         }
 
@@ -228,9 +245,9 @@ namespace TylerButler.Kingsburg.Core
         /// Removes a good from the player.
         /// </summary>
         /// <param name="good">The type of good to remove from the player.</param>
-        internal void RemoveGood( GoodsChoiceOptions good )
+        internal void RemoveGood(GoodsChoiceOptions good)
         {
-            switch( good )
+            switch (good)
             {
                 case GoodsChoiceOptions.Gold:
                     this.Gold--;
@@ -254,9 +271,9 @@ namespace TylerButler.Kingsburg.Core
                     this.Stone--;
                     break;
                 case GoodsChoiceOptions.None:
-                    throw new ArgumentException( "Why are you trying to remove no goods from a player?" );
+                    throw new ArgumentException("Why are you trying to remove no goods from a player?");
                 default:
-                    throw new ArgumentException( "Arguments passed into RemoveGood method were not valid." );
+                    throw new ArgumentException("Arguments passed into RemoveGood method were not valid.");
             }
         }
 
@@ -272,11 +289,11 @@ namespace TylerButler.Kingsburg.Core
             get
             {
                 DiceCollection dv = new DiceCollection();
-                foreach( KingsburgDie die in this.Dice )
+                foreach (KingsburgDie die in this.Dice)
                 {
-                    if( !die.IsUsed )
+                    if (!die.IsUsed)
                     {
-                        dv.Add( (KingsburgDie)die );
+                        dv.Add((KingsburgDie)die);
                     }
                 }
                 return dv;
@@ -288,11 +305,11 @@ namespace TylerButler.Kingsburg.Core
             get
             {
                 DiceCollection dv = new DiceCollection();
-                foreach( KingsburgDie die in this.Dice )
+                foreach (KingsburgDie die in this.Dice)
                 {
-                    if( die.IsUsed )
+                    if (die.IsUsed)
                     {
-                        dv.Add( (KingsburgDie)die );
+                        dv.Add((KingsburgDie)die);
                     }
                 }
                 return dv;
@@ -307,20 +324,20 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        public bool CanBuild( Building b )
+        public bool CanBuild(Building b)
         {
             int goldCost = b.GoldCost;
 
             // Adjust gold cost if player has the crane
-            if( this.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Crane" ) ) )
+            if (this.HasBuilding(GameManager.Instance.Buildings.GetBuilding("Crane")))
             {
                 goldCost--;
             }
 
-            if( this.Gold >= goldCost &&
+            if (this.Gold >= goldCost &&
                 this.Wood >= b.WoodCost &&
                 this.Stone >= b.StoneCost &&
-                this.HasPrerequisiteBuildings( b ) )
+                this.HasPrerequisiteBuildings(b))
             {
                 return true;
             }
@@ -330,36 +347,46 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal void AllocateDie( KingsburgDie die )
+        internal void AllocateDie(KingsburgDie die)
         {
-            if( die.IsUsed == true )
+            if (die.IsUsed == true)
             {
-                throw new Exception( "A used die was tried to be used. Something went wrong." );
+                throw new Exception("A used die was tried to be used. Something went wrong.");
             }
             else
             {
                 die.IsUsed = true;
             }
 
-            if( die.Type == KingsburgDie.DieTypes.MarketPositive || die.Type == KingsburgDie.DieTypes.MarketNegative )
+            if (die.Type == KingsburgDie.DieTypes.MarketPositive || die.Type == KingsburgDie.DieTypes.MarketNegative)
             {
                 IEnumerable<KingsburgDie> dc = from r in this.Dice
                                                where r.Type == KingsburgDie.DieTypes.MarketPositive || r.Type == KingsburgDie.DieTypes.MarketNegative
                                                select r;
-                foreach( KingsburgDie d in dc )
+                foreach (KingsburgDie d in dc)
                 {
                     d.IsUsed = true;
                 }
 
                 this.HasUsedMarket = true;
             }
+
+            if (die.Type == KingsburgDie.DieTypes.PlusTwo)
+            {
+                IEnumerable<KingsburgDie> dc = from r in this.Dice where r.Type == KingsburgDie.DieTypes.PlusTwo select r;
+                foreach (KingsburgDie d in dc)
+                {
+                    d.IsUsed = true;
+                }
+                this.HasUsedPlusTwo = true;
+            }
         }
 
-        internal void AllocateDice( DiceCollection db )
+        internal void AllocateDice(DiceCollection db)
         {
-            foreach( KingsburgDie d in db )
+            foreach (KingsburgDie d in db)
             {
-                this.AllocateDie( d );
+                this.AllocateDie(d);
             }
         }
 
@@ -370,9 +397,9 @@ namespace TylerButler.Kingsburg.Core
 
         internal void AllocateAllDice()
         {
-            foreach( KingsburgDie d in RemainingDice )
+            foreach (KingsburgDie d in RemainingDice)
             {
-                AllocateDie( d );
+                AllocateDie(d);
             }
         }
 
@@ -381,21 +408,21 @@ namespace TylerButler.Kingsburg.Core
             get
             {
                 List<Building> toReturn = new List<Building>();
-                foreach( Building b in GameManager.Instance.Buildings )
+                foreach (Building b in GameManager.Instance.Buildings)
                 {
-                    if( this.CanBuild( b ) )
-                        if( !this.HasBuilding( b ) )
-                            toReturn.Add( b );
+                    if (this.CanBuild(b))
+                        if (!this.HasBuilding(b))
+                            toReturn.Add(b);
                 }
                 return toReturn;
             }
         }
 
-        internal bool HasPrerequisiteBuildings( Building b )
+        internal bool HasPrerequisiteBuildings(Building b)
         {
-            for( int c = b.Column - 1; c >= 1; c-- )
+            for (int c = b.Column - 1; c >= 1; c--)
             {
-                if( !this.Buildings.Contains( GameManager.Instance.Buildings.GetBuilding( b.Row, c ) ) )
+                if (!this.Buildings.Contains(GameManager.Instance.Buildings.GetBuilding(b.Row, c)))
                 {
                     return false;
                 }
@@ -408,9 +435,9 @@ namespace TylerButler.Kingsburg.Core
             get
             {
                 int toReturn = 0;
-                foreach( Building b in this.Buildings )
+                foreach (Building b in this.Buildings)
                 {
-                    if( b != null )
+                    if (b != null)
                     {
                         toReturn++;
                     }
@@ -419,9 +446,9 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal bool HasBuilding( Building b )
+        internal bool HasBuilding(Building b)
         {
-            if( this.Buildings.Contains( b ) )
+            if (this.Buildings.Contains(b))
                 return true;
             else
                 return false;
@@ -445,7 +472,7 @@ namespace TylerButler.Kingsburg.Core
         {
             get
             {
-                int cost = this.HasBuilding( GameManager.Instance.GetBuilding( "Barracks" ) ) ? 1 : 2;
+                int cost = this.HasBuilding(GameManager.Instance.GetBuilding("Barracks")) ? 1 : 2;
                 return cost;
             }
         }
@@ -460,7 +487,7 @@ namespace TylerButler.Kingsburg.Core
             get
             {
                 int toReturn = 0;
-                foreach( Building b in this.Buildings )
+                foreach (Building b in this.Buildings)
                 {
                     toReturn += b.BattleValue;
                 }
@@ -484,26 +511,26 @@ namespace TylerButler.Kingsburg.Core
         /// </summary>
         /// <param name="enemy">The enemy the player is battling.</param>
         /// <returns>The bonus strength the player receives.</returns>
-        internal int BonusStrengthAgainstEnemy( Enemy enemy )
+        internal int BonusStrengthAgainstEnemy(Enemy enemy)
         {
             int bonus = 0;
             GameManager gm = GameManager.Instance;
-            switch( enemy.Type )
+            switch (enemy.Type)
             {
                 case EnemyType.Zombies:
-                    if( this.HasBuilding( gm.GetBuilding( "Palisade" ) ) )
+                    if (this.HasBuilding(gm.GetBuilding("Palisade")))
                     {
                         bonus += 2;
                     }
                     break;
                 case EnemyType.Goblins:
-                    if( this.HasBuilding( gm.GetBuilding( "Barricade" ) ) )
+                    if (this.HasBuilding(gm.GetBuilding("Barricade")))
                     {
                         bonus += 1;
                     }
                     break;
                 case EnemyType.Demons:
-                    if( this.HasBuilding( gm.GetBuilding( "Church" ) ) )
+                    if (this.HasBuilding(gm.GetBuilding("Church")))
                     {
                         bonus += 1;
                     }
@@ -530,19 +557,19 @@ namespace TylerButler.Kingsburg.Core
             get
             {
                 List<GoodsChoiceOptions> toReturn = new List<GoodsChoiceOptions>();
-                if( this.Gold > 0 )
+                if (this.Gold > 0)
                 {
-                    toReturn.Add( GoodsChoiceOptions.Gold );
+                    toReturn.Add(GoodsChoiceOptions.Gold);
                 }
 
-                if( this.Wood > 0 )
+                if (this.Wood > 0)
                 {
-                    toReturn.Add( GoodsChoiceOptions.Wood );
+                    toReturn.Add(GoodsChoiceOptions.Wood);
                 }
 
-                if( this.Stone > 0 )
+                if (this.Stone > 0)
                 {
-                    toReturn.Add( GoodsChoiceOptions.Stone );
+                    toReturn.Add(GoodsChoiceOptions.Stone);
                 }
 
                 return toReturn;
@@ -553,19 +580,19 @@ namespace TylerButler.Kingsburg.Core
         /// Removes a number of buildings from the player, rightmost uppermost buildings first
         /// </summary>
         /// <param name="num">The number of buildings to destroy.</param>
-        internal void DestroyBuildings( int num )
+        internal void DestroyBuildings(int num)
         {
-            foreach( int i in new Range( 1, num ) )
+            foreach (int i in new Range(1, num))
             {
                 Building toDestroy = this.Buildings.RightmostUpperBuilding;
-                this.Buildings.Remove( toDestroy );
+                this.Buildings.Remove(toDestroy);
                 this.VictoryPoints -= toDestroy.VictoryPointValue;
             }
         }
 
-        internal void RemoveDie( KingsburgDie die )
+        internal void RemoveDie(KingsburgDie die)
         {
-            this.Dice.Remove( die );
+            this.Dice.Remove(die);
         }
 
         internal void RemoveNonRegularDice()
@@ -579,9 +606,9 @@ namespace TylerButler.Kingsburg.Core
 
         #region IComparer<Player> Members
 
-        public int Compare( Player x, Player y )
+        public int Compare(Player x, Player y)
         {
-            return x.MostRecentDiceRollTotalValue.CompareTo( y.MostRecentDiceRollTotalValue );
+            return x.MostRecentDiceRollTotalValue.CompareTo(y.MostRecentDiceRollTotalValue);
         }
 
         #endregion
@@ -607,8 +634,8 @@ namespace TylerButler.Kingsburg.Core
         {
         }
 
-        internal PlayerCollection( IEnumerable<Player> collection )
-            : base( collection )
+        internal PlayerCollection(IEnumerable<Player> collection)
+            : base(collection)
         {
         }
     }

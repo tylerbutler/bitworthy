@@ -70,6 +70,8 @@ namespace TylerButler.Kingsburg.Core
                         return -1;
                     case DieTypes.MarketPositive:
                         return 1;
+                    case DieTypes.PlusTwo:
+                        return 2;
                     default:
                         return base.Value;
                 }
@@ -93,6 +95,9 @@ namespace TylerButler.Kingsburg.Core
                     break;
                 case DieTypes.MarketNegative:
                     toReturn += "M";
+                    break;
+                case DieTypes.PlusTwo:
+                    toReturn += "+";
                     break;
             }
             return toReturn;
@@ -169,10 +174,31 @@ namespace TylerButler.Kingsburg.Core
             IEnumerable<KingsburgDie> toRemove = from b in this
                                                  where b.Type != KingsburgDie.DieTypes.Regular
                                                  select b;
-            foreach( KingsburgDie d in toRemove )
+            DiceCollection copy = new DiceCollection(toRemove);
+            foreach( KingsburgDie d in copy )
             {
                 this.Remove( d );
             }
+        }
+
+        internal void RemoveAllDiceOfType(KingsburgDie.DieTypes type)
+        {
+            IEnumerable<KingsburgDie> toRemove = from b in this
+                                                 where b.Type == type
+                                                 select b;
+            DiceCollection copy = new DiceCollection(toRemove);
+            foreach( KingsburgDie d in copy )
+            {
+                this.Remove( d );
+            }
+        }
+
+        internal DiceCollection GetAllDiceOfType(KingsburgDie.DieTypes type)
+        {
+            IEnumerable<KingsburgDie> toReturn = from b in this
+                                                 where b.Type == type
+                                                 select b;
+            return new DiceCollection(toReturn);
         }
 
         #region ICloneable Members

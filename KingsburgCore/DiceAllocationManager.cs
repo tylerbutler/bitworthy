@@ -61,14 +61,6 @@ namespace TylerButler.Kingsburg.Core
 
             HashSet<int> sums = SumComboFinder.Sums( p.RemainingDice );
 
-            //// If the player has the market, he can influence the 
-            //if( p.HasBuilding( GameManager.Instance.GetBuilding( "Market" ) ) && !p.HasUsedMarket )
-            //{
-            //    foreach( int sum in sums )
-            //    {
-            //    }
-            //}
-
             AdvisorCollection copy = new AdvisorCollection( toReturn );
             foreach( Advisor a in copy )
             {
