@@ -7,19 +7,7 @@ namespace TylerButler.Kingsburg.Core.UI
 {
     public sealed class UIManager : UIManagerBase
     {
-        private readonly static UIManager instance = new UIManager( Properties.Settings.Default.UIMode );
-
-        static UIManager()
-        {
-            // Explicit static constructor to tell C# compiler
-            // not to mark type as beforefieldinit
-        }
-
-        UIManager()
-        {
-        }
-
-        UIManager( string uiMode )
+        public UIManager( string uiMode )
         {
             if( uiMode.Equals( "CLI", StringComparison.OrdinalIgnoreCase ) )
             {
@@ -32,14 +20,6 @@ namespace TylerButler.Kingsburg.Core.UI
             else
             {
                 throw new Exception( "UIMode Setting invalid." );
-            }
-        }
-
-        public static UIManager Instance
-        {
-            get
-            {
-                return instance;
             }
         }
 
@@ -274,7 +254,7 @@ namespace TylerButler.Kingsburg.Core.UI
                             break;
                         case Advisors.General:
                             Console.WriteLine( "{0} influences the General and recruits 2 soldiers and may spy on the enemy.", p.Name );
-                            UIManager.Instance.DisplayPeekAtEnemy( p );
+                            GameManager.Instance.UI.DisplayPeekAtEnemy( p );
                             break;
                         case Advisors.Swordsmith:
                             Console.WriteLine( "{0} influences the Swordsmith and receives either 1 Stone and 1 Wood, or 1 Stone and 1 Gold.", p.Name );

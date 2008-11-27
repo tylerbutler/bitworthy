@@ -21,6 +21,7 @@ namespace TylerButler.Kingsburg.Core
         private Enemy[] enemiesForGame = new Enemy[5];
         private int currentYear = 0;
         private bool isGameOver = false;
+        private UIManagerBase ui;
 
         static GameManager()
         {
@@ -45,6 +46,12 @@ namespace TylerButler.Kingsburg.Core
                 }
                 return instance;
             }
+        }
+
+        public UIManagerBase UI
+        {
+            get { return ui; }
+            set { ui = value; }
         }
 
         internal EnemyCollection Enemies
@@ -149,6 +156,14 @@ namespace TylerButler.Kingsburg.Core
         {
             // Pick the enemies for the game
             Instance.SelectEnemies();
+
+            // Load the CLI UI Manager by default
+            switch (Properties.Settings.Default.UIMode)
+            {
+                case "CLI":
+                    this.UI = new UIManager("CLI");
+                    break;
+            }
 
             // Add Phases
             Instance.GameStart.Add( new StartPhase() );
@@ -273,7 +288,7 @@ namespace TylerButler.Kingsburg.Core
 
             do
             {
-                UIManager.Instance.DisplayPhaseInfo( next );
+                GameManager.Instance.UI.DisplayPhaseInfo( next );
                 next = next.Execute();
             }
             while( !this.IsGameOver );
