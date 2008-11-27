@@ -87,6 +87,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="SumComboFinder.cs" />
     <Compile Include="UIManager.cs" />
+    <Compile Include="UI\UIManagerInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -129,9 +130,6 @@
       <ProductName>.NET Framework 3.5</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

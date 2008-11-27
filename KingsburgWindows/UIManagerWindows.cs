@@ -6,15 +6,15 @@ using TylerButler.Kingsburg.Core.UI;
 
 namespace TylerButler.Kingsburg.Windows
 {
-    class UIManagerWindows : UIManager
-    {
-        private UIManagerWindows instance = new UIManagerWindows();
+    //class UIManagerWindows : UIManagerBase
+    //{
+    //    private UIManagerWindows instance = new UIManagerWindows();
 
-        private UIManagerWindows() { }
+    //    private UIManagerWindows() { }
 
-        public UIManagerWindows Instance
-        {
-            get { return instance; }
-        }
-    }
+    //    public UIManagerWindows Instance
+    //    {
+    //        get { return instance; }
+    //    }
+    //}
 }
