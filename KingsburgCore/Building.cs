@@ -177,19 +177,19 @@ namespace TylerButler.Kingsburg.Core
     }
 
     [Serializable]
-    internal class BuildingCollection : List<Building>
+    public class BuildingCollection : List<Building>
     {
-        internal BuildingCollection()
+        public BuildingCollection()
             : base()
         {
         }
 
-        internal BuildingCollection( IEnumerable<Building> collection )
+        public BuildingCollection( IEnumerable<Building> collection )
             : base( collection )
         {
         }
 
-        internal Building GetBuilding( int row, int column )
+        public Building GetBuilding( int row, int column )
         {
             IEnumerable<Building> r = from b in this
                                       where b.Row == row && b.Column == column
@@ -197,7 +197,7 @@ namespace TylerButler.Kingsburg.Core
             return r.ToArray<Building>()[0];
         }
 
-        internal Building GetBuilding( string Name )
+        public Building GetBuilding( string Name )
         {
             IEnumerable<Building> r = from b in this
                                       where b.Name == Name
@@ -205,7 +205,7 @@ namespace TylerButler.Kingsburg.Core
             return r.ToArray<Building>()[0];
         }
 
-        internal Building RightmostUpperBuilding
+        public Building RightmostUpperBuilding
         {
             get
             {

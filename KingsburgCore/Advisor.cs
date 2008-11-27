@@ -12,7 +12,7 @@ namespace TylerButler.Kingsburg.Core
     {
         private Advisors advisorNameEnum;
         //private bool isInfluenced = false;
-        private PlayerCollection influencingPlayers = new PlayerCollection();
+        [NonSerialized] private PlayerCollection influencingPlayers = new PlayerCollection();
 
         public Advisor( Advisors adv, string descriptionIn )
             : base( "" /*will get replaced when advisor enum is set*/, descriptionIn )
@@ -58,7 +58,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal bool IsInfluenced
+        public bool IsInfluenced
         {
             get
             {
@@ -66,7 +66,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal PlayerCollection InfluencingPlayers
+        public PlayerCollection InfluencingPlayers
         {
             get
             {
@@ -74,12 +74,12 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal void Influence( Player p )
+        public void Influence( Player p )
         {
             this.InfluencingPlayers.Add( p );
         }
 
-        internal void Reset()
+        public void Reset()
         {
             this.InfluencingPlayers.Clear();
         }
@@ -293,19 +293,19 @@ namespace TylerButler.Kingsburg.Core
         King,
     }
 
-    internal class AdvisorCollection : HashSet<Advisor>
+    public class AdvisorCollection : HashSet<Advisor>
     {
-        internal AdvisorCollection()
+        public AdvisorCollection()
             : base()
         {
         }
 
-        internal AdvisorCollection( IEnumerable<Advisor> collection )
+        public AdvisorCollection( IEnumerable<Advisor> collection )
             : base( collection )
         {
         }
 
-        internal Advisor this[int advisorNumber]
+        public Advisor this[int advisorNumber]
         {
             get
             {

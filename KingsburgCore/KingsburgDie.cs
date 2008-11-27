@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace TylerButler.Kingsburg.Core
 {
-    internal class KingsburgDie : Die
+    public class KingsburgDie : Die
     {
         private bool isUsed;
         private DieTypes type;
 
-        internal enum DieTypes
+        public enum DieTypes
         {
             Regular,
             White,
@@ -48,7 +48,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal DieTypes Type
+        public DieTypes Type
         {
             get
             {
@@ -60,7 +60,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        new internal int Value
+        new public int Value
         {
             get
             {
@@ -104,7 +104,7 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class DiceCollection : List<KingsburgDie>, ICloneable
+    public class DiceCollection : List<KingsburgDie>, ICloneable
     {
 
         public DiceCollection()
@@ -137,7 +137,7 @@ namespace TylerButler.Kingsburg.Core
         /// <summary>
         /// Resets all the dice in the collection to be "unused" (IsUsed == false).
         /// </summary>
-        internal void ResetDiceUsage()
+        public void ResetDiceUsage()
         {
             foreach( KingsburgDie die in this )
             {
@@ -156,7 +156,7 @@ namespace TylerButler.Kingsburg.Core
             return sb.ToString();
         }
 
-        internal bool AllSameRoll()
+        public bool AllSameRoll()
         {
             KingsburgDie d = this[0];
             foreach( KingsburgDie die in this )
@@ -169,7 +169,7 @@ namespace TylerButler.Kingsburg.Core
             return true;
         }
 
-        internal void RemoveNonRegularDice()
+        public void RemoveNonRegularDice()
         {
             IEnumerable<KingsburgDie> toRemove = from b in this
                                                  where b.Type != KingsburgDie.DieTypes.Regular
@@ -181,7 +181,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal void RemoveAllDiceOfType(KingsburgDie.DieTypes type)
+        public void RemoveAllDiceOfType(KingsburgDie.DieTypes type)
         {
             IEnumerable<KingsburgDie> toRemove = from b in this
                                                  where b.Type == type
@@ -193,7 +193,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal DiceCollection GetAllDiceOfType(KingsburgDie.DieTypes type)
+        public DiceCollection GetAllDiceOfType(KingsburgDie.DieTypes type)
         {
             IEnumerable<KingsburgDie> toReturn = from b in this
                                                  where b.Type == type

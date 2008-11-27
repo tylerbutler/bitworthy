@@ -13,7 +13,7 @@ namespace TylerButler.Kingsburg.Core
         public bool Envoy = false, WasVictorious = false;
         public int VictoryPoints = 0, Soldiers = 0, PlusTwoTokens = 0;
         private DiceCollection dice = new DiceCollection(3, 6);
-        internal DiceCollection MostRecentDiceRoll;
+        public DiceCollection MostRecentDiceRoll;
         HashSet<Advisor> influencedAdvisors = new HashSet<Advisor>();
         private bool hasUsedMarket = false, hasUsedPlusTwo = false;
 
@@ -21,6 +21,8 @@ namespace TylerButler.Kingsburg.Core
             : base(nameIn, descriptionIn)
         {
         }
+
+        public Player() : this("Name", "Description") { }
 
         // DEBUG: take this out after debugging is over
         //Bug:22
@@ -149,7 +151,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal BuildingCollection Buildings
+        public BuildingCollection Buildings
         {
             get
             {
@@ -169,7 +171,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal int GoodsCount
+        public int GoodsCount
         {
             get
             {
@@ -193,14 +195,14 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal KingsburgDie AddDie()
+        public KingsburgDie AddDie()
         {
             KingsburgDie die = new KingsburgDie(KingsburgDie.DieTypes.White);
             this.AddDie(die);
             return die;
         }
 
-        internal void AddDie(KingsburgDie die)
+        public void AddDie(KingsburgDie die)
         {
             Dice.Add(die);
         }
@@ -209,7 +211,7 @@ namespace TylerButler.Kingsburg.Core
         /// Adds a good to the player.
         /// </summary>
         /// <param name="good">The type of good to add to the player.</param>
-        internal void AddGood(GoodsChoiceOptions good)
+        public void AddGood(GoodsChoiceOptions good)
         {
             switch (good)
             {
@@ -245,7 +247,7 @@ namespace TylerButler.Kingsburg.Core
         /// Removes a good from the player.
         /// </summary>
         /// <param name="good">The type of good to remove from the player.</param>
-        internal void RemoveGood(GoodsChoiceOptions good)
+        public void RemoveGood(GoodsChoiceOptions good)
         {
             switch (good)
             {
@@ -277,14 +279,14 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal void RollDice()
+        public void RollDice()
         {
             Dice.RollAllDice();
             Dice.ResetDiceUsage();
             MostRecentDiceRoll = (DiceCollection)Dice.Clone();
         }
 
-        internal DiceCollection RemainingDice
+        public DiceCollection RemainingDice
         {
             get
             {
@@ -300,7 +302,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal DiceCollection UsedDice
+        public DiceCollection UsedDice
         {
             get
             {
@@ -347,7 +349,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal void AllocateDie(KingsburgDie die)
+        public void AllocateDie(KingsburgDie die)
         {
             if (die.IsUsed == true)
             {
@@ -382,7 +384,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal void AllocateDice(DiceCollection db)
+        public void AllocateDice(DiceCollection db)
         {
             foreach (KingsburgDie d in db)
             {
@@ -395,7 +397,7 @@ namespace TylerButler.Kingsburg.Core
             return this.Name;
         }
 
-        internal void AllocateAllDice()
+        public void AllocateAllDice()
         {
             foreach (KingsburgDie d in RemainingDice)
             {
@@ -403,7 +405,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal List<Building> BuildableBuildings
+        public List<Building> BuildableBuildings
         {
             get
             {
@@ -418,7 +420,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal bool HasPrerequisiteBuildings(Building b)
+        public bool HasPrerequisiteBuildings(Building b)
         {
             for (int c = b.Column - 1; c >= 1; c--)
             {
@@ -430,7 +432,7 @@ namespace TylerButler.Kingsburg.Core
             return true;
         }
 
-        internal int NumBuildings
+        public int NumBuildings
         {
             get
             {
@@ -446,7 +448,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal bool HasBuilding(Building b)
+        public bool HasBuilding(Building b)
         {
             if (this.Buildings.Contains(b))
                 return true;
@@ -457,7 +459,7 @@ namespace TylerButler.Kingsburg.Core
         /// <summary>
         /// The number of soldiers a player can recruit in phase 8, based on the number of goods he has and his barracks, if applicable.
         /// </summary>
-        internal int RecruitableSoldiers
+        public int RecruitableSoldiers
         {
             get
             {
@@ -468,7 +470,7 @@ namespace TylerButler.Kingsburg.Core
         /// <summary>
         /// The cost of a soldier for the player, taking into account whether or not he has a Barracks.
         /// </summary>
-        internal int SoldierCost
+        public int SoldierCost
         {
             get
             {
@@ -482,7 +484,7 @@ namespace TylerButler.Kingsburg.Core
         /// </summary>
         /// <remarks>Does not take bonuses that only apply to certain enemy types into account.</remarks>
         /// <example>For example, if the player owns a Guard Tower and a Barricade, this method will return 1, not 2.</example>
-        internal int CurrentBuildingStrength
+        public int CurrentBuildingStrength
         {
             get
             {
@@ -498,7 +500,7 @@ namespace TylerButler.Kingsburg.Core
         /// <summary>
         /// The total military strength of the player, including recruited soldiers and Buildings.
         /// </summary>
-        internal int TotalStrength
+        public int TotalStrength
         {
             get
             {
@@ -511,7 +513,7 @@ namespace TylerButler.Kingsburg.Core
         /// </summary>
         /// <param name="enemy">The enemy the player is battling.</param>
         /// <returns>The bonus strength the player receives.</returns>
-        internal int BonusStrengthAgainstEnemy(Enemy enemy)
+        public int BonusStrengthAgainstEnemy(Enemy enemy)
         {
             int bonus = 0;
             GameManager gm = GameManager.Instance;
@@ -542,7 +544,7 @@ namespace TylerButler.Kingsburg.Core
         /// <summary>
         /// Removes all goods (gold, stone, and wood) from the player.
         /// </summary>
-        internal void RemoveAllGoods()
+        public void RemoveAllGoods()
         {
             this.Gold = 0;
             this.Wood = 0;
@@ -552,7 +554,7 @@ namespace TylerButler.Kingsburg.Core
         /// <summary>
         /// Returns a list of the TYPES of goods (gold, wood, stone) a player has.
         /// </summary>
-        internal List<GoodsChoiceOptions> GoodTypesPlayerHas
+        public List<GoodsChoiceOptions> GoodTypesPlayerHas
         {
             get
             {
@@ -580,7 +582,7 @@ namespace TylerButler.Kingsburg.Core
         /// Removes a number of buildings from the player, rightmost uppermost buildings first
         /// </summary>
         /// <param name="num">The number of buildings to destroy.</param>
-        internal void DestroyBuildings(int num)
+        public void DestroyBuildings(int num)
         {
             foreach (int i in new Range(1, num))
             {
@@ -590,18 +592,18 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal void RemoveDie(KingsburgDie die)
+        public void RemoveDie(KingsburgDie die)
         {
             this.Dice.Remove(die);
         }
 
-        internal void RemoveNonRegularDice()
+        public void RemoveNonRegularDice()
         {
             this.Dice.RemoveNonRegularDice();
         }
     }
 
-    internal class PlayerDiceRollComparer : IComparer<Player>
+    public class PlayerDiceRollComparer : IComparer<Player>
     {
 
         #region IComparer<Player> Members
@@ -614,7 +616,7 @@ namespace TylerButler.Kingsburg.Core
         #endregion
     }
 
-    internal enum GoodsChoiceOptions
+    public enum GoodsChoiceOptions
     {
         Gold = 1,
         Wood,
@@ -626,15 +628,15 @@ namespace TylerButler.Kingsburg.Core
         None,
     }
 
-    internal class PlayerCollection : List<Player>
+    public class PlayerCollection : List<Player>
     {
 
-        internal PlayerCollection()
+        public PlayerCollection()
             : base()
         {
         }
 
-        internal PlayerCollection(IEnumerable<Player> collection)
+        public PlayerCollection(IEnumerable<Player> collection)
             : base(collection)
         {
         }

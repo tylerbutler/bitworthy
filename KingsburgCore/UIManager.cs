@@ -5,25 +5,30 @@ using TylerButler.Kingsburg.Utilities;
 
 namespace TylerButler.Kingsburg.Core.UI
 {
-    public sealed class UIManager : UIManagerBase
+    public sealed class UIManager : UIManagerBase, UIManagerInterface
     {
-        public UIManager( string uiMode )
+        public UIManager()
         {
-            if( uiMode.Equals( "CLI", StringComparison.OrdinalIgnoreCase ) )
-            {
-                Mode = graphicsMode.CLI;
-            }
-            else if( uiMode.Equals( "GUI", StringComparison.OrdinalIgnoreCase ) )
-            {
-                Mode = graphicsMode.GUI;
-            }
-            else
-            {
-                throw new Exception( "UIMode Setting invalid." );
-            }
+            
         }
 
-        override internal void DisplayDiceRoll(Player p, DiceCollection roll)
+        //public UIManager( string uiMode )
+        //{
+        //    if( uiMode.Equals( "CLI", StringComparison.OrdinalIgnoreCase ) )
+        //    {
+        //        Mode = graphicsMode.CLI;
+        //    }
+        //    else if( uiMode.Equals( "GUI", StringComparison.OrdinalIgnoreCase ) )
+        //    {
+        //        Mode = graphicsMode.GUI;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception( "UIMode Setting invalid." );
+        //    }
+        //}
+
+        override public void DisplayDiceRoll(Player p, DiceCollection roll)
         {
             switch( this.Mode )
             {
@@ -40,12 +45,12 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        override internal void DisplayPlayerInfo( Player p )
+        override public void DisplayPlayerInfo( Player p )
         {
             throw new NotImplementedException();
         }
 
-        override internal Advisor DisplayChooseAdvisorToInfluence( Player p )
+        override public Advisor DisplayChooseAdvisorToInfluence( Player p )
         {
             Advisor chosenAdvisor = null;
             switch( this.Mode )
@@ -104,7 +109,7 @@ namespace TylerButler.Kingsburg.Core.UI
             return chosenAdvisor;
         }
 
-        override internal void DisplayPlayerOrder( PlayerCollection order )
+        override public void DisplayPlayerOrder( PlayerCollection order )
         {
             switch( this.Mode )
             {
@@ -125,7 +130,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// <param name="p">The player whose building card should be displayed.</param>
         /// <param name="canBuild">Whether or not the player can actually build or not.</param>
         /// <returns>The building the player chooses to build.</returns>
-        override internal Building DisplayBuildingCard( Player p, bool canBuild )
+        override public Building DisplayBuildingCard( Player p, bool canBuild )
         {
             Building toReturn=null;
             switch( this.Mode )
@@ -172,7 +177,7 @@ namespace TylerButler.Kingsburg.Core.UI
             return toReturn;
         }
 
-        override internal void DisplayKingsReward( PlayerCollection players )
+        override public void DisplayKingsReward( PlayerCollection players )
         {
             //Displays the confirmation that the players in the playerlist have received a 1VP bonus.
             switch( this.Mode )
@@ -188,7 +193,7 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        override internal void DisplayPhaseInfo( Phase phase )
+        override public void DisplayPhaseInfo( Phase phase )
         {
             //Displays info about a phase that is about to start.
             switch( this.Mode )
@@ -202,7 +207,7 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        override internal void DisplayInfluenceAdvisor( Advisor a, Player p, out List<object> returnData )
+        override public void DisplayInfluenceAdvisor( Advisor a, Player p, out List<object> returnData )
         {
             // Displays info about the Advisor that is being influenced
             returnData = new List<object>();
@@ -304,7 +309,7 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        override internal void DisplayPeekAtEnemy( Player p )
+        override public void DisplayPeekAtEnemy( Player p )
         {
             switch( this.Mode )
             {
@@ -325,7 +330,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// Displays information about an enemy.
         /// </summary>
         /// <param name="enemy">The enemy to display.</param>
-        override internal void DisplayEnemyInfo( Enemy enemy )
+        override public void DisplayEnemyInfo( Enemy enemy )
         {
             switch( this.Mode )
             {
@@ -346,7 +351,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// Displays a report that the kings envoy was rewarded to a specific player
         /// </summary>
         /// <param name="p">The player receiving the envoy. If null, no one is receiving the envoy.</param>
-        override internal void DisplayKingsEnvoy( Player p )
+        override public void DisplayKingsEnvoy( Player p )
         {
             switch( this.Mode )
             {
@@ -365,13 +370,13 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        override internal void DisplaySoldierRecruitment( Player p )
+        override public void DisplaySoldierRecruitment( Player p )
         {
             //Displays the soldier recruitment UI for a given player
             throw new NotImplementedException();
         }
 
-        override internal GoodsChoiceOptions DisplayChooseAGood( Player p, params GoodsChoiceOptions[] available )
+        override public GoodsChoiceOptions DisplayChooseAGood( Player p, params GoodsChoiceOptions[] available )
         {
             //pops up dialog to select a good
             GoodsChoiceOptions toReturn = GoodsChoiceOptions.None;
@@ -419,7 +424,7 @@ namespace TylerButler.Kingsburg.Core.UI
             return toReturn;
         }
 
-        override internal PlayerCollection DisplayGetPlayers()
+        override public PlayerCollection DisplayGetPlayers()
         {
             PlayerCollection toReturn = new PlayerCollection();
 
@@ -455,7 +460,7 @@ namespace TylerButler.Kingsburg.Core.UI
             return toReturn;
         }
 
-        override internal DiceCollection DisplayChooseDice( Player p, Advisor a )
+        override public DiceCollection DisplayChooseDice( Player p, Advisor a )
         {
             switch( this.Mode )
             {
@@ -499,7 +504,7 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        override internal void DisplayInnReward( Player p )
+        override public void DisplayInnReward( Player p )
         {
             switch( this.Mode )
             {
@@ -514,7 +519,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// <summary>
         /// Displays information on the current year in the game.
         /// </summary>
-        override internal void DisplayYearInfo()
+        override public void DisplayYearInfo()
         {
             switch( this.Mode )
             {
@@ -531,7 +536,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// </summary>
         /// <param name="p">The player recruiting soldiers.</param>
         /// <returns>The number of soldiers recruited.</returns>
-        override internal int DisplayRecruitSoldiers( Player p )
+        override public int DisplayRecruitSoldiers( Player p )
         {
             int numToRecruit = 0;
             switch( this.Mode )
@@ -575,7 +580,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// <summary>
         /// Displays information about the attacker that is attacking during phase 8.
         /// </summary>
-        override internal void DisplayBattleInfo()
+        override public void DisplayBattleInfo()
         {
             switch( this.Mode )
             {
@@ -593,7 +598,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// Displays the number of reinforcements the king has sent.
         /// </summary>
         /// <param name="reinforcements">The number of reinforcements sent.</param>
-        override internal void DisplayKingsReinforcements( int reinforcements )
+        override public void DisplayKingsReinforcements( int reinforcements )
         {
             switch( this.Mode )
             {
@@ -611,7 +616,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// <param name="player">The player.</param>
         /// <param name="enemy">The enemy.</param>
         /// <param name="battleResults">Whether the player won, lost or tied the battle.</param>
-        override internal void DisplayBattleResults( Player player, Enemy enemy, BattleResults battleResults )
+        override public void DisplayBattleResults( Player player, Enemy enemy, BattleResults battleResults )
         {
             switch( this.Mode )
             {
@@ -638,7 +643,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// Displays information that a player was awarded a VP for being the most glorious player in battle.
         /// </summary>
         /// <param name="p">The player.</param>
-        override internal void DisplayMostGloriousVictory( Player p )
+        override public void DisplayMostGloriousVictory( Player p )
         {
             switch( this.Mode )
             {
@@ -654,7 +659,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// Displays info that a player is receiving a victory point from his fortress.
         /// </summary>
         /// <param name="player">The player.</param>
-        override internal void DisplayFortressBonus( Player player )
+        override public void DisplayFortressBonus( Player player )
         {
             switch( this.Mode )
             {
@@ -670,7 +675,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// Lets the player use the ability of their Statue to reroll.
         /// </summary>
         /// <param name="p">The player.</param>
-        override internal void DisplayUseStatue( Player p )
+        override public void DisplayUseStatue( Player p )
         {
             switch( this.Mode )
             {
@@ -701,7 +706,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// Lets the player use the ability of their Chapel to reroll.
         /// </summary>
         /// <param name="p">The player.</param>
-        override internal void DisplayUseChapel( Player p )
+        override public void DisplayUseChapel( Player p )
         {
             switch( this.Mode )
             {
@@ -733,7 +738,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// </summary>
         /// <param name="p">The player.</param>
         /// <param name="VPEarned">The number of victory points earned.</param>
-        override internal void DisplayCathedralBonus( Player p, int VPEarned )
+        override public void DisplayCathedralBonus( Player p, int VPEarned )
         {
             switch( this.Mode )
             {
@@ -749,7 +754,7 @@ namespace TylerButler.Kingsburg.Core.UI
         /// Displays info that a player is receiving an extra die from his farms.
         /// </summary>
         /// <param name="p">The player.</param>
-        override internal void DisplayFarmBonus( Player p )
+        override public void DisplayFarmBonus( Player p )
         {
             switch( this.Mode )
             {
@@ -761,7 +766,7 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        override internal void DisplayMerchantsGuildBonus( Player p )
+        override public void DisplayMerchantsGuildBonus( Player p )
         {
             switch( this.Mode )
             {
@@ -773,7 +778,7 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        override internal void DisplayStableBonus( Player p )
+        override public void DisplayStableBonus( Player p )
         {
             switch( this.Mode )
             {
@@ -785,7 +790,7 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        override internal GoodsChoiceOptions DisplayGetTownHallChoice( Player p )
+        override public GoodsChoiceOptions DisplayGetTownHallChoice( Player p )
         {
             GoodsChoiceOptions toReturn = GoodsChoiceOptions.None;
             switch( this.Mode )
@@ -813,7 +818,7 @@ namespace TylerButler.Kingsburg.Core.UI
             return toReturn;
         }
 
-        override internal void DisplayEmbassyBonus( Player p )
+        override public void DisplayEmbassyBonus( Player p )
         {
             switch( this.Mode )
             {
@@ -825,7 +830,7 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        override internal void DisplayUseCrane( Player p )
+        override public void DisplayUseCrane( Player p )
         {
             switch( this.Mode )
             {
@@ -837,7 +842,7 @@ namespace TylerButler.Kingsburg.Core.UI
             }
         }
 
-        override internal void DisplayKingsAid( Player player )
+        override public void DisplayKingsAid( Player player )
         {
             switch( this.Mode )
             {

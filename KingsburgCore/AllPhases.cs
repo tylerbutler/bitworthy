@@ -4,7 +4,7 @@ using TylerButler.Kingsburg.Core.UI;
 
 namespace TylerButler.Kingsburg.Core
 {
-    internal class StartPhase : Phase
+    public class StartPhase : Phase
     {
         public StartPhase()
         {
@@ -21,7 +21,7 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class Phase1 : Phase
+    public class Phase1 : Phase
     {
         public Phase1()
         {
@@ -74,7 +74,7 @@ namespace TylerButler.Kingsburg.Core
     /// c) Receive the rewards from the advisors
     /// d) Construct buildings
     /// </summary>
-    internal class Phase2 : Phase
+    public class Phase2 : Phase
     {
         public Phase2()
         {
@@ -318,9 +318,9 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class Phase3 : Phase
+    public class Phase3 : Phase
     {
-        internal Phase3()
+        public Phase3()
         {
             this.Title = "Phase 3 - The King's Reward";
             this.Description = "The player with the most buildings receives 1 Victory Point. If there is a tie, every tied player receives 1 Victory Point.";
@@ -343,9 +343,9 @@ namespace TylerButler.Kingsburg.Core
     /// <summary>
     /// Phase 4 is the same as phase 2.
     /// </summary>
-    internal class Phase4 : Phase2
+    public class Phase4 : Phase2
     {
-        internal Phase4()
+        public Phase4()
             : base()
         {
             this.Title = "Phase 4 - Summer";
@@ -369,9 +369,9 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class Phase5 : Phase
+    public class Phase5 : Phase
     {
-        internal Phase5()
+        public Phase5()
         {
             this.Title = "Phase 5 - The King's Envoy";
             this.Description = "The player with the fewest buildings receives help from the King's Envoy. If there is a tie, the player with the least number of goods. If that is also a tie, nobody receives help.";
@@ -419,7 +419,7 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class Phase6 : Phase2
+    public class Phase6 : Phase2
     {
         public Phase6()
             : base()
@@ -434,9 +434,9 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class Phase7 : Phase
+    public class Phase7 : Phase
     {
-        internal Phase7()
+        public Phase7()
         {
             this.Title = "Phase 7 - Recruit Soldiers";
             this.Description = "Each player may pay goods to hire additional soldiers.";
@@ -454,9 +454,9 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class Phase8 : Phase
+    public class Phase8 : Phase
     {
-        internal Phase8()
+        public Phase8()
         {
             this.Title = "Phase 8 - Winter - The Battle";
             this.Description = "Enemies are attacking! All players must defeat the invaders!";
@@ -516,7 +516,7 @@ namespace TylerButler.Kingsburg.Core
         /// Gets a number of reinforcements that the king sends.
         /// </summary>
         /// <returns>An int between 1 and 6 representing the number of reinforcements the king has sent.</returns>
-        internal int GetKingsReinforcements()
+        public int GetKingsReinforcements()
         {
             return RandomNumber.GetRandom( 1, 6 );
         }
@@ -526,7 +526,7 @@ namespace TylerButler.Kingsburg.Core
         /// </summary>
         /// <param name="player"></param>
         /// <param name="enemy"></param>
-        internal void DoPlayerBattle( Player player, Enemy enemy, int reinforcements )
+        public void DoPlayerBattle( Player player, Enemy enemy, int reinforcements )
         {
             int totalStrength = player.TotalStrength + player.BonusStrengthAgainstEnemy( enemy ) + reinforcements;
             if( totalStrength > enemy.Strength ) // player wins
@@ -558,7 +558,7 @@ namespace TylerButler.Kingsburg.Core
         /// </summary>
         /// <param name="player">The player</param>
         /// <param name="enemy">The enemy</param>
-        internal void AwardPlayerAfterBattle( Player player, Enemy enemy )
+        public void AwardPlayerAfterBattle( Player player, Enemy enemy )
         {
             player.Gold += enemy.GoldReward;
             player.Wood += enemy.WoodReward;
@@ -578,7 +578,7 @@ namespace TylerButler.Kingsburg.Core
         /// </summary>
         /// <param name="player">The player</param>
         /// <param name="enemy">The enemy</param>
-        internal void PenalizePlayerAfterBattle( Player player, Enemy enemy )
+        public void PenalizePlayerAfterBattle( Player player, Enemy enemy )
         {
             //Bug:19
             player.Gold -= enemy.GoldPenalty;
@@ -600,9 +600,9 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class EndPhase : Phase
+    public class EndPhase : Phase
     {
-        internal EndPhase()
+        public EndPhase()
         {
             this.Title = "Game Over - Final Scoring";
             this.Description = "The game has come to an end! Commence the final scoring!";
@@ -627,7 +627,7 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal enum BattleResults
+    public enum BattleResults
     {
         Victory,
         Tie,

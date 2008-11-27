@@ -200,7 +200,7 @@ namespace TylerButler.Kingsburg.Core
     [Serializable]
     public class EnemyCollection : List<Enemy>
     {
-        internal EnemyCollection()
+        public EnemyCollection()
         {
         }
     }
