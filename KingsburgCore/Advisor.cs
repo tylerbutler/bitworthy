@@ -12,7 +12,7 @@ namespace TylerButler.Kingsburg.Core
     {
         private Advisors advisorNameEnum;
         //private bool isInfluenced = false;
-        private PlayerCollection influencingPlayers = new PlayerCollection();
+        [NonSerialized] private PlayerCollection influencingPlayers = new PlayerCollection();
 
         public Advisor( Advisors adv, string descriptionIn )
             : base( "" /*will get replaced when advisor enum is set*/, descriptionIn )
@@ -58,7 +58,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal bool IsInfluenced
+        public bool IsInfluenced
         {
             get
             {
@@ -66,7 +66,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal PlayerCollection InfluencingPlayers
+        public PlayerCollection InfluencingPlayers
         {
             get
             {
@@ -74,12 +74,12 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal void Influence( Player p )
+        public void Influence( Player p )
         {
             this.InfluencingPlayers.Add( p );
         }
 
-        internal void Reset()
+        public void Reset()
         {
             this.InfluencingPlayers.Clear();
         }
@@ -95,33 +95,33 @@ namespace TylerButler.Kingsburg.Core
                 case Advisors.Jester:
                     // Player gains 1 VP
                     p.VictoryPoints++;
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
                     break;
                 case Advisors.Squire:
                     // Take 1 gold from the supply.
                     p.Gold++;
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
                     break;
                 case Advisors.Architect:
                     // Take 1 wood from the supply.
                     p.Wood++;
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
                     break;
                 case Advisors.Merchant:
                     // Take 1 wood OR 1 gold from the supply.
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p, out returnData );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     choice = (GoodsChoiceOptions)returnData[0];
                     p.AddGood( choice );
                     break;
                 case Advisors.Sergeant:
                     // Recruit 1 soldier.
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
                     p.Soldiers++;
                     HandleStable( p );
                     break;
                 case Advisors.Alchemist:
                     //trade a single good for one of each of the other two goods
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p, out returnData );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     choice = (GoodsChoiceOptions)returnData[0];
                     switch( choice )
                     {
@@ -144,49 +144,49 @@ namespace TylerButler.Kingsburg.Core
                     break;
                 case Advisors.Astronomer:
                     // Receive a good of choice and a +2 token
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p, out returnData );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     choice = (GoodsChoiceOptions)returnData[0];
                     p.AddGood( choice );
                     p.PlusTwoTokens++;
                     break;
                 case Advisors.Treasurer:
                     // Receive 2 gold
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
                     p.Gold += 2;
                     break;
                 case Advisors.MasterHunter:
                     // Take a wood and a gold, or a wood and a stone
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p, out returnData );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     choice = (GoodsChoiceOptions)returnData[0];
                     p.AddGood( choice );
                     break;
                 case Advisors.General:
                     // recruit two soliders and secretly look at the enemy card
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
                     p.Soldiers += 2;
                     HandleStable( p );
                     break;
                 case Advisors.Swordsmith:
                     // receive a stone and a wood or a stone and a gold
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p, out returnData );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     choice = (GoodsChoiceOptions)returnData[0];
                     p.AddGood( choice );
                     break;
                 case Advisors.Duchess:
                     // Take 2 goods of choice and a "+2" token
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p, out returnData );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     p.AddGood( (GoodsChoiceOptions)returnData[0] );
                     p.AddGood( (GoodsChoiceOptions)returnData[1] );
                     p.PlusTwoTokens++;
                     break;
                 case Advisors.Champion:
                     // Take 3 stone
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
                     p.Stone += 3;
                     break;
                 case Advisors.Smuggler:
                     // Pay a VP to take 3 goods of choice.
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p, out returnData );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     p.VictoryPoints--;
                     p.AddGood( (GoodsChoiceOptions)returnData[0] );
                     p.AddGood( (GoodsChoiceOptions)returnData[1] );
@@ -194,26 +194,26 @@ namespace TylerButler.Kingsburg.Core
                     break;
                 case Advisors.Inventor:
                     // receive 1 of each good
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
                     p.Gold++;
                     p.Wood++;
                     p.Stone++;
                     break;
                 case Advisors.Wizard:
                     // Take 4 gold
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
                     p.Gold += 4;
                     break;
                 case Advisors.Queen:
                     // Take 2 goods of choice, spy on the enemy, and get 3 VP
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p, out returnData );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     p.AddGood( (GoodsChoiceOptions)returnData[0] );
                     p.AddGood( (GoodsChoiceOptions)returnData[1] );
                     p.VictoryPoints += 3;
                     break;
                 case Advisors.King:
                     // take one of each good and a soldier
-                    UIManager.Instance.DisplayInfluenceAdvisor( this, p );
+                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
                     p.Gold++;
                     p.Wood++;
                     p.Stone++;
@@ -229,7 +229,7 @@ namespace TylerButler.Kingsburg.Core
         {
             if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Stable" ) ) )
             {
-                UIManager.Instance.DisplayStableBonus( p );
+                GameManager.Instance.UI.DisplayStableBonus( p );
                 p.Soldiers++;
             }
         }
@@ -293,19 +293,19 @@ namespace TylerButler.Kingsburg.Core
         King,
     }
 
-    internal class AdvisorCollection : HashSet<Advisor>
+    public class AdvisorCollection : HashSet<Advisor>
     {
-        internal AdvisorCollection()
+        public AdvisorCollection()
             : base()
         {
         }
 
-        internal AdvisorCollection( IEnumerable<Advisor> collection )
+        public AdvisorCollection( IEnumerable<Advisor> collection )
             : base( collection )
         {
         }
 
-        internal Advisor this[int advisorNumber]
+        public Advisor this[int advisorNumber]
         {
             get
             {

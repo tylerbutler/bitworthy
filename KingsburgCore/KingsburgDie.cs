@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace TylerButler.Kingsburg.Core
 {
-    internal class KingsburgDie : Die
+    public class KingsburgDie : Die
     {
         private bool isUsed;
         private DieTypes type;
 
-        internal enum DieTypes
+        public enum DieTypes
         {
             Regular,
             White,
@@ -48,7 +48,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        internal DieTypes Type
+        public DieTypes Type
         {
             get
             {
@@ -60,7 +60,7 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        new internal int Value
+        new public int Value
         {
             get
             {
@@ -70,6 +70,8 @@ namespace TylerButler.Kingsburg.Core
                         return -1;
                     case DieTypes.MarketPositive:
                         return 1;
+                    case DieTypes.PlusTwo:
+                        return 2;
                     default:
                         return base.Value;
                 }
@@ -94,12 +96,15 @@ namespace TylerButler.Kingsburg.Core
                 case DieTypes.MarketNegative:
                     toReturn += "M";
                     break;
+                case DieTypes.PlusTwo:
+                    toReturn += "+";
+                    break;
             }
             return toReturn;
         }
     }
 
-    internal class DiceCollection : List<KingsburgDie>, ICloneable
+    public class DiceCollection : List<KingsburgDie>, ICloneable
     {
 
         public DiceCollection()
@@ -132,7 +137,7 @@ namespace TylerButler.Kingsburg.Core
         /// <summary>
         /// Resets all the dice in the collection to be "unused" (IsUsed == false).
         /// </summary>
-        internal void ResetDiceUsage()
+        public void ResetDiceUsage()
         {
             foreach( KingsburgDie die in this )
             {
@@ -151,7 +156,7 @@ namespace TylerButler.Kingsburg.Core
             return sb.ToString();
         }
 
-        internal bool AllSameRoll()
+        public bool AllSameRoll()
         {
             KingsburgDie d = this[0];
             foreach( KingsburgDie die in this )
@@ -164,15 +169,36 @@ namespace TylerButler.Kingsburg.Core
             return true;
         }
 
-        internal void RemoveNonRegularDice()
+        public void RemoveNonRegularDice()
         {
             IEnumerable<KingsburgDie> toRemove = from b in this
                                                  where b.Type != KingsburgDie.DieTypes.Regular
                                                  select b;
-            foreach( KingsburgDie d in toRemove )
+            DiceCollection copy = new DiceCollection(toRemove);
+            foreach( KingsburgDie d in copy )
             {
                 this.Remove( d );
             }
+        }
+
+        public void RemoveAllDiceOfType(KingsburgDie.DieTypes type)
+        {
+            IEnumerable<KingsburgDie> toRemove = from b in this
+                                                 where b.Type == type
+                                                 select b;
+            DiceCollection copy = new DiceCollection(toRemove);
+            foreach( KingsburgDie d in copy )
+            {
+                this.Remove( d );
+            }
+        }
+
+        public DiceCollection GetAllDiceOfType(KingsburgDie.DieTypes type)
+        {
+            IEnumerable<KingsburgDie> toReturn = from b in this
+                                                 where b.Type == type
+                                                 select b;
+            return new DiceCollection(toReturn);
         }
 
         #region ICloneable Members

@@ -3,6 +3,7 @@ using TylerButler.GameToolkit;
 using TylerButler.Kingsburg.Utilities;
 using System.Xml.Serialization;
 using System.IO;
+using TylerButler.Kingsburg.Core.UI;
 
 namespace TylerButler.Kingsburg.Core
 {
@@ -26,6 +27,7 @@ namespace TylerButler.Kingsburg.Core
             //serializer.Serialize( writer, ec );
             //writer.Close();
 
+            GameManager.Instance.UI = new UIManager();
             GameManager.Instance.MainExecutionMethod();
 
             //KingsburgDie d = new KingsburgDie( KingsburgDie.DieTypes.Regular );

@@ -4,7 +4,7 @@ using TylerButler.Kingsburg.Core.UI;
 
 namespace TylerButler.Kingsburg.Core
 {
-    internal class StartPhase : Phase
+    public class StartPhase : Phase
     {
         public StartPhase()
         {
@@ -15,13 +15,13 @@ namespace TylerButler.Kingsburg.Core
         public override Phase Execute()
         {
             // Add Players
-            GameManager.Instance.AllPlayers = UIManager.Instance.DisplayGetPlayers();
+            GameManager.Instance.AllPlayers = GameManager.Instance.UI.DisplayGetPlayers();
             GameManager.DebugSetup();
             return new Phase1();
         }
     }
 
-    internal class Phase1 : Phase
+    public class Phase1 : Phase
     {
         public Phase1()
         {
@@ -34,12 +34,12 @@ namespace TylerButler.Kingsburg.Core
             GameManager k = GameManager.Instance;
             k.CurrentYear++;
             //TODO: Pop up phase info message
-            UIManager.Instance.DisplayYearInfo();
+            GameManager.Instance.UI.DisplayYearInfo();
             PlayerCollection LeastBuildingPlayers = k.PlayersWithLowestBuildingCount( k.AllPlayers );
             if( LeastBuildingPlayers.Count == 1 )
             {
                 //LeastBuildingPlayers[0].KingsAidDie = 
-                UIManager.Instance.DisplayKingsAid( LeastBuildingPlayers[0] );
+                GameManager.Instance.UI.DisplayKingsAid( LeastBuildingPlayers[0] );
                 LeastBuildingPlayers[0].AddDie();
             }
             else
@@ -48,14 +48,14 @@ namespace TylerButler.Kingsburg.Core
                 if( LeastGoodsPlayers.Count == 1 )
                 {
                     //LeastBuildingPlayers[0].KingsAidDie = 
-                    UIManager.Instance.DisplayKingsAid( LeastGoodsPlayers[0] );
+                    GameManager.Instance.UI.DisplayKingsAid( LeastGoodsPlayers[0] );
                     LeastGoodsPlayers[0].AddDie();
                 }
                 else
                 {
                     foreach( Player p in LeastGoodsPlayers )
                     {
-                        GoodsChoiceOptions choice = UIManager.Instance.DisplayChooseAGood( p, GoodsChoiceOptions.Gold,
+                        GoodsChoiceOptions choice = GameManager.Instance.UI.DisplayChooseAGood( p, GoodsChoiceOptions.Gold,
                             GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone );
                         p.AddGood( choice );
                     }
@@ -74,7 +74,7 @@ namespace TylerButler.Kingsburg.Core
     /// c) Receive the rewards from the advisors
     /// d) Construct buildings
     /// </summary>
-    internal class Phase2 : Phase
+    public class Phase2 : Phase
     {
         public Phase2()
         {
@@ -89,11 +89,12 @@ namespace TylerButler.Kingsburg.Core
 
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
+                HandlePlusTwo(p);
                 HandleMerchantsGuild( p );
                 HandleFarms( p );
                 HandleMarket( p );
                 p.RollDice();
-                UIManager.Instance.DisplayDiceRoll( p );
+                GameManager.Instance.UI.DisplayDiceRoll( p );
                 HandleStatueAction( p );
                 HandleChapelAction( p );
             }
@@ -104,12 +105,16 @@ namespace TylerButler.Kingsburg.Core
                 {
                     if( !p.HasUsedAllDice )
                     {
-                        Advisor influenced = UIManager.Instance.DisplayChooseAdvisorToInfluence( p );
+                        Advisor influenced = GameManager.Instance.UI.DisplayChooseAdvisorToInfluence( p );
                         if( influenced != null ) // player has passed if influenced==null
                         {
                             influenced.InfluencingPlayers.Add( p );
-                            DiceCollection spent = UIManager.Instance.DisplayChooseDice( p, influenced );
+                            DiceCollection spent = GameManager.Instance.UI.DisplayChooseDice( p, influenced );
                             p.AllocateDice( spent );
+                            if ( !p.HasUsedPlusTwo &&  spent.GetAllDiceOfType(KingsburgDie.DieTypes.PlusTwo).Count > 0 )
+                            {
+                                p.HasUsedPlusTwo = false;
+                            }
                         }
                     }
                 }
@@ -129,6 +134,7 @@ namespace TylerButler.Kingsburg.Core
                 HandleEmbassy( p );
 
                 p.HasUsedMarket = false;
+                p.HasUsedPlusTwo = false;
             }
 
             return new Phase3();
@@ -138,7 +144,7 @@ namespace TylerButler.Kingsburg.Core
         {
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
-                Building built = UIManager.Instance.DisplayBuildingCard( p, true /* can build */);
+                Building built = GameManager.Instance.UI.DisplayBuildingCard( p, true /* can build */);
                 if( built != null )
                 {
                     p.Buildings.Add( built );
@@ -164,7 +170,7 @@ namespace TylerButler.Kingsburg.Core
         {
             // SORT THE PLAYERS BASED ON MostRecentDiceRollValue()
             GameManager.Instance.AllPlayers.Sort( new PlayerDiceRollComparer() );
-            UIManager.Instance.DisplayPlayerOrder( GameManager.Instance.AllPlayers );
+            GameManager.Instance.UI.DisplayPlayerOrder( GameManager.Instance.AllPlayers );
         }
 
         private void InfluenceAdvisors()
@@ -209,7 +215,7 @@ namespace TylerButler.Kingsburg.Core
             }
             else
             {
-                UIManager.Instance.DisplayUseStatue( p );
+                GameManager.Instance.UI.DisplayUseStatue( p );
             }
         }
 
@@ -225,7 +231,7 @@ namespace TylerButler.Kingsburg.Core
             }
             else
             {
-                UIManager.Instance.DisplayUseChapel( p );
+                GameManager.Instance.UI.DisplayUseChapel( p );
             }
         }
 
@@ -233,7 +239,7 @@ namespace TylerButler.Kingsburg.Core
         {
             if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Farms" ) ) )
             {
-                UIManager.Instance.DisplayFarmBonus( p );
+                GameManager.Instance.UI.DisplayFarmBonus( p );
                 p.AddDie();
             }
         }
@@ -242,7 +248,7 @@ namespace TylerButler.Kingsburg.Core
         {
             if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Merchants' Guild" ) ) )
             {
-                UIManager.Instance.DisplayMerchantsGuildBonus( p );
+                GameManager.Instance.UI.DisplayMerchantsGuildBonus( p );
                 p.Gold++;
             }
         }
@@ -251,7 +257,7 @@ namespace TylerButler.Kingsburg.Core
         {
             if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Town Hall" ) ) )
             {
-                GoodsChoiceOptions choice = UIManager.Instance.DisplayGetTownHallChoice( p );
+                GoodsChoiceOptions choice = GameManager.Instance.UI.DisplayGetTownHallChoice( p );
 
                 if( choice == GoodsChoiceOptions.None ) // player chose not to use their town hall
                 {
@@ -274,7 +280,7 @@ namespace TylerButler.Kingsburg.Core
         {
             if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Embassy" ) ) )
             {
-                UIManager.Instance.DisplayEmbassyBonus( p );
+                GameManager.Instance.UI.DisplayEmbassyBonus( p );
                 p.VictoryPoints++;
             }
         }
@@ -285,7 +291,7 @@ namespace TylerButler.Kingsburg.Core
             {
                 if( built.Column == 3 || built.Column == 4 )
                 {
-                    UIManager.Instance.DisplayUseCrane( p );
+                    GameManager.Instance.UI.DisplayUseCrane( p );
                     return true;
                 }
             }
@@ -301,11 +307,20 @@ namespace TylerButler.Kingsburg.Core
                 p.HasUsedMarket = false;
             }
         }
+
+        private void HandlePlusTwo(Player p)
+        {
+            if (p.PlusTwoTokens > 0)
+            {
+                p.AddDie(new KingsburgDie(KingsburgDie.DieTypes.PlusTwo));
+                p.HasUsedPlusTwo = false;
+            }
+        }
     }
 
-    internal class Phase3 : Phase
+    public class Phase3 : Phase
     {
-        internal Phase3()
+        public Phase3()
         {
             this.Title = "Phase 3 - The King's Reward";
             this.Description = "The player with the most buildings receives 1 Victory Point. If there is a tie, every tied player receives 1 Victory Point.";
@@ -315,7 +330,7 @@ namespace TylerButler.Kingsburg.Core
         {
             GameManager gm = GameManager.Instance;
             PlayerCollection players = gm.PlayersWithHighestBuildingCount( gm.AllPlayers );
-            UIManager.Instance.DisplayKingsReward( players );
+            GameManager.Instance.UI.DisplayKingsReward( players );
             foreach( Player p in players )
             {
                 p.VictoryPoints++;
@@ -328,9 +343,9 @@ namespace TylerButler.Kingsburg.Core
     /// <summary>
     /// Phase 4 is the same as phase 2.
     /// </summary>
-    internal class Phase4 : Phase2
+    public class Phase4 : Phase2
     {
-        internal Phase4()
+        public Phase4()
             : base()
         {
             this.Title = "Phase 4 - Summer";
@@ -345,7 +360,7 @@ namespace TylerButler.Kingsburg.Core
             {
                 if( p.HasBuilding( GameManager.Instance.GetBuilding( "Inn" ) ) )
                 {
-                    UIManager.Instance.DisplayInnReward( p );
+                    GameManager.Instance.UI.DisplayInnReward( p );
                     p.PlusTwoTokens++;
                 }
             }
@@ -354,9 +369,9 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class Phase5 : Phase
+    public class Phase5 : Phase
     {
-        internal Phase5()
+        public Phase5()
         {
             this.Title = "Phase 5 - The King's Envoy";
             this.Description = "The player with the fewest buildings receives help from the King's Envoy. If there is a tie, the player with the least number of goods. If that is also a tie, nobody receives help.";
@@ -388,7 +403,7 @@ namespace TylerButler.Kingsburg.Core
                 }
             }
 
-            UIManager.Instance.DisplayKingsEnvoy( PlayerReceivingEnvoy );
+            GameManager.Instance.UI.DisplayKingsEnvoy( PlayerReceivingEnvoy );
             return new Phase6();
         }
 
@@ -404,7 +419,7 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class Phase6 : Phase2
+    public class Phase6 : Phase2
     {
         public Phase6()
             : base()
@@ -419,9 +434,9 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class Phase7 : Phase
+    public class Phase7 : Phase
     {
-        internal Phase7()
+        public Phase7()
         {
             this.Title = "Phase 7 - Recruit Soldiers";
             this.Description = "Each player may pay goods to hire additional soldiers.";
@@ -431,7 +446,7 @@ namespace TylerButler.Kingsburg.Core
         {
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
-                int numRecruited = UIManager.Instance.DisplayRecruitSoldiers( p );
+                int numRecruited = GameManager.Instance.UI.DisplayRecruitSoldiers( p );
                 p.Soldiers += numRecruited;
             }
 
@@ -439,9 +454,9 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class Phase8 : Phase
+    public class Phase8 : Phase
     {
-        internal Phase8()
+        public Phase8()
         {
             this.Title = "Phase 8 - Winter - The Battle";
             this.Description = "Enemies are attacking! All players must defeat the invaders!";
@@ -449,11 +464,11 @@ namespace TylerButler.Kingsburg.Core
 
         public override Phase Execute()
         {
-            UIManager.Instance.DisplayBattleInfo();
+            GameManager.Instance.UI.DisplayBattleInfo();
             Enemy e= GameManager.Instance.Enemies[GameManager.Instance.CurrentYear - 1];
 
             int reinforcements = GetKingsReinforcements();
-            UIManager.Instance.DisplayKingsReinforcements( reinforcements );
+            GameManager.Instance.UI.DisplayKingsReinforcements( reinforcements );
 
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
@@ -465,7 +480,7 @@ namespace TylerButler.Kingsburg.Core
                 if( p.WasVictorious )
                 {
                     p.VictoryPoints++;
-                    UIManager.Instance.DisplayMostGloriousVictory( p );
+                    GameManager.Instance.UI.DisplayMostGloriousVictory( p );
                 }
             }
 
@@ -475,7 +490,7 @@ namespace TylerButler.Kingsburg.Core
                 if( p.HasBuilding( GameManager.Instance.GetBuilding( "Fortress" ) ) )
                 {
                     p.VictoryPoints++;
-                    UIManager.Instance.DisplayFortressBonus( p );
+                    GameManager.Instance.UI.DisplayFortressBonus( p );
                 }
             }
 
@@ -501,7 +516,7 @@ namespace TylerButler.Kingsburg.Core
         /// Gets a number of reinforcements that the king sends.
         /// </summary>
         /// <returns>An int between 1 and 6 representing the number of reinforcements the king has sent.</returns>
-        internal int GetKingsReinforcements()
+        public int GetKingsReinforcements()
         {
             return RandomNumber.GetRandom( 1, 6 );
         }
@@ -511,12 +526,12 @@ namespace TylerButler.Kingsburg.Core
         /// </summary>
         /// <param name="player"></param>
         /// <param name="enemy"></param>
-        internal void DoPlayerBattle( Player player, Enemy enemy, int reinforcements )
+        public void DoPlayerBattle( Player player, Enemy enemy, int reinforcements )
         {
             int totalStrength = player.TotalStrength + player.BonusStrengthAgainstEnemy( enemy ) + reinforcements;
             if( totalStrength > enemy.Strength ) // player wins
             {
-                UIManager.Instance.DisplayBattleResults( player, enemy, BattleResults.Victory );
+                GameManager.Instance.UI.DisplayBattleResults( player, enemy, BattleResults.Victory );
                 this.AwardPlayerAfterBattle( player, enemy );
             }
             else if( totalStrength == enemy.Strength ) // player ties
@@ -524,17 +539,17 @@ namespace TylerButler.Kingsburg.Core
                 // Check if the player has the stone wall, which allows a tie to count as a victory
                 if( player.HasBuilding( GameManager.Instance.GetBuilding( "Stone Wall" ) ) )
                 {
-                    UIManager.Instance.DisplayBattleResults( player, enemy, BattleResults.Victory );
+                    GameManager.Instance.UI.DisplayBattleResults( player, enemy, BattleResults.Victory );
                     this.AwardPlayerAfterBattle( player, enemy );
                 }
                 else
                 {
-                    UIManager.Instance.DisplayBattleResults( player, enemy, BattleResults.Tie );
+                    GameManager.Instance.UI.DisplayBattleResults( player, enemy, BattleResults.Tie );
                 }
             }
             else // player loses
             {
-                UIManager.Instance.DisplayBattleResults( player, enemy, BattleResults.Loss );
+                GameManager.Instance.UI.DisplayBattleResults( player, enemy, BattleResults.Loss );
             }
         }
 
@@ -543,7 +558,7 @@ namespace TylerButler.Kingsburg.Core
         /// </summary>
         /// <param name="player">The player</param>
         /// <param name="enemy">The enemy</param>
-        internal void AwardPlayerAfterBattle( Player player, Enemy enemy )
+        public void AwardPlayerAfterBattle( Player player, Enemy enemy )
         {
             player.Gold += enemy.GoldReward;
             player.Wood += enemy.WoodReward;
@@ -552,7 +567,7 @@ namespace TylerButler.Kingsburg.Core
 
             if( enemy.GoodReward > 0 )
             {
-                player.AddGood( UIManager.Instance.DisplayChooseAGood( player, GoodsChoiceOptions.Gold, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone ) );
+                player.AddGood( GameManager.Instance.UI.DisplayChooseAGood( player, GoodsChoiceOptions.Gold, GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone ) );
             }
 
             player.WasVictorious = true;
@@ -563,7 +578,7 @@ namespace TylerButler.Kingsburg.Core
         /// </summary>
         /// <param name="player">The player</param>
         /// <param name="enemy">The enemy</param>
-        internal void PenalizePlayerAfterBattle( Player player, Enemy enemy )
+        public void PenalizePlayerAfterBattle( Player player, Enemy enemy )
         {
             //Bug:19
             player.Gold -= enemy.GoldPenalty;
@@ -577,7 +592,7 @@ namespace TylerButler.Kingsburg.Core
             }
             else
             {
-                player.RemoveGood( UIManager.Instance.DisplayChooseAGood( player, player.GoodTypesPlayerHas.ToArray() ) );
+                player.RemoveGood( GameManager.Instance.UI.DisplayChooseAGood( player, player.GoodTypesPlayerHas.ToArray() ) );
             }
 
             player.DestroyBuildings( enemy.BuildingPenalty );
@@ -585,9 +600,9 @@ namespace TylerButler.Kingsburg.Core
         }
     }
 
-    internal class EndPhase : Phase
+    public class EndPhase : Phase
     {
-        internal EndPhase()
+        public EndPhase()
         {
             this.Title = "Game Over - Final Scoring";
             this.Description = "The game has come to an end! Commence the final scoring!";
@@ -606,13 +621,13 @@ namespace TylerButler.Kingsburg.Core
         private void HandleCathedral( Player p )
         {
             int VPEarned = p.GoodsCount / 2;
-            UIManager.Instance.DisplayCathedralBonus( p, VPEarned );
+            GameManager.Instance.UI.DisplayCathedralBonus( p, VPEarned );
             p.VictoryPoints += VPEarned;
             throw new NotImplementedException();
         }
     }
 
-    internal enum BattleResults
+    public enum BattleResults
     {
         Victory,
         Tie,

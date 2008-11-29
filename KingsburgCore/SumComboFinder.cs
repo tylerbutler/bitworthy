@@ -5,11 +5,11 @@ using TylerButler.Kingsburg.Core;
 
 namespace TylerButler.Kingsburg.Utilities
 {
-    internal class SumComboFinder
+    public class SumComboFinder
     {
         private List<List<KingsburgDie>> mResults;
 
-        internal List<List<KingsburgDie>> Find( int targetSum, DiceCollection bag )
+        public List<List<KingsburgDie>> Find( int targetSum, DiceCollection bag )
         {
             //DiceCollection clone = (DiceCollection)bag.Clone();
             DiceCollection clone = bag;
@@ -66,7 +66,7 @@ namespace TylerButler.Kingsburg.Utilities
         }
 
         // This is a horrible way to do this but I am sick of trying to do the right algorithm to find all subset sums
-        internal static HashSet<int> Sums( DiceCollection diceVals )
+        public static HashSet<int> Sums( DiceCollection diceVals )
         {
 
             HashSet<int> toReturn = new HashSet<int>();
