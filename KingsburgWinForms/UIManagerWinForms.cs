@@ -43,7 +43,8 @@ namespace KingsburgWinForms
 
         override public void DisplayPhaseInfo(TylerButler.GameToolkit.Phase phase)
         {
-            throw new NotImplementedException();
+            InformationDisplayForm idf = new InformationDisplayForm(phase.Title, phase.Description);
+            idf.ShowDialog();
         }
 
         override public void DisplayInfluenceAdvisor(TylerButler.Kingsburg.Core.Advisor a, TylerButler.Kingsburg.Core.Player p, out List<object> returnData)
@@ -78,7 +79,8 @@ namespace KingsburgWinForms
 
         override public PlayerCollection DisplayGetPlayers()
         {
-            throw new NotImplementedException();
+            GetPlayersForm form = new GetPlayersForm();
+            return form.ShowDialog();
         }
 
         override public DiceCollection DisplayChooseDice(TylerButler.Kingsburg.Core.Player p, TylerButler.Kingsburg.Core.Advisor a)
