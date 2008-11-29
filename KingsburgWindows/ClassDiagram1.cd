@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Marblets.GameBoard" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASAgAgABABEAghGAAYAAFAABmAAgAAAAAyQAwCAAJU=</HashCode>
+      <FileName>GameBoard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Marblets.GamePadHelper" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BUUCUMAABoAAG0EAAAAAAAEAAAA0QAQNAEAEAGAIQQA=</HashCode>
+      <FileName>GamePadHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Marblets.GamePads" Collapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAACAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>GamePads.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Marblets.InputHelper" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InputHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Marblets.RelativeSpriteBatch" Collapsed="true">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACCAAAAAAAAAAgAAAAAAAAACAAAAAAAAAAQAAAEAAAA=</HashCode>
+      <FileName>RelativeSprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Marblets.Screen" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEEEAAAwIAAEAAAQAAAAAAABAAQAAAAgEAAAQ=</HashCode>
+      <FileName>Screen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Marblets.Sound" Collapsed="true">
+    <Position X="7" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAQAAAAIAAQAAAAAAAAAAoAAAAgQAAAA=</HashCode>
+      <FileName>Sound.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.GameToolkit.InputManager" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oiU5ZFAoCE0BARMAYAgAAMCgAFQAKgQAICqxAAQESBI=</HashCode>
+      <FileName>InputManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Windows.KingsburgWindowsGame" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQAEAAAAgAAAwAAAAAAIAAAAAAAAAgAAAABAAKEAAQ=</HashCode>
+      <FileName>KingsburgWindowsGame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Windows.PlayerManager" Collapsed="true">
+    <Position X="8.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>PlayerManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Windows.Program" Collapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Windows.MainGameScreen">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAwAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>MainGameScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TylerButler.Kingsburg.Windows.TitleScreen">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TitleScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Marblets.Animation" Collapsed="true">
+    <Position X="5.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAEAAAI=</HashCode>
+      <FileName>GameBoard.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Marblets.GamePadKey" Collapsed="true">
+    <Position X="7" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAIAACAAAAAAAAAAAAAAAAAAAAAACACAIAEAYAI=</HashCode>
+      <FileName>GamePadHelper.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Marblets.SoundEntry" Collapsed="true">
+    <Position X="8.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAABAAAAAAEEAAABAADBAAAQAAAAIAAAQAAAAAAA=</HashCode>
+      <FileName>Sound.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
