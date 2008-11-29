@@ -30,3 +30,4 @@ git stash save <optional-name>
 
 TO DELETE THE STASH (ERASE THE “CLIPBOARD” FROM MEMORY)
 git stash clear
+
