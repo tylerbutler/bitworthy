@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace TylerButler.GameToolkit
 {
-    public abstract class Game
+    public abstract class Game //: Microsoft.Xna.Framework.Game
     {
         private int numPlayersMax;
         private int numPlayersMin;
