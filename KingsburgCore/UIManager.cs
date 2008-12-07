@@ -8,8 +8,8 @@ namespace TylerButler.Kingsburg.Core.UI
     public sealed class UIManager : UIManagerBase, UIManagerInterface
     {
         public UIManager()
+            : base()
         {
-            
         }
 
         //public UIManager( string uiMode )
@@ -28,7 +28,7 @@ namespace TylerButler.Kingsburg.Core.UI
         //    }
         //}
 
-        override public void DisplayDiceRoll(Player p, DiceCollection roll)
+        override public void DisplayDiceRoll( Player p, DiceCollection roll )
         {
             switch( this.Mode )
             {

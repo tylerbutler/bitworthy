@@ -18,16 +18,16 @@ namespace TylerButler.Kingsburg.Windows
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class KingsburgWindowsGame : Microsoft.Xna.Framework.Game
+    public class KingsburgWindowsGame : Game
     {
         private GraphicsDeviceManager graphics;
         private InputHelper inputHelper;
         private int previousWindowWidth = 1280;
         private int previousWindowHeight = 720;
 
-        private MainGameScreen mainGameScreen;
-        private TitleScreen titleScreen;
-        private GameManager gm;
+        private UIManagerWindows uiManager;
+        private ScreenManager screenManager;
+        private GameManager gameManager;
 
 
         /// <summary>
@@ -55,22 +55,15 @@ namespace TylerButler.Kingsburg.Windows
             base.Content.RootDirectory = "Content";
             KingsburgWindowsGame.Content = base.Content;
 
-            titleScreen = new TitleScreen( this, "Images/title_background.png", null );
-            titleScreen.Enabled = true;
-            titleScreen.Visible = true;
-            this.Components.Add( titleScreen );
-
-            mainGameScreen = new MainGameScreen( this, "Images/game_background.png", null );
-            mainGameScreen.Enabled = false;
-            mainGameScreen.Visible = false;
-            this.Components.Add( mainGameScreen );
-
-            inputHelper = new InputHelper( this );
-            this.Components.Add( inputHelper );
+            gameManager = GameManager.Instance;
+            gameManager.UI = new UIManagerWindows( this );
+            uiManager = (UIManagerWindows)gameManager.UI;
+            screenManager = uiManager.ScreenManager;
 
             this.Components.Add( new GamerServicesComponent( this ) );
+            this.Components.Add( screenManager );
 
-            gm = GameManager.Instance;
+            //gameManager.MainExecutionMethod();
         }
 
         /// <summary>
@@ -81,9 +74,11 @@ namespace TylerButler.Kingsburg.Windows
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            InputManager.Initialize();
 
             base.Initialize();
+
+            screenManager.AddScreen( new TitleScreen() );
         }
 
         /// <summary>
@@ -93,6 +88,8 @@ namespace TylerButler.Kingsburg.Windows
         protected override void LoadContent()
         {
             // TODO: use this.Content to load your game content here
+            Fonts.LoadContent( Content );
+            base.LoadContent();
         }
 
         /// <summary>
@@ -102,6 +99,7 @@ namespace TylerButler.Kingsburg.Windows
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            base.UnloadContent();
         }
 
         /// <summary>
@@ -111,9 +109,7 @@ namespace TylerButler.Kingsburg.Windows
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update( GameTime gameTime )
         {
-            // Allows the game to exit
-            if( GamePad.GetState( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed )
-                this.Exit();
+            InputManager.Update();
 
             // TODO: Add your update logic here
 
@@ -132,32 +128,20 @@ namespace TylerButler.Kingsburg.Windows
 
             base.Draw( gameTime );
         }
-    }
 
-    /// <summary>
-    /// This enum is for the state transitions.
-    /// </summary>
-    public enum GameState
-    {
+        #region Entry Point
+        
         /// <summary>
-        /// Default value - means no state is set
+        /// The main entry point for the application.
         /// </summary>
-        None,
+        static void Main( string[] args )
+        {
+            using( KingsburgWindowsGame game = new KingsburgWindowsGame() )
+            {
+                game.Run();
+            }
+        }
 
-        /// <summary>
-        /// Nothing visible, game has just been run and nothing is initialized
-        /// </summary>
-        Started,
-
-        /// <summary>
-        /// Logo Screen is being displayed
-        /// </summary>
-        LogoSplash,
-
-        /// <summary>
-        /// Currently playing the 2d version
-        /// </summary>
-        GameInProgress,
-
+        #endregion
     }
 }

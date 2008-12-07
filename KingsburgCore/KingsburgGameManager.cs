@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace TylerButler.Kingsburg.Core
 {
-    public sealed class GameManager : Game
+    public class GameManager : Game
     {
         private static GameManager instance = null;
         private PlayerCollection playerOrderPrimary;
@@ -277,7 +277,7 @@ namespace TylerButler.Kingsburg.Core
             return this.Buildings.GetBuilding(name);
         }
 
-        public void MainExecutionMethod()
+        public override void MainExecutionMethod()
         {
             Phase next = (this.GameStart.Count > 0 ? this.GameStart[0] : this.Phases[0]);
 

@@ -75,5 +75,7 @@ namespace TylerButler.GameToolkit
             get;
             set;
         }
+
+        public abstract void MainExecutionMethod();
     }
 }
