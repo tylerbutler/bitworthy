@@ -37,3 +37,5 @@ git stash save <optional-name>
 TO DELETE THE STASH (ERASE THE “CLIPBOARD” FROM MEMORY)
 git stash clear
 
+REVERT ALL CHANGES IN UNSTAGED FILES
+git checkout HEAD -- $(git ls-files -m)
