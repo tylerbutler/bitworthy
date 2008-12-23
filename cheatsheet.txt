@@ -25,6 +25,12 @@ TO MERGE CHANGES FROM BRANCH A TO BRANCH B (including master)
 git co <branch b>
 git merge <branch a>
 
+MERGE WITHOUT COMMITTING
+git merge <source branch> --no-commit --no-ff
+
+TO UNDO A SUCCESSFUL MERGE (AND ANY CHANGES AFTER IT)
+git reset --hard ORIG_HEAD
+
 ADD A STASH
 git stash save <optional-name>
 
