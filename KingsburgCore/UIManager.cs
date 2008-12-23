@@ -144,37 +144,85 @@ namespace TylerButler.Kingsburg.Core.UI
                     }
                     if( canBuild )
                     {
-                        //bug:14
-                        Console.WriteLine( "{0}, you may build the following buildings: ", p.Name );
-                        foreach( Building bu in p.BuildableBuildings )
+                        bool failed = false;
+
+                        do
                         {
-                            Console.WriteLine( "{0},{1}: {2}", bu.Row, bu.Column, bu.Name );
-                        }
-                        Console.WriteLine();
-                        if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Crane" ) ) )
-                        {
-                            Console.WriteLine( "You have a crane so gold prices of buildings in columns 3 and 4 are reduced by 1." );
+                            if( failed )
+                            {
+                                Console.WriteLine( "Invalid selection!\n" );
+                            }
+
+                            //bug:14
+                            Console.WriteLine( "{0}, you may build the following buildings: ", p.Name );
+                            foreach( Building bu in p.BuildableBuildings )
+                            {
+                                Console.WriteLine( "{0},{1}: {2}", bu.Row, bu.Column, bu.Name );
+                            }
                             Console.WriteLine();
-                        }
-                        Console.WriteLine( "Enter 'p' to pass." );
-                        string choice = Console.ReadLine();
+                            if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Crane" ) ) )
+                            {
+                                Console.WriteLine( "You have a crane so gold prices of buildings in columns 3 and 4 are reduced by 1." );
+                                Console.WriteLine();
+                            }
+                            Console.WriteLine( "Enter 'p' to pass." );
+                            string choice = Console.ReadLine();
 
-                        if( choice.Equals( "p", StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            Console.WriteLine( "{0} passed without building a building.", p.Name );
-                            return null;
-                        }
+                            if( choice.Equals( "p", StringComparison.OrdinalIgnoreCase ) )
+                            {
+                                Console.WriteLine( "{0} passed without building a building.", p.Name );
+                                return null;
+                            }
 
-                        string[] parsedChoice = choice.Split( ',' );
-                        int chosenRow = int.Parse( parsedChoice[0] );
-                        int chosenColumn = int.Parse( parsedChoice[1] );
-                        toReturn = (Building)GameManager.Instance.Buildings.GetBuilding( chosenRow, chosenColumn ).Clone();
+                            try
+                            {
+                                string[] parsedChoice = choice.Split( ',' );
+                                int chosenRow = int.Parse( parsedChoice[0] );
+                                int chosenColumn = int.Parse( parsedChoice[1] );
+                                toReturn = (Building)GameManager.Instance.Buildings.GetBuilding( chosenRow, chosenColumn ).Clone();
+
+                                failed = true;
+                                foreach( Building b in p.BuildableBuildings )
+                                {
+                                    if( b.Equals( toReturn ) )
+                                    {
+                                        failed = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            catch( Exception )
+                            {
+                                //player entered an unparsable value, swallow the exception
+                                failed = true;
+                            }
+                        }
+                        while( failed );
                     }
                     break;
                 case graphicsMode.GUI:
                     throw new NotImplementedException();
             }
             return toReturn;
+        }
+
+        public override Building DisplayUseEnvoyToBuild( Player p )
+        {
+            string response;
+            Console.WriteLine( "Would you like to use the Envoy to build a second building? y/n" );
+            do
+            {
+                response = Console.ReadLine();
+            }
+            while( !response.Equals( "y", StringComparison.OrdinalIgnoreCase ) &&
+                !response.Equals( "n", StringComparison.OrdinalIgnoreCase ) );
+
+            if( response.Equals( "y", StringComparison.OrdinalIgnoreCase ) )
+            {
+                return DisplayBuildingCard( p, true );
+            }
+            else
+                return null;
         }
 
         override public void DisplayKingsReward( PlayerCollection players )
@@ -338,7 +386,7 @@ namespace TylerButler.Kingsburg.Core.UI
                     Console.WriteLine( "Enemy Name: {0}", enemy.Name );
                     Console.WriteLine( "Strength: {0}", enemy.Strength );
                     Console.WriteLine( "Penalties:" );
-                    Console.WriteLine( "Goods of choice: {0}, Gold: {1}, Wood: {2}, Stone: {3}, VP: {4}, Buildings: {5}", enemy.GoodPenalty, enemy.GoldPenalty, enemy.WoodPenalty, enemy.StonePenalty, enemy.VictoryPointPenalty, enemy.BuildingPenalty );
+                    Console.WriteLine( "Goods of choice: {0}, Gold: {1}, Wood: {2}, Stone: {3}, VP: {4}, Buildings: {5}\n", enemy.GoodPenalty, enemy.GoldPenalty, enemy.WoodPenalty, enemy.StonePenalty, enemy.VictoryPointPenalty, enemy.BuildingPenalty );
                     Console.WriteLine( "Rewards:" );
                     Console.WriteLine( "Gold: {0}, Wood: {1}, Stone: {2}, VP: {3}\n", enemy.GoldReward, enemy.WoodReward, enemy.StoneReward, enemy.VictoryPointReward );
                     break;
@@ -488,12 +536,28 @@ namespace TylerButler.Kingsburg.Core.UI
                         }
                         Console.WriteLine( "\"*\" indicates a white die." );
                         int chosenCombo = -1;
+                        bool failed = false;
                         do
                         {
+                            if( failed )
+                            {
+                                Console.WriteLine( "Invalid choice!" );
+                            }
+
+                            failed = false;
+
                             string input = Console.ReadLine();
-                            chosenCombo = int.Parse( input );
+                            try
+                            {
+                                chosenCombo = int.Parse( input );
+                            }
+                            catch( Exception )
+                            {
+                                // User entered invalid data, swallow the exception
+                                failed = true;
+                            }
                         }
-                        while( chosenCombo == -1 || chosenCombo + 1 > combos.Count );
+                        while( chosenCombo == -1 || chosenCombo + 1 > combos.Count || failed );
                         toReturn = new DiceCollection( combos[chosenCombo] );
                     }
                     return toReturn;
