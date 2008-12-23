@@ -17,11 +17,13 @@ namespace KingsburgXNA
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         ScreenManager screenManager;
+        InputManager inputManager;
+        public GameData Data;
 
         public Game1()
         {
@@ -33,9 +35,18 @@ namespace KingsburgXNA
 
             // Create the screen manager component.
             screenManager = new ScreenManager( this );
-
             Components.Add( screenManager );
             screenManager.TraceEnabled = true;
+
+            // Create the Input manager
+            inputManager = new InputManager( this );
+            Components.Add( inputManager );
+
+            // This gives us access to the guide
+            Components.Add( new GamerServicesComponent( this ) );
+
+            Data = new GameData( this );
+
         }
 
         /// <summary>
@@ -46,12 +57,9 @@ namespace KingsburgXNA
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            InputManager.Initialize();
-
             base.Initialize();
 
-            screenManager.AddScreen( new TitleScreen() );
+            screenManager.AddScreen( new StartScreen( this ) );
         }
 
         /// <summary>
@@ -83,10 +91,6 @@ namespace KingsburgXNA
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update( GameTime gameTime )
         {
-            // Allows the game to exit
-            if( GamePad.GetState( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed )
-                this.Exit();
-
             // TODO: Add your update logic here
 
             base.Update( gameTime );
@@ -103,6 +107,58 @@ namespace KingsburgXNA
             // TODO: Add your drawing code here
 
             base.Draw( gameTime );
+        }
+
+        public void TrySignIn( ScreenExited handler )
+        {
+            // Prompt for sign in if nobody is signed in
+            if( SignedInGamer.SignedInGamers.Count == 0 )
+            {
+                SignInScreen screen = new SignInScreen( this );
+                screen.ScreenExiting += handler;
+                screenManager.AddScreen( screen );
+            }
+            else
+                handler();
+        }
+
+        public void InitializePlayer1( PlayerIndex index )
+        {
+            if( !Data.Player1.IsPlaying )
+            {
+                SignedInGamer gamer = NetworkManager.FindGamer( index );
+                if( gamer == null )  // No signed in gamer on this controller
+                    Data.Player1.InitLocal( index, "Player 1", XNAPlayerColor.Blue );
+                else
+                {
+                    Data.Player1.InitFromGamer( gamer, XNAPlayerColor.Blue );
+                }
+            }
+        }
+
+        public void InitializePlayer2( PlayerIndex index )
+        {
+            if( !Data.Player2.IsPlaying )
+            {
+                SignedInGamer gamer = NetworkManager.FindGamer( index );
+                if( gamer == null )  // No signed in gamer on this controller
+                    Data.Player2.InitLocal( index, "Player 2", XNAPlayerColor.Red );
+                else
+                {
+                    Data.Player2.InitFromGamer( gamer, XNAPlayerColor.Red );
+                }
+            }
+        }
+
+        public void StartGame()
+        {
+            ResetGame();
+            screenManager.AddScreen( new MainGameScreen() );
+        }
+
+        public void ResetGame()
+        {
+            this.Data = new GameData( this );
         }
     }
 }

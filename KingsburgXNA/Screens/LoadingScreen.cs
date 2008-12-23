@@ -99,9 +99,9 @@ namespace KingsburgXNA.Screens
         public override void LoadContent()
         {
             ContentManager content = ScreenManager.Game.Content;
-            loadingTexture = content.Load<Texture2D>( @"Textures\MainMenu\LoadingPause" );
+            loadingTexture = content.Load<Texture2D>( @"Images\loading" );
             loadingBlackTexture =
-                content.Load<Texture2D>( @"Textures\GameScreens\FadeScreen" );
+                content.Load<Texture2D>( @"Images\FadeScreen" );
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             loadingBlackTextureDestination = new Rectangle( viewport.X, viewport.Y,
                 viewport.Width, viewport.Height );

@@ -7,70 +7,72 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace KingsburgXNA.Screens
 {
-    public class TitleScreen : MenuScreen
+    public class TitleScreen : TitleBackgroundScreen
     {
-        #region Graphics Data
-
-        private Texture2D backgroundTexture;
-        private Vector2 backgroundPosition;
-
-        private Texture2D descriptionAreaTexture;
-        private Vector2 descriptionAreaPosition;
-        private Vector2 descriptionAreaTextPosition;
-
-        //private Texture2D iconTexture;
-        //private Vector2 iconPosition;
-
-        //private Texture2D backTexture;
-        //private Vector2 backPosition;
+        #region Fields
 
         private Texture2D selectTexture;
         private Vector2 selectPosition;
 
-        //private Texture2D plankTexture1, plankTexture2, plankTexture3;
+        MenuComponent menu;
+        Game1 Game;
 
         #endregion
 
-        MenuEntry newGameMenuEntry, exitGameMenuEntry;
 
-        public TitleScreen()
+        public TitleScreen( Game1 game )
             : base()
         {
+            this.Game = game;
+            menu = new MenuComponent( Game, Fonts.DescriptionFont );
+
             float menuStartVerticalPosition = 800;
 
-            newGameMenuEntry = new MenuEntry( "New Game" );
-            newGameMenuEntry.Description = "Start a new game.";
-            newGameMenuEntry.Font = Fonts.HeaderFont;
-            newGameMenuEntry.Position = new Vector2( menuStartVerticalPosition, 0 );
-            newGameMenuEntry.Selected += newGameMenuEntry_Selected;
-            MenuEntries.Add( newGameMenuEntry );
+            menu.AddText( "New Game", "Start a new game." );
+            menu.AddText( "Exit", "Exit the game." );
 
-            exitGameMenuEntry = new MenuEntry( "Exit" );
-            exitGameMenuEntry.Description = "Exit the game.";
-            exitGameMenuEntry.Font = Fonts.HeaderFont;
-            exitGameMenuEntry.Position = new Vector2( menuStartVerticalPosition, 0 );
-            exitGameMenuEntry.Selected += exitGameSelected;
-            MenuEntries.Add( exitGameMenuEntry );
+            menu.uiBounds = menu.GetExtents();
+            menu.uiBounds.Offset( menu.uiBounds.X, 300 );
+            menu.SelectedColor = Color.MediumBlue;
+            menu.MenuOptionSelected += new MenuEventHandler( menu_MenuOptionSelected );
+            menu.MenuCanceled += new MenuEventHandler( menu_MenuCancelled );
+        }
+
+        void menu_MenuCancelled( int selection )
+        {
+            // If they hit B or Back, go back to Start Screen
+            ExitScreen();
+            ScreenManager.AddScreen( new StartScreen( (Game1)ScreenManager.Game ) );
+        }
+
+        void menu_MenuOptionSelected( int selection )
+        {
+            switch( selection )
+            {
+                case 0: // New Game
+                    ExitScreen();
+                    ( (Game1)ScreenManager.Game ).StartGame();
+                    break;
+                case 1: // Exit
+                    this.ScreenManager.Game.Exit();
+                    break;
+                default:
+                    break;
+            }
         }
 
         public override void LoadContent()
         {
             ContentManager content = ScreenManager.Game.Content;
-            backgroundTexture = content.Load<Texture2D>( @"Images\MainMenu\title_background" );
-            backgroundPosition = Vector2.Zero;
-
-            descriptionAreaTexture = content.Load<Texture2D>( @"Images\Scroll" );
-            descriptionAreaPosition = new Vector2( 720, 340 );
 
             selectTexture = content.Load<Texture2D>( @"Images\Buttons\AButton" );
             selectPosition = new Vector2( 1120, 610 );
 
             // now that they have textures, set the proper positions on the menu entries
-            for( int i = 0; i < MenuEntries.Count; i++ )
-            {
-                MenuEntries[i].Position = new Vector2( MenuEntries[i].Position.X, 490 - ( 40f * ( MenuEntries.Count - 1 - i ) ) );
-            }
-
+            //for( int i = 0; i < MenuEntries.Count; i++ )
+            //{
+            //    MenuEntries[i].Position = new Vector2( MenuEntries[i].Position.X, 490 - ( 40f * ( MenuEntries.Count - 1 - i ) ) );
+            //}
 
             base.LoadContent();
         }
@@ -80,8 +82,7 @@ namespace KingsburgXNA.Screens
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
             spriteBatch.Begin();
-            spriteBatch.Draw( backgroundTexture, backgroundPosition, Color.White );
-            spriteBatch.Draw( descriptionAreaTexture, descriptionAreaPosition, Color.White );
+            //spriteBatch.Draw( descriptionAreaTexture, descriptionAreaPosition, Color.White );
 
             // Draw each menu entry in turn.
             for( int i = 0; i < MenuEntries.Count; i++ )
@@ -117,8 +118,9 @@ namespace KingsburgXNA.Screens
         protected void newGameMenuEntry_Selected( object sender, EventArgs e )
         {
             ContentManager content = ScreenManager.Game.Content;
-            LoadingScreen.Load( ScreenManager, true, new MainGameScreen() );
+            //LoadingScreen.Load( ScreenManager, true, new MainGameScreen() );
+            ScreenManager.AddScreen( new SignInScreen( this.Game ) );
+            this.Game.TrySignIn( FinishStart );
         }
-
     }
 }

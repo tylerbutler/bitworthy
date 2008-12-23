@@ -85,23 +85,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fonts.cs" />
+    <Compile Include="GameData.cs" />
     <Compile Include="InputManager.cs" />
+    <Compile Include="InputState.cs" />
+    <Compile Include="NetworkManager.cs" />
+    <Compile Include="Phases.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="ScreenManager\ControlsScreen.cs" />
+    <Compile Include="ScreenManager\SliderComponent.cs" />
+    <Compile Include="ScreenManager\Unused\ControlsScreen.cs" />
     <Compile Include="ScreenManager\GameScreen.cs" />
-    <Compile Include="ScreenManager\HelpScreen.cs" />
-    <Compile Include="ScreenManager\LoadingScreen.cs" />
-    <Compile Include="ScreenManager\MenuEntry.cs" />
-    <Compile Include="ScreenManager\MenuScreen.cs" />
-    <Compile Include="ScreenManager\MessageBoxScreen.cs" />
-    <Compile Include="ScreenManager\SaveLoadScreen.cs" />
+    <Compile Include="ScreenManager\Unused\HelpScreen.cs" />
+    <Compile Include="Screens\LoadingScreen.cs" />
+    <Compile Include="ScreenManager\MenuComponent.cs" />
+    <Compile Include="ScreenManager\Unused\MenuEntry.cs" />
+    <Compile Include="Screens\MainMenuScreen.cs" />
+    <Compile Include="ScreenManager\Unused\MessageBoxScreen.cs" />
+    <Compile Include="ScreenManager\Unused\SaveLoadScreen.cs" />
     <Compile Include="ScreenManager\ScreenManager.cs" />
-    <Compile Include="Screens\BoardBackground.cs" />
-    <Compile Include="Screens\GetPlayersScreen.cs" />
+    <Compile Include="Screens\BoardBackgroundScreen.cs" />
+    <Compile Include="Screens\Unused\ErrorScreen.cs" />
+    <Compile Include="Screens\SignInScreen.cs" />
     <Compile Include="Screens\MainGameScreen.cs" />
+    <Compile Include="Screens\StartScreen.cs" />
+    <Compile Include="Screens\TitleBackgroundScreen.cs" />
     <Compile Include="Screens\TitleScreen.cs" />
+    <Compile Include="XNAPlayer.cs" />
+    <Compile Include="XNAPlayerColor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -139,6 +150,19 @@
       <ProductName>Microsoft XNA Framework Redistributable 3.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameToolkit\GameToolKit.csproj">
+      <Project>{D705BB26-E0FD-4470-8EA9-5B93C3BE72CF}</Project>
+      <Name>GameToolKit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KingsburgCore\KingsburgCore.csproj">
+      <Project>{EF97E080-E271-4C1C-AC94-5601EA379D64}</Project>
+      <Name>KingsburgCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Screens.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

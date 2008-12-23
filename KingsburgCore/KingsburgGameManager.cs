@@ -29,7 +29,7 @@ namespace TylerButler.Kingsburg.Core
             // not to mark type as beforefieldinit
         }
 
-        GameManager()
+        public GameManager()
             : base()
         {
 
@@ -118,6 +118,11 @@ namespace TylerButler.Kingsburg.Core
             {
                 this.allPlayers = value;
             }
+        }
+
+        public void AddPlayer( Player player )
+        {
+            AllPlayers.Add( player );
         }
 
         public Enemy[] EnemiesForGame

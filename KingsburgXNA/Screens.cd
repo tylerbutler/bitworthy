@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="KingsburgXNA.Screens.BoardBackgroundScreen" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GAAAAQABAAEAAwAAAAACAAAEEAAQAAAAYCAAABAgAAQ=</HashCode>
+      <FileName>Screens\BoardBackgroundScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.ErrorScreen" Collapsed="true">
+    <Position X="16" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAoAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAAAAAAEAAAQ=</HashCode>
+      <FileName>Screens\Unused\ErrorScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.SignInScreen" Collapsed="true">
+    <Position X="4.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAwAAAAAAAAAAAAgCAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Screens\SignInScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.MainGameScreen" Collapsed="true">
+    <Position X="7" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAASAQ=</HashCode>
+      <FileName>Screens\MainGameScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.StartScreen" Collapsed="true">
+    <Position X="13.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEABAAAAAAAAAAAAAAAAAAAAAAAAIAAIAAAAAAAA=</HashCode>
+      <FileName>Screens\StartScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.TitleBackgroundScreen" Collapsed="true">
+    <Position X="12.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAABAAAAAAAAgAAAQ=</HashCode>
+      <FileName>Screens\TitleBackgroundScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.TitleScreen" Collapsed="true">
+    <Position X="11.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FAACAAAACAAAAgAAAAAAAAAAAAgACgAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Screens\TitleScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.GameScreen" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwQEACAAARAAwAEEAIQAAAADAAAAI4AAgCGAEYIBAQ=</HashCode>
+      <FileName>ScreenManager\GameScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.LoadingScreen" Collapsed="true">
+    <Position X="18.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABRAgAAAAAAAAgAAAAAQAAEAAEAAAAABAAAAAgAAAAQ=</HashCode>
+      <FileName>Screens\LoadingScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.MainMenuScreen" Collapsed="true">
+    <Position X="9.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAQAAAAwgAAAAIAAgAAIAiAAAQAAAAAAAAgAQ=</HashCode>
+      <FileName>Screens\MainMenuScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.MenuComponent" Collapsed="true">
+    <Position X="20.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIBAAACAAQgAAhABgAAIAAYBAQAIAAEACAEAAEVCQAQ=</HashCode>
+      <FileName>ScreenManager\MenuComponent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="KingsburgXNA.Screens.ScreenState" Collapsed="true">
+    <Position X="20.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAgAAAIAAAEAAA=</HashCode>
+      <FileName>ScreenManager\GameScreen.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="KingsburgXNA.Screens.ScreenExited" Collapsed="true">
+    <Position X="22.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Screens\SignInScreen.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="KingsburgXNA.Screens.MenuEventHandler" Collapsed="true">
+    <Position X="20.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Screens\MainMenuScreen.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
