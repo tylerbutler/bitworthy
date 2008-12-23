@@ -9,7 +9,7 @@ namespace KingsburgXNA.Screens
 {
     public delegate void ScreenExited();
 
-    class SignInScreen : BoardBackgroundScreen
+    class SignInScreen : TitleBackgroundScreen
     {
         #region Fields
 

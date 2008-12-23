@@ -23,7 +23,7 @@ namespace KingsburgXNA.Screens
         public PlayerIndex Controller;
 
         public event MenuEventHandler MenuOptionSelected;
-        public event MenuEventHandler MenuCanceled;
+        public event MenuEventHandler MenuCancelled;
 
         #region Constructors
 
@@ -110,7 +110,7 @@ namespace KingsburgXNA.Screens
             if( input.IsNewButtonPress( Buttons.B ) ||
                 input.IsNewButtonPress( Buttons.Back ) )
             {
-                MenuCanceled.Invoke( -1 );
+                MenuCancelled.Invoke( -1 );
                 return;
             }
 

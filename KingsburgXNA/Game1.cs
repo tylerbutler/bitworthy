@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using KingsburgXNA.Screens;
+using System.Diagnostics;
 
 namespace KingsburgXNA
 {
@@ -36,7 +37,6 @@ namespace KingsburgXNA
             // Create the screen manager component.
             screenManager = new ScreenManager( this );
             Components.Add( screenManager );
-            screenManager.TraceEnabled = true;
 
             // Create the Input manager
             inputManager = new InputManager( this );
@@ -47,6 +47,7 @@ namespace KingsburgXNA
 
             Data = new GameData( this );
 
+            DebugSetup();
         }
 
         /// <summary>
@@ -159,6 +160,12 @@ namespace KingsburgXNA
         public void ResetGame()
         {
             this.Data = new GameData( this );
+        }
+
+        [Conditional( "DEBUG" )]
+        private void DebugSetup()
+        {
+            this.screenManager.TraceEnabled = true;
         }
     }
 }

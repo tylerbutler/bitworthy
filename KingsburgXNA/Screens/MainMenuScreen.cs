@@ -61,7 +61,7 @@ namespace KingsburgXNA.Screens
             menu.uiBounds.Offset( uiBounds.X, titleBounds.Bottom + 60 );
             menu.SelectedColor = Color.LightBlue;
             menu.MenuOptionSelected += new MenuEventHandler( menu_MenuOptionSelected );
-            menu.MenuCanceled += new MenuEventHandler( menu_MenuCancelled );
+            menu.MenuCancelled += new MenuEventHandler( menu_MenuCancelled );
 
             this.PresenceMode = GamerPresenceMode.AtMenu;
 

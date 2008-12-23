@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.GamerServices;
 
 namespace KingsburgXNA.Screens
 {
@@ -26,8 +27,6 @@ namespace KingsburgXNA.Screens
             this.Game = game;
             menu = new MenuComponent( Game, Fonts.DescriptionFont );
 
-            float menuStartVerticalPosition = 800;
-
             menu.AddText( "New Game", "Start a new game." );
             menu.AddText( "Exit", "Exit the game." );
 
@@ -35,7 +34,7 @@ namespace KingsburgXNA.Screens
             menu.uiBounds.Offset( menu.uiBounds.X, 300 );
             menu.SelectedColor = Color.MediumBlue;
             menu.MenuOptionSelected += new MenuEventHandler( menu_MenuOptionSelected );
-            menu.MenuCanceled += new MenuEventHandler( menu_MenuCancelled );
+            menu.MenuCancelled += new MenuEventHandler( menu_MenuCancelled );
         }
 
         void menu_MenuCancelled( int selection )
@@ -68,59 +67,48 @@ namespace KingsburgXNA.Screens
             selectTexture = content.Load<Texture2D>( @"Images\Buttons\AButton" );
             selectPosition = new Vector2( 1120, 610 );
 
-            // now that they have textures, set the proper positions on the menu entries
-            //for( int i = 0; i < MenuEntries.Count; i++ )
-            //{
-            //    MenuEntries[i].Position = new Vector2( MenuEntries[i].Position.X, 490 - ( 40f * ( MenuEntries.Count - 1 - i ) ) );
-            //}
-
             base.LoadContent();
+        }
+
+        public override void HandleInput( InputState input )
+        {
+            menu.HandleInput( input );
+            base.HandleInput( input );
+        }
+
+        public override void Update( GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen )
+        {
+            if( !coveredByOtherScreen && !Guide.IsVisible )
+            {
+                menu.Update( gameTime );
+            }
+            base.Update( gameTime, otherScreenHasFocus, coveredByOtherScreen );
         }
 
         public override void Draw( GameTime gameTime )
         {
+            // Draw the background first
+            base.Draw( gameTime );
+
+            // Draw the menu
+            menu.Draw( gameTime );
+
+            // Draw the "press 'A' to select instructions
+            DrawSelect( gameTime, selectPosition );
+        }
+
+        private void DrawSelect( GameTime gameTime, Vector2 position )
+        {
+            string selectString = "Select";
+            SpriteFont font = Fonts.DescriptionFont;
+            Vector2 stringMeasure = font.MeasureString( "Select" );
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
-            spriteBatch.Begin();
-            //spriteBatch.Draw( descriptionAreaTexture, descriptionAreaPosition, Color.White );
-
-            // Draw each menu entry in turn.
-            for( int i = 0; i < MenuEntries.Count; i++ )
-            {
-                MenuEntry menuEntry = MenuEntries[i];
-                bool isSelected = IsActive && ( i == selectedEntry );
-                menuEntry.Draw( this, isSelected, gameTime );
-            }
-
-            MenuEntry selectedMenuEntry = SelectedMenuEntry;
-            if( selectedMenuEntry != null && !String.IsNullOrEmpty( selectedMenuEntry.Description ) )
-            {
-                spriteBatch.DrawString( Fonts.DescriptionFont, selectedMenuEntry.Description, new Vector2( 50, 50 ), Color.White );
-            }
-
-            // draw the select instruction
-            spriteBatch.Draw( selectTexture, selectPosition, Color.White );
-            spriteBatch.DrawString( Fonts.ButtonNamesFont, "Select",
-                new Vector2(
-                selectPosition.X - Fonts.ButtonNamesFont.MeasureString( "Select" ).X - 5,
-                selectPosition.Y + 5 ), Color.White );
-
+            spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
+            spriteBatch.DrawString( Fonts.DescriptionFont, selectString, position, Color.White );
+            position.X += stringMeasure.X;
+            spriteBatch.Draw( selectTexture, position, null, Color.White, 0, Vector2.Zero, .33f, SpriteEffects.None, 1.0f );
             spriteBatch.End();
-
-            base.Draw( gameTime );
-        }
-
-        protected void exitGameSelected( object sender, EventArgs e )
-        {
-            base.OnCancel();
-        }
-
-        protected void newGameMenuEntry_Selected( object sender, EventArgs e )
-        {
-            ContentManager content = ScreenManager.Game.Content;
-            //LoadingScreen.Load( ScreenManager, true, new MainGameScreen() );
-            ScreenManager.AddScreen( new SignInScreen( this.Game ) );
-            this.Game.TrySignIn( FinishStart );
         }
     }
 }

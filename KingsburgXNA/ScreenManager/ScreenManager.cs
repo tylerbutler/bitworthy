@@ -388,8 +388,8 @@ namespace KingsburgXNA.Screens
         {
             // Load content belonging to the screen manager.
             spriteBatch = new SpriteBatch( GraphicsDevice );
-            font = Game.Content.Load<SpriteFont>( "menufont" );
-            blankTexture = Game.Content.Load<Texture2D>( "blank" );
+            font = Game.Content.Load<SpriteFont>( @"ScreenManagerSupport\menufont" );
+            blankTexture = Game.Content.Load<Texture2D>( @"ScreenManagerSupport\blank" );
 
             // Tell each of the screens to load their content.
             foreach( GameScreen screen in screens )
