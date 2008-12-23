@@ -160,8 +160,9 @@ namespace TylerButler.Kingsburg.Core
                         p.Gold -= built.GoldCost;
                     }
 
+                    // REMOVED because the building VP is now tracked separately from the regular VP
                     // Give VP to player
-                    p.VictoryPoints += built.VictoryPointValue;
+                    //p.BoardVictoryPoints += built.VictoryPointValue;
                 }
 
                 // If player has the Envoy, he can choose to build a second time
@@ -273,12 +274,12 @@ namespace TylerButler.Kingsburg.Core
                 else if( choice == GoodsChoiceOptions.PlusTwoToken ) // player chose a plus two token
                 {
                     p.PlusTwoTokens--;
-                    p.VictoryPoints++;
+                    p.BoardVictoryPoints++;
                 }
                 else
                 {
                     p.RemoveGood( choice );
-                    p.VictoryPoints++;
+                    p.BoardVictoryPoints++;
                 }
             }
         }
@@ -288,7 +289,7 @@ namespace TylerButler.Kingsburg.Core
             if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Embassy" ) ) )
             {
                 GameManager.Instance.UI.DisplayEmbassyBonus( p );
-                p.VictoryPoints++;
+                p.BoardVictoryPoints++;
             }
         }
 
@@ -340,7 +341,7 @@ namespace TylerButler.Kingsburg.Core
             GameManager.Instance.UI.DisplayKingsReward( players );
             foreach( Player p in players )
             {
-                p.VictoryPoints++;
+                p.BoardVictoryPoints++;
             }
 
             return new Phase4();
@@ -486,7 +487,7 @@ namespace TylerButler.Kingsburg.Core
             {
                 if( p.WasVictorious )
                 {
-                    p.VictoryPoints++;
+                    p.BoardVictoryPoints++;
                     GameManager.Instance.UI.DisplayMostGloriousVictory( p );
                 }
             }
@@ -496,7 +497,7 @@ namespace TylerButler.Kingsburg.Core
             {
                 if( p.HasBuilding( GameManager.Instance.GetBuilding( "Fortress" ) ) )
                 {
-                    p.VictoryPoints++;
+                    p.BoardVictoryPoints++;
                     GameManager.Instance.UI.DisplayFortressBonus( p );
                 }
             }
@@ -571,7 +572,7 @@ namespace TylerButler.Kingsburg.Core
             player.Gold += enemy.GoldReward;
             player.Wood += enemy.WoodReward;
             player.Stone += enemy.StoneReward;
-            player.VictoryPoints += enemy.VictoryPointReward;
+            player.BoardVictoryPoints += enemy.VictoryPointReward;
 
             if( enemy.GoodReward > 0 )
             {
@@ -592,7 +593,7 @@ namespace TylerButler.Kingsburg.Core
             player.Gold -= enemy.GoldPenalty;
             player.Wood -= enemy.WoodPenalty;
             player.Stone -= enemy.StonePenalty;
-            player.VictoryPoints -= enemy.VictoryPointPenalty;
+            player.BoardVictoryPoints -= enemy.VictoryPointPenalty;
 
             if( enemy.GoodPenalty >= player.GoodsCount )
             {
@@ -630,7 +631,7 @@ namespace TylerButler.Kingsburg.Core
         {
             int VPEarned = p.GoodsCount / 2;
             GameManager.Instance.UI.DisplayCathedralBonus( p, VPEarned );
-            p.VictoryPoints += VPEarned;
+            p.BoardVictoryPoints += VPEarned;
             throw new NotImplementedException();
         }
     }
