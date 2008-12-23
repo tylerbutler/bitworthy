@@ -89,7 +89,7 @@ namespace TylerButler.Kingsburg.Core
 
             foreach( Player p in GameManager.Instance.AllPlayers )
             {
-                HandlePlusTwo(p);
+                HandlePlusTwo( p );
                 HandleMerchantsGuild( p );
                 HandleFarms( p );
                 HandleMarket( p );
@@ -111,7 +111,7 @@ namespace TylerButler.Kingsburg.Core
                             influenced.InfluencingPlayers.Add( p );
                             DiceCollection spent = GameManager.Instance.UI.DisplayChooseDice( p, influenced );
                             p.AllocateDice( spent );
-                            if ( !p.HasUsedPlusTwo &&  spent.GetAllDiceOfType(KingsburgDie.DieTypes.PlusTwo).Count > 0 )
+                            if( !p.HasUsedPlusTwo && spent.GetAllDiceOfType( KingsburgDie.DieTypes.PlusTwo ).Count > 0 )
                             {
                                 p.HasUsedPlusTwo = false;
                             }
@@ -162,6 +162,13 @@ namespace TylerButler.Kingsburg.Core
 
                     // Give VP to player
                     p.VictoryPoints += built.VictoryPointValue;
+                }
+
+                // If player has the Envoy, he can choose to build a second time
+                if( p.Envoy )
+                {
+                    built = null;
+                    built = GameManager.Instance.UI.DisplayUseEnvoyToBuild( p );
                 }
             }
         }
@@ -308,11 +315,11 @@ namespace TylerButler.Kingsburg.Core
             }
         }
 
-        private void HandlePlusTwo(Player p)
+        private void HandlePlusTwo( Player p )
         {
-            if (p.PlusTwoTokens > 0)
+            if( p.PlusTwoTokens > 0 )
             {
-                p.AddDie(new KingsburgDie(KingsburgDie.DieTypes.PlusTwo));
+                p.AddDie( new KingsburgDie( KingsburgDie.DieTypes.PlusTwo ) );
                 p.HasUsedPlusTwo = false;
             }
         }
@@ -465,7 +472,7 @@ namespace TylerButler.Kingsburg.Core
         public override Phase Execute()
         {
             GameManager.Instance.UI.DisplayBattleInfo();
-            Enemy e= GameManager.Instance.Enemies[GameManager.Instance.CurrentYear - 1];
+            Enemy e= GameManager.Instance.EnemiesForGame[GameManager.Instance.CurrentYear - 1];
 
             int reinforcements = GetKingsReinforcements();
             GameManager.Instance.UI.DisplayKingsReinforcements( reinforcements );
@@ -539,8 +546,8 @@ namespace TylerButler.Kingsburg.Core
                 // Check if the player has the stone wall, which allows a tie to count as a victory
                 if( player.HasBuilding( GameManager.Instance.GetBuilding( "Stone Wall" ) ) )
                 {
-                    GameManager.Instance.UI.DisplayBattleResults( player, enemy, BattleResults.Victory );
                     this.AwardPlayerAfterBattle( player, enemy );
+                    GameManager.Instance.UI.DisplayBattleResults( player, enemy, BattleResults.Victory );
                 }
                 else
                 {
@@ -549,6 +556,7 @@ namespace TylerButler.Kingsburg.Core
             }
             else // player loses
             {
+                PenalizePlayerAfterBattle( player, enemy );
                 GameManager.Instance.UI.DisplayBattleResults( player, enemy, BattleResults.Loss );
             }
         }
