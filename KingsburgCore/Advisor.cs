@@ -94,7 +94,7 @@ namespace TylerButler.Kingsburg.Core
             {
                 case Advisors.Jester:
                     // Player gains 1 VP
-                    p.VictoryPoints++;
+                    p.BoardVictoryPoints++;
                     GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
                     break;
                 case Advisors.Squire:
@@ -187,7 +187,7 @@ namespace TylerButler.Kingsburg.Core
                 case Advisors.Smuggler:
                     // Pay a VP to take 3 goods of choice.
                     GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
-                    p.VictoryPoints--;
+                    p.BoardVictoryPoints--;
                     p.AddGood( (GoodsChoiceOptions)returnData[0] );
                     p.AddGood( (GoodsChoiceOptions)returnData[1] );
                     p.AddGood( (GoodsChoiceOptions)returnData[2] );
@@ -209,7 +209,7 @@ namespace TylerButler.Kingsburg.Core
                     GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     p.AddGood( (GoodsChoiceOptions)returnData[0] );
                     p.AddGood( (GoodsChoiceOptions)returnData[1] );
-                    p.VictoryPoints += 3;
+                    p.BoardVictoryPoints += 3;
                     break;
                 case Advisors.King:
                     // take one of each good and a soldier
