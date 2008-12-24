@@ -1,101 +1,94 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="KingsburgXNA.Screens.BoardBackgroundScreen" Collapsed="true">
-    <Position X="6" Y="1.5" Width="1.75" />
+    <Position X="4.75" Y="1.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>GAAAAQABAAEAAwAAAAACAAAEEAAQAAAAYCAAABAgAAQ=</HashCode>
+      <HashCode>GAAAAQABAAEAAwAAAAACAAAEEAAQAAAIYCAAABAgAAQ=</HashCode>
       <FileName>Screens\BoardBackgroundScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="KingsburgXNA.Screens.ErrorScreen" Collapsed="true">
-    <Position X="16.75" Y="1.75" Width="1.5" />
+    <Position X="14.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAoAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAAAAAAEAAAQ=</HashCode>
       <FileName>Screens\Unused\ErrorScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="KingsburgXNA.Screens.SignInScreen" Collapsed="true">
-    <Position X="9.75" Y="3.25" Width="1.75" />
+    <Position X="7.25" Y="3.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAwAAAAAAAAAAAAgCAAAAAAAAQAAAAAA=</HashCode>
       <FileName>Screens\SignInScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="KingsburgXNA.Screens.MainGameScreen" Collapsed="true">
+  <Class Name="KingsburgXNA.Screens.MainGameScreen">
     <Position X="4.75" Y="3.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAASAQ=</HashCode>
+      <HashCode>AAAAAACAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAACAQ=</HashCode>
       <FileName>Screens\MainGameScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="KingsburgXNA.Screens.StartScreen" Collapsed="true">
-    <Position X="14.5" Y="3.25" Width="1.5" />
+    <Position X="12" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAEABAAAAAAAAAAAAAAAAAAAAAAAAIAAIAAAAAAAA=</HashCode>
+      <HashCode>AAQAEABAAAAAAgAAAAAAAAAAAAAAAAAIAAIAAAAAAAA=</HashCode>
       <FileName>Screens\StartScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="KingsburgXNA.Screens.TitleBackgroundScreen" Collapsed="true">
-    <Position X="12" Y="1.75" Width="1.75" />
+    <Position X="9.5" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAABAAAAAAAAgAAAQ=</HashCode>
       <FileName>Screens\TitleBackgroundScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="KingsburgXNA.Screens.TitleScreen" Collapsed="true">
-    <Position X="12.25" Y="3.25" Width="1.5" />
+    <Position X="9.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>FAAAAAAACAAAAgAAAAAAAAgAAAgACAAQAAAAAAAAgAQ=</HashCode>
+      <HashCode>AAQAAACACAAAAggAAAAAAAgAAAgACAAQAAAAAAAAgAQ=</HashCode>
       <FileName>Screens\TitleScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="KingsburgXNA.Screens.GameScreen" Collapsed="true">
-    <Position X="12" Y="0.5" Width="1.5" />
+    <Position X="10.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAwQEACAAARAAwAEEAIQAAAADAAAAI4AAgCGAEYIBAQ=</HashCode>
       <FileName>ScreenManager\GameScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="KingsburgXNA.Screens.LoadingScreen" Collapsed="true">
-    <Position X="19" Y="1.75" Width="1.5" />
+    <Position X="16.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABRAgAAAAAAAAgAAAAAQAAEAAEAAAAABAAAAAgAAAAQ=</HashCode>
       <FileName>Screens\LoadingScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="KingsburgXNA.Screens.MainMenuScreen" Collapsed="true">
-    <Position X="7.25" Y="3.25" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAQAAACAQAAAAwgAAAAIAAgAAIAiAAAQAAAAAAAAgAQ=</HashCode>
-      <FileName>Screens\MainMenuScreen.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="KingsburgXNA.Screens.MenuComponent" Collapsed="true">
-    <Position X="21.5" Y="0.5" Width="1.5" />
+    <Position X="19" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIBAAACAAQgAAhABgAAIAAYBAQAIAAEACAEAAEVCQAQ=</HashCode>
+      <HashCode>AIJAAACAAQgAAhABgAAIAAYBAQAIAAEACAAAAEVCQAQ=</HashCode>
       <FileName>ScreenManager\MenuComponent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="KingsburgXNA.Screens.ScreenState" Collapsed="true">
-    <Position X="21.5" Y="1.75" Width="1.5" />
+    <Position X="19" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAgAAAIAAAEAAA=</HashCode>
       <FileName>ScreenManager\GameScreen.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Delegate Name="KingsburgXNA.Screens.ScreenExited" Collapsed="true">
-    <Position X="23.25" Y="2.75" Width="1.5" />
+    <Position X="20.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Screens\SignInScreen.cs</FileName>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="KingsburgXNA.Screens.MenuEventHandler" Collapsed="true">
-    <Position X="21.5" Y="2.75" Width="1.5" />
+    <Position X="19" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Screens\MainMenuScreen.cs</FileName>
+      <FileName>Screens\Unused\MainMenuScreen.cs</FileName>
     </TypeIdentifier>
   </Delegate>
   <Font Name="Segoe UI" Size="9" />

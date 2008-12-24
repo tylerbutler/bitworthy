@@ -100,7 +100,8 @@
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="ScreenManager\MenuComponent.cs" />
     <Compile Include="ScreenManager\Unused\MenuEntry.cs" />
-    <Compile Include="Screens\MainMenuScreen.cs" />
+    <Compile Include="Screens\Phase1Screen.cs" />
+    <Compile Include="Screens\Unused\MainMenuScreen.cs" />
     <Compile Include="ScreenManager\Unused\MessageBoxScreen.cs" />
     <Compile Include="ScreenManager\Unused\SaveLoadScreen.cs" />
     <Compile Include="ScreenManager\ScreenManager.cs" />
@@ -111,6 +112,8 @@
     <Compile Include="Screens\StartScreen.cs" />
     <Compile Include="Screens\TitleBackgroundScreen.cs" />
     <Compile Include="Screens\TitleScreen.cs" />
+    <Compile Include="StaticData.cs" />
+    <Compile Include="XNAPhase1.cs" />
     <Compile Include="XNAPlayer.cs" />
     <Compile Include="XNAPlayerColor.cs" />
   </ItemGroup>

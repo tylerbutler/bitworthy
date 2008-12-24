@@ -305,8 +305,7 @@ namespace KingsburgXNA.Screens
         #endregion
 
         #region Properties
-
-
+        
         /// <summary>
         /// A default SpriteBatch shared by all the screens. This saves
         /// each screen having to bother creating their own local instance.
@@ -524,7 +523,7 @@ namespace KingsburgXNA.Screens
             screens.Add( screen );
 
             // Print debug trace?
-            if( traceEnabled )
+            if( TraceEnabled )
                 TraceScreens();
         }
 
@@ -547,7 +546,7 @@ namespace KingsburgXNA.Screens
             screensToUpdate.Remove( screen );
 
             // Print debug trace?
-            if( traceEnabled )
+            if( TraceEnabled )
                 TraceScreens();
         }
 

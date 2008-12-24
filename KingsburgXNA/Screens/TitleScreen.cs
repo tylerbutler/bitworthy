@@ -25,14 +25,19 @@ namespace KingsburgXNA.Screens
             : base()
         {
             this.Game = game;
-            menu = new MenuComponent( Game, Fonts.DescriptionFont );
+            menu = new MenuComponent( Game, Fonts.HeaderFont );
+            menu.Initialize();
 
-            menu.AddText( "New Game", "Start a new game." );
-            menu.AddText( "Exit", "Exit the game." );
+            menu.AddText( "New Game" );
+            menu.AddText( "Exit" );
 
             menu.uiBounds = menu.GetExtents();
             menu.uiBounds.Offset( menu.uiBounds.X, 300 );
-            menu.SelectedColor = Color.MediumBlue;
+
+            menu.CenterMenu( game.GraphicsDevice.Viewport );
+
+            menu.SelectedColor = Color.White;
+            menu.UnselectedColor = Color.Black;
             menu.MenuOptionSelected += new MenuEventHandler( menu_MenuOptionSelected );
             menu.MenuCancelled += new MenuEventHandler( menu_MenuCancelled );
         }
@@ -104,10 +109,10 @@ namespace KingsburgXNA.Screens
             Vector2 stringMeasure = font.MeasureString( "Select" );
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
-            spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
+            spriteBatch.Begin( SpriteBlendMode.AlphaBlend );
             spriteBatch.DrawString( Fonts.DescriptionFont, selectString, position, Color.White );
             position.X += stringMeasure.X;
-            spriteBatch.Draw( selectTexture, position, null, Color.White, 0, Vector2.Zero, .33f, SpriteEffects.None, 1.0f );
+            spriteBatch.Draw( selectTexture, position, Color.White );
             spriteBatch.End();
         }
     }

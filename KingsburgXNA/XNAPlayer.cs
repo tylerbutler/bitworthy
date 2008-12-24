@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Storage;
+using KingsburgXNA.Screens;
+using Microsoft.Xna.Framework.Net;
 
 namespace KingsburgXNA
 {
@@ -47,19 +49,35 @@ namespace KingsburgXNA
         public void InitFromGamer( SignedInGamer gamer, XNAPlayerColor color )
         {
             this.SignedInGamer = gamer;
-            InitCommon( SignedInGamer.PlayerIndex, color );
+            Texture2D picture;
+
+            try
+            {
+                GamerProfile profile = SignedInGamer.GetProfile();
+                picture = profile.GamerPicture;
+            }
+            catch( NetworkException )
+            {
+                // Due to a bug in XNA Windows Live, this call might fail if the player has a picture
+                // based on an Avatar from the NXE. Therefor, catching the exception and setting
+                // the value to a default. See http://forums.xna.com/forums/p/21649/114949.aspx for
+                // more info.
+                picture = StaticData.DefaultGamerPicture;
+            }
+            InitCommon( SignedInGamer.PlayerIndex, picture, color );
         }
 
-        public void InitLocal( PlayerIndex controller, string name, XNAPlayerColor color )
+        public void InitLocal( PlayerIndex controller, string name, Texture2D gamerPicture, XNAPlayerColor color )
         {
             this.Name = name;
-            InitCommon( controller, color );
+            InitCommon( controller, gamerPicture, color );
         }
 
-        private void InitCommon( PlayerIndex controller, XNAPlayerColor color )
+        private void InitCommon( PlayerIndex controller, Texture2D picture, XNAPlayerColor color )
         {
             this.Controller = controller;
             this.Color = color;
+            this.Picture = picture;
             this.IsPlaying = true;
         }
 

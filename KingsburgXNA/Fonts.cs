@@ -380,13 +380,13 @@ namespace KingsburgXNA.Screens
         }
 
 
-        /// <summary>
-        /// Returns a properly-formatted gold-quantity string.
-        /// </summary>
-        public static string GetGoldString( int gold )
-        {
-            return String.Format( "{0:n0}", gold );
-        }
+        ///// <summary>
+        ///// Returns a properly-formatted gold-quantity string.
+        ///// </summary>
+        //public static string GetGoldString( int gold )
+        //{
+        //    return String.Format( "{0:n0}", gold );
+        //}
 
 
         #endregion

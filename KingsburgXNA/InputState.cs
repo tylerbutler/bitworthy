@@ -292,6 +292,14 @@ namespace KingsburgXNA
                 toReturn[(int)Action.Back] = new ActionMap();
                 toReturn[(int)Action.Back].AddGamePadButtons( Buttons.B, Buttons.Back );
                 toReturn[(int)Action.Back].AddKeyboardKeys( Keys.Back, Keys.Escape );
+
+                toReturn[(int)Action.StartButton] = new ActionMap();
+                toReturn[(int)Action.StartButton].AddGamePadButtons( Buttons.Start );
+                toReturn[(int)Action.StartButton].AddKeyboardKeys( Keys.Enter, Keys.Space );
+
+                toReturn[(int)Action.DebugExit] = new ActionMap();
+                toReturn[(int)Action.DebugExit].AddGamePadButtons( Buttons.RightStick );
+                toReturn[(int)Action.DebugExit].AddKeyboardKeys( Keys.End );
                 
                 return toReturn;
             }
@@ -306,6 +314,8 @@ namespace KingsburgXNA
         Down,
         OK,
         Back,
+        StartButton,
+        DebugExit,
         TotalActions,
     }
 

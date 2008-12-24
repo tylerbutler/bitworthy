@@ -21,11 +21,18 @@ namespace KingsburgXNA.Screens
         Vector2 boardPosition = Vector2.Zero;
         Vector2 buildingsPosition = new Vector2( 1, 100 );
         Vector2 playerTitlePosition = Vector2.Zero;
-        Vector2 goldPosition = new Vector2( 268, 0 );
-        Vector2 woodPosition = new Vector2( 368, 0 );
-        Vector2 stonePosition = new Vector2( 468, 0 );
+        Vector2 goldPosition = new Vector2( 262, 0 );
+        Vector2 woodPosition = new Vector2( 362, 0 );
+        Vector2 stonePosition = new Vector2( 462, 0 );
         Rectangle infoPosition = new Rectangle( 277, 515, 283, 205 );
 
+        public Game1 game;
+
+        public BoardBackgroundScreen( Game1 game ) : base()
+        {
+            this.game = game;
+        }
+        
         public override void Initialize()
         {
             isBackgroundOn = true;

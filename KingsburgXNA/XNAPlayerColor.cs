@@ -14,5 +14,7 @@ namespace KingsburgXNA
         Red,
         Yellow,
         Green,
+        White, // Only for Dice
+        //TotalColors, // Should always be last
     }
 }

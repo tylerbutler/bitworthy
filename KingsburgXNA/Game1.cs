@@ -74,6 +74,7 @@ namespace KingsburgXNA
 
             // TODO: use this.Content to load your game content here            
             Fonts.LoadContent( Content );
+            StaticData.LoadContent( Content );
         }
 
         /// <summary>
@@ -129,7 +130,9 @@ namespace KingsburgXNA
             {
                 SignedInGamer gamer = NetworkManager.FindGamer( index );
                 if( gamer == null )  // No signed in gamer on this controller
-                    Data.Player1.InitLocal( index, "Player 1", XNAPlayerColor.Blue );
+                {
+                    Data.Player1.InitLocal( index, "Player 1", StaticData.DefaultGamerPicture, XNAPlayerColor.Blue );
+                }
                 else
                 {
                     Data.Player1.InitFromGamer( gamer, XNAPlayerColor.Blue );
@@ -137,29 +140,33 @@ namespace KingsburgXNA
             }
         }
 
-        public void InitializePlayer2( PlayerIndex index )
-        {
-            if( !Data.Player2.IsPlaying )
-            {
-                SignedInGamer gamer = NetworkManager.FindGamer( index );
-                if( gamer == null )  // No signed in gamer on this controller
-                    Data.Player2.InitLocal( index, "Player 2", XNAPlayerColor.Red );
-                else
-                {
-                    Data.Player2.InitFromGamer( gamer, XNAPlayerColor.Red );
-                }
-            }
-        }
+        //public void InitializePlayer2( PlayerIndex index )
+        //{
+        //    if( !Data.Player2.IsPlaying )
+        //    {
+        //        SignedInGamer gamer = NetworkManager.FindGamer( index );
+        //        if( gamer == null )  // No signed in gamer on this controller
+        //        {
+        //            Data.Player2.InitLocal( index, "Player 2", StaticData.DefaultGamerPicture, XNAPlayerColor.Red );
+        //        }
+        //        else
+        //        {
+        //            Data.Player2.InitFromGamer( gamer, XNAPlayerColor.Red );
+        //        }
+        //    }
+        //}
 
         public void StartGame()
         {
             ResetGame();
-            screenManager.AddScreen( new MainGameScreen() );
+            Data.StartGame();
+            screenManager.AddScreen( new MainGameScreen( this ) );
         }
 
         public void ResetGame()
         {
-            this.Data = new GameData( this );
+            //this.Data = new GameData( this );
+            Data.CurrentPlayer = Data.Player1;
         }
 
         [Conditional( "DEBUG" )]

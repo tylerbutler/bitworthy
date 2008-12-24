@@ -29,7 +29,8 @@ namespace KingsburgXNA.Screens
         Texture2D title;
         Texture2D btnA;
 
-        public MainMenuScreen()
+        public MainMenuScreen( Game1 game )
+            : base( game )
         {
         }
 

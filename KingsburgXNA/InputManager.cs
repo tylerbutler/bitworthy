@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 #endregion
 
 namespace KingsburgXNA
@@ -918,12 +919,12 @@ namespace KingsburgXNA
 
         public override void Update( GameTime gameTime )
         {
-            PlayerIndex player2Controller;
-            if( GamePad.GetState( game.Data.Player1.Controller ).IsConnected )
-            {
-                CheckPlayerTwoStart( game.Data.Player1.Controller, out player2Controller );
-                game.InitializePlayer2( player2Controller );
-            }
+            //PlayerIndex player2Controller;
+            //if( GamePad.GetState( game.Data.Player1.Controller ).IsConnected )
+            //{
+            //    CheckPlayerTwoStart( game.Data.Player1.Controller, out player2Controller );
+            //    game.InitializePlayer2( player2Controller );
+            //}
             
             base.Update( gameTime );
         }
@@ -969,39 +970,39 @@ namespace KingsburgXNA
         /// <param name="playerOne">The index of player one.</param>
         /// <param name="playerTwo">The returned index of the lowest player who has pressed start.</param>
         /// <returns>True if player two pressed start, otherwise false.</returns>
-        public static bool CheckPlayerTwoStart( PlayerIndex playerOne, out PlayerIndex playerTwo )
-        {
-            playerTwo = playerOne;
-            if( IsSupported( GamePad.GetCapabilities( PlayerIndex.One ).GamePadType ) &&
-                ( GamePad.GetState( PlayerIndex.One ).Buttons.Start == ButtonState.Pressed ) &&
-                ( playerOne != PlayerIndex.One ) )
-            {
-                playerTwo = PlayerIndex.One;
-                return true;
-            }
-            if( IsSupported( GamePad.GetCapabilities( PlayerIndex.Two ).GamePadType ) &&
-                ( GamePad.GetState( PlayerIndex.Two ).Buttons.Start == ButtonState.Pressed ) &&
-                ( playerOne != PlayerIndex.Two ) )
-            {
-                playerTwo = PlayerIndex.Two;
-                return true;
-            }
-            if( IsSupported( GamePad.GetCapabilities( PlayerIndex.Three ).GamePadType ) &&
-                ( GamePad.GetState( PlayerIndex.Three ).Buttons.Start == ButtonState.Pressed ) &&
-                ( playerOne != PlayerIndex.Three ) )
-            {
-                playerTwo = PlayerIndex.Three;
-                return true;
-            }
-            if( IsSupported( GamePad.GetCapabilities( PlayerIndex.Four ).GamePadType ) &&
-                ( GamePad.GetState( PlayerIndex.Four ).Buttons.Start == ButtonState.Pressed ) &&
-                ( playerOne != PlayerIndex.Four ) )
-            {
-                playerTwo = PlayerIndex.Four;
-                return true;
-            }
-            return false;
-        }
+        //public static bool CheckPlayerTwoStart( PlayerIndex playerOne, out PlayerIndex playerTwo )
+        //{
+        //    playerTwo = playerOne;
+        //    if( IsSupported( GamePad.GetCapabilities( PlayerIndex.One ).GamePadType ) &&
+        //        ( GamePad.GetState( PlayerIndex.One ).Buttons.Start == ButtonState.Pressed ) &&
+        //        ( playerOne != PlayerIndex.One ) )
+        //    {
+        //        playerTwo = PlayerIndex.One;
+        //        return true;
+        //    }
+        //    if( IsSupported( GamePad.GetCapabilities( PlayerIndex.Two ).GamePadType ) &&
+        //        ( GamePad.GetState( PlayerIndex.Two ).Buttons.Start == ButtonState.Pressed ) &&
+        //        ( playerOne != PlayerIndex.Two ) )
+        //    {
+        //        playerTwo = PlayerIndex.Two;
+        //        return true;
+        //    }
+        //    if( IsSupported( GamePad.GetCapabilities( PlayerIndex.Three ).GamePadType ) &&
+        //        ( GamePad.GetState( PlayerIndex.Three ).Buttons.Start == ButtonState.Pressed ) &&
+        //        ( playerOne != PlayerIndex.Three ) )
+        //    {
+        //        playerTwo = PlayerIndex.Three;
+        //        return true;
+        //    }
+        //    if( IsSupported( GamePad.GetCapabilities( PlayerIndex.Four ).GamePadType ) &&
+        //        ( GamePad.GetState( PlayerIndex.Four ).Buttons.Start == ButtonState.Pressed ) &&
+        //        ( playerOne != PlayerIndex.Four ) )
+        //    {
+        //        playerTwo = PlayerIndex.Four;
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
         /// <summary>
         /// This function determines if a controller is a type we support.
@@ -1012,9 +1013,20 @@ namespace KingsburgXNA
         /// <returns>true if the controller is supported by this game.</returns>
         private static bool IsSupported( GamePadType type )
         {
-            return ( ( type == GamePadType.GamePad ) ||
-                    ( type == GamePadType.ArcadeStick ) ||
-                    ( type == GamePadType.FlightStick ) );
+            //return ( ( type == GamePadType.GamePad ) ||
+            //        ( type == GamePadType.ArcadeStick ) ||
+            //        ( type == GamePadType.FlightStick ) );
+            return ( type == GamePadType.GamePad );
+        }
+
+        [Conditional( "DEBUG" )]
+        public static void DebugExit( InputState input, Game game )
+        {
+            if( input.CheckAction( Action.DebugExit ) )
+            {
+                Trace.WriteLine( "Debug Exit was triggered, exiting game." );
+                game.Exit();
+            }
         }
     }
 }

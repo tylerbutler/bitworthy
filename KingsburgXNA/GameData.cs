@@ -11,8 +11,9 @@ namespace KingsburgXNA
         #region Fields
 
         public PhasesEnum CurrentPhase = PhasesEnum.Start;
+        public XNAPlayer CurrentPlayer;
         public XNAPlayer Player1 = new XNAPlayer();
-        public XNAPlayer Player2 = new XNAPlayer();
+        //public XNAPlayer Player2 = new XNAPlayer();
         private Game1 game;
 
         #endregion
@@ -22,8 +23,12 @@ namespace KingsburgXNA
         {
             this.game = game;
             AddPlayer( Player1 );
-            AddPlayer( Player2 );
+            //AddPlayer( Player2 );
         }
 
+        public void StartGame()
+        {
+            CurrentPhase = PhasesEnum.Phase1;
+        }
     }
 }

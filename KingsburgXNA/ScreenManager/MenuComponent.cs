@@ -107,8 +107,7 @@ namespace KingsburgXNA.Screens
         public void HandleInput( InputState input )
         {
             // If back or B are pressed, cancel menu
-            if( input.IsNewButtonPress( Buttons.B ) ||
-                input.IsNewButtonPress( Buttons.Back ) )
+            if( input.CheckAction( Action.Back ) )
             {
                 MenuCancelled.Invoke( -1 );
                 return;
@@ -122,21 +121,24 @@ namespace KingsburgXNA.Screens
                 return;
             }
 
-            if( input.IsNewButtonPress( Buttons.DPadDown ) ||
-                input.IsNewButtonPress( Buttons.LeftThumbstickDown ) )
+            if( input.CheckAction( Action.Down ) )
             {
                 Selection++;
             }
-            if( input.IsNewButtonPress( Buttons.DPadUp ) ||
-                input.IsNewButtonPress( Buttons.LeftThumbstickUp ) )
+            if( input.CheckAction( Action.Up ) )
             {
                 Selection--;
             }
 
             if( Selection >= MenuItems.Count )
+            {
                 Selection -= MenuItems.Count;
+            }
+
             if( Selection < 0 )
+            {
                 Selection += MenuItems.Count;
+            }
         }
 
         private static int RoundUp( float value )
@@ -147,7 +149,10 @@ namespace KingsburgXNA.Screens
             return retval;
         }
 
-        // Get the menu size, in pixels
+        /// <summary>
+        /// Get the menu size, in pixels
+        /// </summary>
+        /// <returns> A Rectangle respresenting the menu size.</returns>
         public Rectangle GetExtents()
         {
             int width = 0;
@@ -179,6 +184,7 @@ namespace KingsburgXNA.Screens
             view.Height = uiBounds.Height;
             return view;
         }
+
         /// <summary>
         /// Center the menu in a given viewport
         /// </summary>
