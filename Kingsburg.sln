@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KingsburgWindows", "Kingsbu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KingsburgWinForms", "KingsburgWinForms\KingsburgWinForms.csproj", "{1435FA32-819C-4C77-AC3E-3368C6B6D298}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KingsburgXNA", "KingsburgXNA\KingsburgXNA.csproj", "{F44169B0-9CA9-47DB-BD1E-1EDC5E21E2BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,12 +59,28 @@ Global
 		{1435FA32-819C-4C77-AC3E-3368C6B6D298}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1435FA32-819C-4C77-AC3E-3368C6B6D298}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1435FA32-819C-4C77-AC3E-3368C6B6D298}.Release|x86.ActiveCfg = Release|Any CPU
+		{F44169B0-9CA9-47DB-BD1E-1EDC5E21E2BC}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F44169B0-9CA9-47DB-BD1E-1EDC5E21E2BC}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{F44169B0-9CA9-47DB-BD1E-1EDC5E21E2BC}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F44169B0-9CA9-47DB-BD1E-1EDC5E21E2BC}.Debug|x86.ActiveCfg = Debug|x86
+		{F44169B0-9CA9-47DB-BD1E-1EDC5E21E2BC}.Debug|x86.Build.0 = Debug|x86
+		{F44169B0-9CA9-47DB-BD1E-1EDC5E21E2BC}.Release|Any CPU.ActiveCfg = Release|x86
+		{F44169B0-9CA9-47DB-BD1E-1EDC5E21E2BC}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{F44169B0-9CA9-47DB-BD1E-1EDC5E21E2BC}.Release|Mixed Platforms.Build.0 = Release|x86
+		{F44169B0-9CA9-47DB-BD1E-1EDC5E21E2BC}.Release|x86.ActiveCfg = Release|x86
+		{F44169B0-9CA9-47DB-BD1E-1EDC5E21E2BC}.Release|x86.Build.0 = Release|x86
 		{3DF2F108-759D-44BE-814C-F90AD33CB0FC}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{3DF2F108-759D-44BE-814C-F90AD33CB0FC}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{3DF2F108-759D-44BE-814C-F90AD33CB0FC}.Debug|x86.ActiveCfg = Debug|x86
 		{3DF2F108-759D-44BE-814C-F90AD33CB0FC}.Release|Any CPU.ActiveCfg = Release|x86
 		{3DF2F108-759D-44BE-814C-F90AD33CB0FC}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{3DF2F108-759D-44BE-814C-F90AD33CB0FC}.Release|x86.ActiveCfg = Release|x86
+		{F97A1E6B-EC50-4839-AF87-C80762A57B5F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F97A1E6B-EC50-4839-AF87-C80762A57B5F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{F97A1E6B-EC50-4839-AF87-C80762A57B5F}.Debug|x86.ActiveCfg = Debug|x86
+		{F97A1E6B-EC50-4839-AF87-C80762A57B5F}.Release|Any CPU.ActiveCfg = Release|x86
+		{F97A1E6B-EC50-4839-AF87-C80762A57B5F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{F97A1E6B-EC50-4839-AF87-C80762A57B5F}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

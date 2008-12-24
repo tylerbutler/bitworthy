@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="KingsburgXNA.Screens.BoardBackgroundScreen" Collapsed="true">
+    <Position X="4.75" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>GAAAAQABAAEAAwAAAAACAAAEEAAQAAAIYCAAABAgAAQ=</HashCode>
+      <FileName>Screens\BoardBackgroundScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.ErrorScreen" Collapsed="true">
+    <Position X="14.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAoAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAAAAAAEAAAQ=</HashCode>
+      <FileName>Screens\Unused\ErrorScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.SignInScreen" Collapsed="true">
+    <Position X="7.25" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAwAAAAAAAAAAAAgCAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Screens\SignInScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.MainGameScreen">
+    <Position X="4.75" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAACAQ=</HashCode>
+      <FileName>Screens\MainGameScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.StartScreen" Collapsed="true">
+    <Position X="12" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEABAAAAAAgAAAAAAAAAAAAAAAAAIAAIAAAAAAAA=</HashCode>
+      <FileName>Screens\StartScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.TitleBackgroundScreen" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAABAAAAAAAAgAAAQ=</HashCode>
+      <FileName>Screens\TitleBackgroundScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.TitleScreen" Collapsed="true">
+    <Position X="9.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACACAAAAggAAAAAAAgAAAgACAAQAAAAAAAAgAQ=</HashCode>
+      <FileName>Screens\TitleScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.GameScreen" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwQEACAAARAAwAEEAIQAAAADAAAAI4AAgCGAEYIBAQ=</HashCode>
+      <FileName>ScreenManager\GameScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.LoadingScreen" Collapsed="true">
+    <Position X="16.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABRAgAAAAAAAAgAAAAAQAAEAAEAAAAABAAAAAgAAAAQ=</HashCode>
+      <FileName>Screens\LoadingScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KingsburgXNA.Screens.MenuComponent" Collapsed="true">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIJAAACAAQgAAhABgAAIAAYBAQAIAAEACAAAAEVCQAQ=</HashCode>
+      <FileName>ScreenManager\MenuComponent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="KingsburgXNA.Screens.ScreenState" Collapsed="true">
+    <Position X="19" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAgAAAIAAAEAAA=</HashCode>
+      <FileName>ScreenManager\GameScreen.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="KingsburgXNA.Screens.ScreenExited" Collapsed="true">
+    <Position X="20.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Screens\SignInScreen.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="KingsburgXNA.Screens.MenuEventHandler" Collapsed="true">
+    <Position X="19" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Screens\Unused\MainMenuScreen.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

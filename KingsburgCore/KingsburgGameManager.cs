@@ -12,9 +12,9 @@ namespace TylerButler.Kingsburg.Core
     public class GameManager : Game
     {
         private static GameManager instance = null;
-        private PlayerCollection playerOrderPrimary;
-        private PlayerCollection playerOrderSecondary;
-        private PlayerCollection allPlayers;
+        private PlayerCollection playerOrderPrimary = new PlayerCollection();
+        private PlayerCollection playerOrderSecondary = new PlayerCollection();
+        private PlayerCollection allPlayers = new PlayerCollection();
         private readonly BuildingCollection buildings = DataLoader.LoadBuildings( Path.Combine( Properties.Settings.Default.DataPath, "Buildings.xml" ) );
         private readonly AdvisorCollection advisors = DataLoader.LoadAdvisors( Path.Combine( Properties.Settings.Default.DataPath, "Advisors.xml" ) );
         private readonly EnemyCollection enemies = DataLoader.LoadEnemies( Path.Combine( Properties.Settings.Default.DataPath, "Enemies.xml" ) );
@@ -29,7 +29,7 @@ namespace TylerButler.Kingsburg.Core
             // not to mark type as beforefieldinit
         }
 
-        GameManager()
+        public GameManager()
             : base()
         {
 
@@ -118,6 +118,11 @@ namespace TylerButler.Kingsburg.Core
             {
                 this.allPlayers = value;
             }
+        }
+
+        public void AddPlayer( Player player )
+        {
+            AllPlayers.Add( player );
         }
 
         public Enemy[] EnemiesForGame
