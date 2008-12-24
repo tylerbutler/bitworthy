@@ -17,6 +17,12 @@ git push origin <branch>
 DELETE A REMOTE BRANCH
 git push <repository> :heads/<branch>
 
+COMPARE 2 BRANCHES
+git diff <branch>..<branch>
+
+COMPARE 2 BRANCHES SMALL OUTPUT
+git diff <branch>..<branch> --stat
+
 TO MERGE CHANGES FROM MASTER TO A BRANCH
 git co <branch>
 git rebase master
@@ -37,3 +43,14 @@ git stash save <optional-name>
 TO DELETE THE STASH (ERASE THE “CLIPBOARD” FROM MEMORY)
 git stash clear
 
+REVERT ALL CHANGES IN UNSTAGED FILES
+git checkout HEAD -- $(git ls-files -m)
+
+SHOW WHO AUTHORED EACH LINE IN A FILE
+git blame <file>
+
+SHOW WHO AUTHORED EACH LINE IN A FILE IN A SPECIFIC REVISION
+git blame <file> <rev>
+
+LIST THE COMMITS THAT AFFECTED A FILE
+git whatchanged <file>
