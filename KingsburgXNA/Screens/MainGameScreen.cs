@@ -82,31 +82,50 @@ namespace KingsburgXNA.Screens
             base.Update( gameTime, otherScreenHasFocus, coveredByOtherScreen );
 
             bool hidden = coveredByOtherScreen || otherScreenHasFocus;
-            //if( !hidden )
-            //{
-            //    switch( game.Data.CurrentPhase )
-            //    {
-            //        case PhasesEnum.Start:
-            //            // The game has just started, set the start phase to Phase1
-            //            game.Data.CurrentPhase = PhasesEnum.Phase1;
-            //            break;
-            //        case PhasesEnum.Phase1:
-            //            HandlePhase1();
-            //            break;
-            //    }
-            //}
+            if( !hidden )
+            {
+                switch( game.Data.CurrentPhase )
+                {
+                    case PhasesEnum.Start:
+                        // The game has just started, set the start phase to Phase1
+                        game.Data.CurrentPhase = PhasesEnum.Phase1;
+                        break;
+                    case PhasesEnum.Phase1:
+                        HandlePhase1();
+                        break;
+                }
+            }
         }
 
         #endregion
 
         #region Handle the Phases
 
+        #region Phase 1
         Phase phase = new Phase1();
         public void HandlePhase1()
         {
             Phase1 phase1 = (Phase1)phase;
-
+            Phase1InfoScreen phaseInfo = new Phase1InfoScreen();
+            phaseInfo.Accepted += new EventHandler<EventArgs>( phaseInfo_Accepted );
+            ScreenManager.AddScreen( phaseInfo );
         }
+
+        void phaseInfo_Accepted( object sender, EventArgs e )
+        {
+            // User has closed the phase info message, so do the other phase action
+            Phase1 phase1 = (Phase1)phase;
+            PlayerCollection pc = phase1.FindKingsAid();
+            Phase1KingsAidScreen kingsAidScreen = new Phase1KingsAidScreen( pc );
+            kingsAidScreen.Accepted += new EventHandler<EventArgs>( kingsAidScreen_Accepted );
+            ScreenManager.AddScreen( kingsAidScreen );
+        }
+
+        void kingsAidScreen_Accepted( object sender, EventArgs e )
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
 
         #endregion
     }

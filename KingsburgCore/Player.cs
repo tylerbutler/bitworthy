@@ -22,7 +22,8 @@ namespace TylerButler.Kingsburg.Core
         {
         }
 
-        public Player() : this( "Name", "Description" )
+        public Player()
+            : this( "Name", "Description" )
         {
         }
 
@@ -659,6 +660,27 @@ namespace TylerButler.Kingsburg.Core
         public PlayerCollection( IEnumerable<Player> collection )
             : base( collection )
         {
+        }
+
+        public PlayerCollection( Player player )
+            : this()
+        {
+            this.Add( player );
+        }
+
+        public override string ToString()
+        {
+            String toReturn = "";
+            foreach( Player p in this )
+            {
+                toReturn += p.Name + ", ";
+            }
+
+            if( toReturn.Length > 0 )
+            {
+                toReturn = toReturn.Substring( 0, toReturn.Length - 2 );
+            }
+            return toReturn;
         }
     }
 }

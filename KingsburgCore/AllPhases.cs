@@ -31,38 +31,47 @@ namespace TylerButler.Kingsburg.Core
 
         public override Phase Execute()
         {
-            GameManager k = GameManager.Instance;
-            k.CurrentYear++;
-            //TODO: Pop up phase info message
-            GameManager.Instance.UI.DisplayYearInfo();
-            PlayerCollection LeastBuildingPlayers = k.PlayersWithLowestBuildingCount( k.AllPlayers );
-            if( LeastBuildingPlayers.Count == 1 )
+            GameManager gm = GameManager.Instance;
+            gm.CurrentYear++;
+            gm.UI.DisplayYearInfo();
+            PlayerCollection kingAid = FindKingsAid();
+            if( kingAid.Count > 1 )
             {
-                //LeastBuildingPlayers[0].KingsAidDie = 
-                GameManager.Instance.UI.DisplayKingsAid( LeastBuildingPlayers[0] );
-                LeastBuildingPlayers[0].AddDie();
+                foreach( Player p in kingAid )
+                {
+                    GoodsChoiceOptions choice = GameManager.Instance.UI.DisplayChooseAGood( p, GoodsChoiceOptions.Gold,
+                        GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone );
+                    p.AddGood( choice );
+                }
             }
             else
             {
-                PlayerCollection LeastGoodsPlayers = k.PlayersWithLowestGoodsCount( LeastBuildingPlayers );
+                gm.UI.DisplayKingsAid( kingAid[0] );
+                kingAid[0].AddDie();
+            }
+            return new Phase2();
+        }
+
+        public PlayerCollection FindKingsAid()
+        {
+            GameManager gm = GameManager.Instance;
+            PlayerCollection LeastBuildingPlayers = gm.PlayersWithLowestBuildingCount( gm.AllPlayers );
+            if( LeastBuildingPlayers.Count == 1 )
+            {
+                return new PlayerCollection( LeastBuildingPlayers[0] );
+            }
+            else
+            {
+                PlayerCollection LeastGoodsPlayers = gm.PlayersWithLowestGoodsCount( LeastBuildingPlayers );
                 if( LeastGoodsPlayers.Count == 1 )
                 {
-                    //LeastBuildingPlayers[0].KingsAidDie = 
-                    GameManager.Instance.UI.DisplayKingsAid( LeastGoodsPlayers[0] );
-                    LeastGoodsPlayers[0].AddDie();
+                    return new PlayerCollection( LeastGoodsPlayers[0] );
                 }
                 else
                 {
-                    foreach( Player p in LeastGoodsPlayers )
-                    {
-                        GoodsChoiceOptions choice = GameManager.Instance.UI.DisplayChooseAGood( p, GoodsChoiceOptions.Gold,
-                            GoodsChoiceOptions.Wood, GoodsChoiceOptions.Stone );
-                        p.AddGood( choice );
-                    }
+                    return LeastGoodsPlayers;
                 }
             }
-
-            return new Phase2();
         }
     }
 

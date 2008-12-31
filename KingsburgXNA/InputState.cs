@@ -48,84 +48,6 @@ namespace KingsburgXNA
         #endregion
 
         #region Properties
-
-
-        /// <summary>
-        /// Checks for a "menu up" input action, from any player,
-        /// on either keyboard or gamepad.
-        /// </summary>
-        public bool MenuUp
-        {
-            get
-            {
-                return IsNewKeyPress( Keys.Up ) ||
-                       IsNewButtonPress( Buttons.DPadUp ) ||
-                       IsNewButtonPress( Buttons.LeftThumbstickUp );
-            }
-        }
-
-
-        /// <summary>
-        /// Checks for a "menu down" input action, from any player,
-        /// on either keyboard or gamepad.
-        /// </summary>
-        public bool MenuDown
-        {
-            get
-            {
-                return IsNewKeyPress( Keys.Down ) ||
-                       IsNewButtonPress( Buttons.DPadDown ) ||
-                       IsNewButtonPress( Buttons.LeftThumbstickDown );
-            }
-        }
-
-
-        /// <summary>
-        /// Checks for a "menu select" input action, from any player,
-        /// on either keyboard or gamepad.
-        /// </summary>
-        public bool MenuSelect
-        {
-            get
-            {
-                return IsNewKeyPress( Keys.Space ) ||
-                       IsNewKeyPress( Keys.Enter ) ||
-                       IsNewButtonPress( Buttons.A ) ||
-                       IsNewButtonPress( Buttons.Start );
-            }
-        }
-
-
-        /// <summary>
-        /// Checks for a "menu cancel" input action, from any player,
-        /// on either keyboard or gamepad.
-        /// </summary>
-        public bool MenuCancel
-        {
-            get
-            {
-                return IsNewKeyPress( Keys.Escape ) ||
-                       IsNewButtonPress( Buttons.B ) ||
-                       IsNewButtonPress( Buttons.Back );
-            }
-        }
-
-
-        /// <summary>
-        /// Checks for a "pause the game" input action, from any player,
-        /// on either keyboard or gamepad.
-        /// </summary>
-        public bool PauseGame
-        {
-            get
-            {
-                return IsNewKeyPress( Keys.Escape ) ||
-                       IsNewButtonPress( Buttons.Back ) ||
-                       IsNewButtonPress( Buttons.Start );
-            }
-        }
-
-
         #endregion
 
         #region Methods
@@ -173,7 +95,6 @@ namespace KingsburgXNA
                     LastKeyboardStates[(int)playerIndex].IsKeyUp( key ) );
         }
 
-
         /// <summary>
         /// Helper for checking if a button was newly pressed during this update,
         /// by any player.
@@ -189,7 +110,6 @@ namespace KingsburgXNA
             return false;
         }
 
-
         /// <summary>
         /// Helper for checking if a button was newly pressed during this update,
         /// by the specified player.
@@ -199,30 +119,6 @@ namespace KingsburgXNA
             return ( CurrentGamePadStates[(int)playerIndex].IsButtonDown( button ) &&
                     LastGamePadStates[(int)playerIndex].IsButtonUp( button ) );
         }
-
-
-        ///// <summary>
-        ///// Checks for a "menu select" input action from the specified player.
-        ///// </summary>
-        //public bool IsMenuSelect( PlayerIndex playerIndex )
-        //{
-        //    return IsNewKeyPress( Keys.Space, playerIndex ) ||
-        //           IsNewKeyPress( Keys.Enter, playerIndex ) ||
-        //           IsNewButtonPress( Buttons.A, playerIndex ) ||
-        //           IsNewButtonPress( Buttons.Start, playerIndex );
-        //}
-
-
-        ///// <summary>
-        ///// Checks for a "menu cancel" input action from the specified player.
-        ///// </summary>
-        //public bool IsMenuCancel( PlayerIndex playerIndex )
-        //{
-        //    return IsNewKeyPress( Keys.Escape, playerIndex ) ||
-        //           IsNewButtonPress( Buttons.B, playerIndex ) ||
-        //           IsNewButtonPress( Buttons.Back, playerIndex );
-        //}
-
 
         #endregion
 

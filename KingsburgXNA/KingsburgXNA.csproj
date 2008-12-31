@@ -100,6 +100,7 @@
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="ScreenManager\MenuComponent.cs" />
     <Compile Include="ScreenManager\Unused\MenuEntry.cs" />
+    <Compile Include="Screens\MessageBox.cs" />
     <Compile Include="Screens\Phase1Screen.cs" />
     <Compile Include="Screens\Unused\MainMenuScreen.cs" />
     <Compile Include="ScreenManager\Unused\MessageBoxScreen.cs" />

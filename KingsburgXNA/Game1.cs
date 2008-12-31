@@ -131,7 +131,7 @@ namespace KingsburgXNA
                 SignedInGamer gamer = NetworkManager.FindGamer( index );
                 if( gamer == null )  // No signed in gamer on this controller
                 {
-                    Data.Player1.InitLocal( index, "Player 1", StaticData.DefaultGamerPicture, XNAPlayerColor.Blue );
+                    Data.Player1.InitLocal( index, "Player1", StaticData.DefaultGamerPicture, XNAPlayerColor.Blue );
                 }
                 else
                 {

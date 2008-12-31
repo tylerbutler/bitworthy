@@ -234,8 +234,6 @@ namespace KingsburgXNA.Screens
                 int temp = aboveheight + ( selectheight / 2 );
                 return new Vector2( 0, uiBounds.Height / 2 - temp );
             }
-
-
         }
 
         public override void Draw( GameTime gameTime )
