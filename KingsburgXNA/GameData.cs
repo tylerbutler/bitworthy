@@ -12,7 +12,7 @@ namespace KingsburgXNA
 
         public PhasesEnum CurrentPhase = PhasesEnum.Start;
         public XNAPlayer CurrentPlayer;
-        public XNAPlayer Player1 = new XNAPlayer();
+        public XNAPlayer Player1;
         //public XNAPlayer Player2 = new XNAPlayer();
         private Game1 game;
 
@@ -22,6 +22,7 @@ namespace KingsburgXNA
             : base()
         {
             this.game = game;
+            Player1 = new XNAPlayer( this );
             AddPlayer( Player1 );
             //AddPlayer( Player2 );
         }

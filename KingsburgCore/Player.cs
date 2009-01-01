@@ -7,6 +7,8 @@ namespace TylerButler.Kingsburg.Core
 {
     public class Player : Character
     {
+        protected GameManager gm;
+
         //private Inventory inventory = new Inventory();
         private BuildingCollection buildings = new BuildingCollection();
         private int gold = 0, wood = 0, stone = 0;
@@ -17,13 +19,19 @@ namespace TylerButler.Kingsburg.Core
         HashSet<Advisor> influencedAdvisors = new HashSet<Advisor>();
         private bool hasUsedMarket = false, hasUsedPlusTwo = false;
 
-        public Player( string nameIn, string descriptionIn )
+        public Player( GameManager gm, string nameIn, string descriptionIn )
             : base( nameIn, descriptionIn )
+        {
+            this.gm = gm;
+        }
+
+        public Player( GameManager gm )
+            : this( gm, "Name", "Description" )
         {
         }
 
         public Player()
-            : this( "Name", "Description" )
+            : base( "Name", "Description" )
         {
         }
 
@@ -350,7 +358,7 @@ namespace TylerButler.Kingsburg.Core
             int goldCost = b.GoldCost;
 
             // Adjust gold cost if player has the crane
-            if( this.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Crane" ) ) )
+            if( this.HasBuilding( gm.Buildings.GetBuilding( "Crane" ) ) )
             {
                 goldCost--;
             }
@@ -431,7 +439,7 @@ namespace TylerButler.Kingsburg.Core
             get
             {
                 List<Building> toReturn = new List<Building>();
-                foreach( Building b in GameManager.Instance.Buildings )
+                foreach( Building b in gm.Buildings )
                 {
                     if( this.CanBuild( b ) )
                         if( !this.HasBuilding( b ) )
@@ -445,7 +453,7 @@ namespace TylerButler.Kingsburg.Core
         {
             for( int c = b.Column - 1; c >= 1; c-- )
             {
-                if( !this.Buildings.Contains( GameManager.Instance.Buildings.GetBuilding( b.Row, c ) ) )
+                if( !this.Buildings.Contains( gm.Buildings.GetBuilding( b.Row, c ) ) )
                 {
                     return false;
                 }
@@ -495,7 +503,7 @@ namespace TylerButler.Kingsburg.Core
         {
             get
             {
-                int cost = this.HasBuilding( GameManager.Instance.GetBuilding( "Barracks" ) ) ? 1 : 2;
+                int cost = this.HasBuilding( gm.GetBuilding( "Barracks" ) ) ? 1 : 2;
                 return cost;
             }
         }
@@ -537,7 +545,6 @@ namespace TylerButler.Kingsburg.Core
         public int BonusStrengthAgainstEnemy( Enemy enemy )
         {
             int bonus = 0;
-            GameManager gm = GameManager.Instance;
             switch( enemy.Type )
             {
                 case EnemyType.Zombies:

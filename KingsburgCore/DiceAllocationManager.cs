@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using TylerButler.Kingsburg.Utilities;
+using System;
 
 namespace TylerButler.Kingsburg.Core
 {
     public sealed class DiceAllocationManager
     {
-        private static DiceAllocationManager instance = new DiceAllocationManager();
+        private static DiceAllocationManager instance = null;
+        static GameManager gm;
 
         private DiceAllocationManager()
         {
@@ -16,8 +18,18 @@ namespace TylerButler.Kingsburg.Core
         {
             get
             {
+                if( instance == null )
+                {
+                    throw new Exception( "DiceAllocationManager was not initialized." );
+                }
                 return instance;
             }
+        }
+
+        public static void Initialize( GameManager gameManager )
+        {
+            instance = new DiceAllocationManager();
+            gm = gameManager;
         }
 
         private AdvisorCollection InfluencedAdvisors
@@ -25,7 +37,7 @@ namespace TylerButler.Kingsburg.Core
             get
             {
                 AdvisorCollection toReturn = new AdvisorCollection();
-                foreach( Advisor a in GameManager.Instance.Advisors )
+                foreach( Advisor a in gm.Advisors )
                 {
                     if( a.IsInfluenced )
                     {
@@ -38,7 +50,7 @@ namespace TylerButler.Kingsburg.Core
 
         public bool PlayersHaveDiceToAllocate()
         {
-            foreach( Player p in GameManager.Instance.AllPlayers )
+            foreach( Player p in gm.AllPlayers )
             {
                 if( !p.HasUsedAllDice )
                 {
@@ -50,7 +62,7 @@ namespace TylerButler.Kingsburg.Core
 
         public AdvisorCollection InfluenceableAdvisors( Player p )
         {
-            AdvisorCollection toReturn = new AdvisorCollection( GameManager.Instance.Advisors );
+            AdvisorCollection toReturn = new AdvisorCollection( gm.Advisors );
             if( !p.Envoy )
             {
                 foreach( Advisor a in InfluencedAdvisors )

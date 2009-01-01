@@ -9,12 +9,14 @@ namespace KingsburgXNA.Screens
 {
     class Phase1InfoScreen : MessageBox
     {
-        static Phase1 phase1 = new Phase1();
         bool firstUpdate = true;
 
         public Phase1InfoScreen()
-            : base( phase1.Title, phase1.Description, false )
+            : base( "", "", false )
         {
+            Phase1 phase1 = new Phase1( ( (Game1)this.ScreenManager.Game ).Data );
+            this.Title = phase1.Title;
+            this.Message = phase1.Description;
         }
 
         public override void Update( GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen )

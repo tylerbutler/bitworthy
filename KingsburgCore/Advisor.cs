@@ -4,6 +4,7 @@ using TylerButler.GameToolkit;
 using TylerButler.Kingsburg.Core.UI;
 using TylerButler.Kingsburg.Utilities;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace TylerButler.Kingsburg.Core
 {
@@ -12,12 +13,25 @@ namespace TylerButler.Kingsburg.Core
     {
         private Advisors advisorNameEnum;
         //private bool isInfluenced = false;
-        [NonSerialized] private PlayerCollection influencingPlayers = new PlayerCollection();
+        [NonSerialized]
+        [XmlIgnore()]
+        private PlayerCollection influencingPlayers = new PlayerCollection();
 
-        public Advisor( Advisors adv, string descriptionIn )
+        [NonSerialized]
+        [XmlIgnore()]
+        private GameManager gm;
+
+        public Advisor( GameManager gm, Advisors adv, string descriptionIn )
             : base( "" /*will get replaced when advisor enum is set*/, descriptionIn )
         {
+            this.gm = gm;
             this.AdvisorNameEnum = adv;
+        }
+
+        public Advisor( GameManager gm )
+            : base( "Name", "Description" )
+        {
+            this.gm = gm;
         }
 
         public Advisor()
@@ -95,33 +109,33 @@ namespace TylerButler.Kingsburg.Core
                 case Advisors.Jester:
                     // Player gains 1 VP
                     p.BoardVictoryPoints++;
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
+                    gm.UI.DisplayInfluenceAdvisor( this, p );
                     break;
                 case Advisors.Squire:
                     // Take 1 gold from the supply.
                     p.Gold++;
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
+                    gm.UI.DisplayInfluenceAdvisor( this, p );
                     break;
                 case Advisors.Architect:
                     // Take 1 wood from the supply.
                     p.Wood++;
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
+                    gm.UI.DisplayInfluenceAdvisor( this, p );
                     break;
                 case Advisors.Merchant:
                     // Take 1 wood OR 1 gold from the supply.
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
+                    gm.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     choice = (GoodsChoiceOptions)returnData[0];
                     p.AddGood( choice );
                     break;
                 case Advisors.Sergeant:
                     // Recruit 1 soldier.
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
+                    gm.UI.DisplayInfluenceAdvisor( this, p );
                     p.Soldiers++;
                     HandleStable( p );
                     break;
                 case Advisors.Alchemist:
                     //trade a single good for one of each of the other two goods
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
+                    gm.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     choice = (GoodsChoiceOptions)returnData[0];
                     switch( choice )
                     {
@@ -144,49 +158,49 @@ namespace TylerButler.Kingsburg.Core
                     break;
                 case Advisors.Astronomer:
                     // Receive a good of choice and a +2 token
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
+                    gm.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     choice = (GoodsChoiceOptions)returnData[0];
                     p.AddGood( choice );
                     p.PlusTwoTokens++;
                     break;
                 case Advisors.Treasurer:
                     // Receive 2 gold
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
+                    gm.UI.DisplayInfluenceAdvisor( this, p );
                     p.Gold += 2;
                     break;
                 case Advisors.MasterHunter:
                     // Take a wood and a gold, or a wood and a stone
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
+                    gm.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     choice = (GoodsChoiceOptions)returnData[0];
                     p.AddGood( choice );
                     break;
                 case Advisors.General:
                     // recruit two soliders and secretly look at the enemy card
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
+                    gm.UI.DisplayInfluenceAdvisor( this, p );
                     p.Soldiers += 2;
                     HandleStable( p );
                     break;
                 case Advisors.Swordsmith:
                     // receive a stone and a wood or a stone and a gold
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
+                    gm.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     choice = (GoodsChoiceOptions)returnData[0];
                     p.AddGood( choice );
                     break;
                 case Advisors.Duchess:
                     // Take 2 goods of choice and a "+2" token
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
+                    gm.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     p.AddGood( (GoodsChoiceOptions)returnData[0] );
                     p.AddGood( (GoodsChoiceOptions)returnData[1] );
                     p.PlusTwoTokens++;
                     break;
                 case Advisors.Champion:
                     // Take 3 stone
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
+                    gm.UI.DisplayInfluenceAdvisor( this, p );
                     p.Stone += 3;
                     break;
                 case Advisors.Smuggler:
                     // Pay a VP to take 3 goods of choice.
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
+                    gm.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     p.BoardVictoryPoints--;
                     p.AddGood( (GoodsChoiceOptions)returnData[0] );
                     p.AddGood( (GoodsChoiceOptions)returnData[1] );
@@ -194,26 +208,26 @@ namespace TylerButler.Kingsburg.Core
                     break;
                 case Advisors.Inventor:
                     // receive 1 of each good
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
+                    gm.UI.DisplayInfluenceAdvisor( this, p );
                     p.Gold++;
                     p.Wood++;
                     p.Stone++;
                     break;
                 case Advisors.Wizard:
                     // Take 4 gold
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
+                    gm.UI.DisplayInfluenceAdvisor( this, p );
                     p.Gold += 4;
                     break;
                 case Advisors.Queen:
                     // Take 2 goods of choice, spy on the enemy, and get 3 VP
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p, out returnData );
+                    gm.UI.DisplayInfluenceAdvisor( this, p, out returnData );
                     p.AddGood( (GoodsChoiceOptions)returnData[0] );
                     p.AddGood( (GoodsChoiceOptions)returnData[1] );
                     p.BoardVictoryPoints += 3;
                     break;
                 case Advisors.King:
                     // take one of each good and a soldier
-                    GameManager.Instance.UI.DisplayInfluenceAdvisor( this, p );
+                    gm.UI.DisplayInfluenceAdvisor( this, p );
                     p.Gold++;
                     p.Wood++;
                     p.Stone++;
@@ -227,9 +241,9 @@ namespace TylerButler.Kingsburg.Core
 
         private void HandleStable( Player p )
         {
-            if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Stable" ) ) )
+            if( p.HasBuilding( gm.Buildings.GetBuilding( "Stable" ) ) )
             {
-                GameManager.Instance.UI.DisplayStableBonus( p );
+                gm.UI.DisplayStableBonus( p );
                 p.Soldiers++;
             }
         }

@@ -9,7 +9,7 @@ namespace TylerButler.Kingsburg.Core
 {
     class ProgramRunner
     {
-        static void Main(string[] args)
+        static void Main( string[] args )
         {
             //List<Building> bs = DataLoader.LoadBuildings(@"Data\Buildings.xml");
             //List<Advisor> advisors = DataLoader.LoadAdvisors( @"Data\Advisors.xml" );
@@ -22,13 +22,19 @@ namespace TylerButler.Kingsburg.Core
             //e.Type = EnemyType.Dragons;
             //EnemyCollection ec = new EnemyCollection();
             //ec.Add( e );
-            //XmlSerializer serializer = new XmlSerializer( typeof( EnemyCollection ) );
+            //List<Advisor> ec = new List<Advisor>();
+            //ec.Add( new Advisor() );
+            //XmlSerializer serializer = new XmlSerializer( typeof( List<Advisor> ) );
             //TextWriter writer = new StreamWriter( @"c:\my.xml" );
             //serializer.Serialize( writer, ec );
             //writer.Close();
 
-            GameManager.Instance.UI = new UIManager();
-            GameManager.Instance.MainExecutionMethod();
+            GameManager gm = new GameManager();
+            gm.UI = new UIManager( gm );
+
+            DiceAllocationManager.Initialize( gm );
+
+            gm.MainExecutionMethod();
 
             //KingsburgDie d = new KingsburgDie( KingsburgDie.DieTypes.Regular );
             //d.Value = 1;

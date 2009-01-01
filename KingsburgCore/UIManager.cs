@@ -7,9 +7,12 @@ namespace TylerButler.Kingsburg.Core.UI
 {
     public sealed class UIManager : UIManagerBase, UIManagerInterface
     {
-        public UIManager()
+        GameManager gm;
+
+        public UIManager( GameManager gm )
             : base()
         {
+            this.gm = gm;
         }
 
         //public UIManager( string uiMode )
@@ -76,7 +79,7 @@ namespace TylerButler.Kingsburg.Core.UI
                         }
                         // TODO: Add a check for this value (should be > 0 and < 18 )
                         //
-                        chosenAdvisor = GameManager.Instance.Advisors[int.Parse( choice ) - 1];
+                        chosenAdvisor = gm.Advisors[int.Parse( choice ) - 1];
                         if( CanBeInfluenced.Contains( chosenAdvisor ) )
                         {
                             exitLoop = true;
@@ -136,7 +139,7 @@ namespace TylerButler.Kingsburg.Core.UI
             switch( this.Mode )
             {
                 case graphicsMode.CLI:
-                    foreach( Building b in GameManager.Instance.Buildings )
+                    foreach( Building b in gm.Buildings )
                     {
                         string ownedStar = p.HasBuilding( b ) ? "***" : string.Empty;
                         Console.WriteLine( "{5}\t{0}: {1} Gold, {2} Wood, {3} Stone, {4} VP", b.Name, b.GoldCost,
@@ -160,7 +163,7 @@ namespace TylerButler.Kingsburg.Core.UI
                                 Console.WriteLine( "{0},{1}: {2}", bu.Row, bu.Column, bu.Name );
                             }
                             Console.WriteLine();
-                            if( p.HasBuilding( GameManager.Instance.Buildings.GetBuilding( "Crane" ) ) )
+                            if( p.HasBuilding( gm.Buildings.GetBuilding( "Crane" ) ) )
                             {
                                 Console.WriteLine( "You have a crane so gold prices of buildings in columns 3 and 4 are reduced by 1." );
                                 Console.WriteLine();
@@ -179,7 +182,7 @@ namespace TylerButler.Kingsburg.Core.UI
                                 string[] parsedChoice = choice.Split( ',' );
                                 int chosenRow = int.Parse( parsedChoice[0] );
                                 int chosenColumn = int.Parse( parsedChoice[1] );
-                                toReturn = (Building)GameManager.Instance.Buildings.GetBuilding( chosenRow, chosenColumn ).Clone();
+                                toReturn = (Building)gm.Buildings.GetBuilding( chosenRow, chosenColumn ).Clone();
 
                                 failed = true;
                                 foreach( Building b in p.BuildableBuildings )
@@ -307,7 +310,7 @@ namespace TylerButler.Kingsburg.Core.UI
                             break;
                         case Advisors.General:
                             Console.WriteLine( "{0} influences the General and recruits 2 soldiers and may spy on the enemy.", p.Name );
-                            GameManager.Instance.UI.DisplayPeekAtEnemy( p );
+                            gm.UI.DisplayPeekAtEnemy( p );
                             break;
                         case Advisors.Swordsmith:
                             Console.WriteLine( "{0} influences the Swordsmith and receives either 1 Stone and 1 Wood, or 1 Stone and 1 Gold.", p.Name );
@@ -364,7 +367,7 @@ namespace TylerButler.Kingsburg.Core.UI
                 case graphicsMode.CLI:
                     Console.WriteLine( "{0} may now spy on the enemy. All other players should look away. Press any key when ready.", p.Name );
                     Console.ReadLine();
-                    Enemy e = GameManager.Instance.EnemiesForGame[GameManager.Instance.CurrentYear - 1];
+                    Enemy e = gm.EnemiesForGame[gm.CurrentYear - 1];
                     this.DisplayEnemyInfo( e );
                     Console.WriteLine( "\nPress any key to continue." );
                     Console.ReadLine();
@@ -493,7 +496,7 @@ namespace TylerButler.Kingsburg.Core.UI
                         }
                         else if( !data.Equals( cancelChar, StringComparison.OrdinalIgnoreCase ) && !data.Equals( String.Empty ) )
                         {
-                            toReturn.Add( new Player( data, "" ) );
+                            toReturn.Add( new Player( gm, data, "" ) );
                             Console.WriteLine( "{0} has joined the game!", data );
                             Console.WriteLine();
                         }
@@ -588,7 +591,7 @@ namespace TylerButler.Kingsburg.Core.UI
             switch( this.Mode )
             {
                 case graphicsMode.CLI:
-                    Console.WriteLine( "This is year {0} of 5.", GameManager.Instance.CurrentYear );
+                    Console.WriteLine( "This is year {0} of 5.", gm.CurrentYear );
                     break;
                 case graphicsMode.GUI:
                     throw new NotImplementedException();
@@ -649,7 +652,7 @@ namespace TylerButler.Kingsburg.Core.UI
             switch( this.Mode )
             {
                 case graphicsMode.CLI:
-                    Enemy attacker = GameManager.Instance.EnemiesForGame[GameManager.Instance.CurrentYear - 1];
+                    Enemy attacker = gm.EnemiesForGame[gm.CurrentYear - 1];
                     Console.WriteLine( "We are under attack by {0}! Prepare to defend yourselves!\n", attacker.Name );
                     this.DisplayEnemyInfo( attacker );
                     break;

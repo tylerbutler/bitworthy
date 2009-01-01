@@ -21,8 +21,8 @@ namespace KingsburgXNA
         public PlayerIndex Controller;
         public StorageDevice Device;
 
-        public XNAPlayer()
-            : base()
+        public XNAPlayer( GameManager gm )
+            : base( gm )
         {
         }
 

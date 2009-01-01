@@ -102,9 +102,10 @@ namespace KingsburgXNA.Screens
         #region Handle the Phases
 
         #region Phase 1
-        Phase phase = new Phase1();
+        Phase phase;
         public void HandlePhase1()
         {
+            phase = new Phase1( ( (Game1)this.ScreenManager.Game ).Data );
             Phase1 phase1 = (Phase1)phase;
             Phase1InfoScreen phaseInfo = new Phase1InfoScreen();
             phaseInfo.Accepted += new EventHandler<EventArgs>( phaseInfo_Accepted );

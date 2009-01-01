@@ -11,7 +11,7 @@ namespace TylerButler.Kingsburg.Core
 {
     public class GameManager : Game
     {
-        private static GameManager instance = null;
+        //private static GameManager instance = null;
         private PlayerCollection playerOrderPrimary = new PlayerCollection();
         private PlayerCollection playerOrderSecondary = new PlayerCollection();
         private PlayerCollection allPlayers = new PlayerCollection();
@@ -23,30 +23,30 @@ namespace TylerButler.Kingsburg.Core
         private bool isGameOver = false;
         private UIManagerBase ui;
 
-        static GameManager()
-        {
-            // Explicit static constructor to tell C# compiler
-            // not to mark type as beforefieldinit
-        }
+        //static GameManager()
+        //{
+        //    // Explicit static constructor to tell C# compiler
+        //    // not to mark type as beforefieldinit
+        //}
 
         public GameManager()
             : base()
         {
-
+            InitializeData();
         }
 
-        public static GameManager Instance
-        {
-            get
-            {
-                if( instance == null )
-                {
-                    instance = new GameManager();
-                    instance.InitializeData();
-                }
-                return instance;
-            }
-        }
+        //public static GameManager Instance
+        //{
+        //    get
+        //    {
+        //        if( instance == null )
+        //        {
+        //            instance = new GameManager();
+        //            instance.InitializeData();
+        //        }
+        //        return instance;
+        //    }
+        //}
 
         public UIManagerBase UI
         {
@@ -166,13 +166,13 @@ namespace TylerButler.Kingsburg.Core
         private void InitializeData()
         {
             // Pick the enemies for the game
-            Instance.SelectEnemies();
+            this.SelectEnemies();
 
             // Load the CLI UI Manager by default
-            this.UI = new UIManager();
+            this.UI = new UIManager( this );
 
             // Add Phases
-            Instance.GameStart.Add( new StartPhase() );
+            this.GameStart.Add( new StartPhase( this ) );
         }
 
         private void SelectEnemies()
@@ -294,14 +294,14 @@ namespace TylerButler.Kingsburg.Core
 
             do
             {
-                GameManager.Instance.UI.DisplayPhaseInfo( next );
+                this.UI.DisplayPhaseInfo( next );
                 next = next.Execute();
             }
             while( !this.IsGameOver );
         }
 
         [Conditional( "DEBUG" )]
-        public static void DebugSetup()
+        public void DebugSetup()
         {
             //GameManager.Instance.AllPlayers[0].AddDie( new KingsburgDie( KingsburgDie.DieTypes.MarketPositive ) );
             //GameManager.Instance.AllPlayers[0].AddDie( new KingsburgDie( KingsburgDie.DieTypes.MarketNegative ) );
