@@ -141,6 +141,43 @@ namespace KingsburgXNA.Screens
             }
         }
 
+        public void HandleInput( InputState input, PlayerIndex player )
+        {
+            // If back or B are pressed, cancel menu
+            if( input.CheckAction( Action.Back, player ) )
+            {
+                MenuCancelled.Invoke( -1 );
+                return;
+            }
+
+            if( input.CheckAction( Action.OK, player ) )
+            {
+                if( MenuOptionSelected != null )
+                    MenuOptionSelected( Selection );
+
+                return;
+            }
+
+            if( input.CheckAction( Action.Down, player ) )
+            {
+                Selection++;
+            }
+            if( input.CheckAction( Action.Up, player ) )
+            {
+                Selection--;
+            }
+
+            if( Selection >= MenuItems.Count )
+            {
+                Selection -= MenuItems.Count;
+            }
+
+            if( Selection < 0 )
+            {
+                Selection += MenuItems.Count;
+            }
+        }
+
         private static int RoundUp( float value )
         {
             int retval = (int)value;
@@ -199,6 +236,15 @@ namespace KingsburgXNA.Screens
             bounds.Offset( (int)( centerView.X - ( bounds.Width / 2 ) ),
                 (int)( centerView.Y - ( bounds.Height / 2 ) ) );
             this.uiBounds = bounds;
+        }
+
+        public void CenterMenu( Rectangle rectangle )
+        {
+            Viewport vp = new Viewport();
+            vp.X = rectangle.X;
+            vp.Y = rectangle.Y;
+            vp.Width = rectangle.Width;
+            vp.Height = rectangle.Height;
         }
 
         private Vector2 GetTopLeft()

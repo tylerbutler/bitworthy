@@ -93,6 +93,9 @@ namespace KingsburgXNA.Screens
                     case PhasesEnum.Phase1:
                         HandlePhase1();
                         break;
+                    case PhasesEnum.Phase2:
+                        HandlePhase2();
+                        break;
                 }
             }
         }
@@ -102,20 +105,18 @@ namespace KingsburgXNA.Screens
         #region Handle the Phases
 
         #region Phase 1
-        Phase phase;
+        Phase1 phase1;
         public void HandlePhase1()
         {
-            phase = new Phase1( ( (Game1)this.ScreenManager.Game ).Data );
-            Phase1 phase1 = (Phase1)phase;
-            Phase1InfoScreen phaseInfo = new Phase1InfoScreen();
-            phaseInfo.Accepted += new EventHandler<EventArgs>( phaseInfo_Accepted );
-            ScreenManager.AddScreen( phaseInfo );
+            phase1 = new Phase1( ( (Game1)this.ScreenManager.Game ).Data );
+            PhaseInfoScreen phase1Info = new PhaseInfoScreen( phase1 );
+            phase1Info.Accepted += new EventHandler<EventArgs>( phase1Info_Accepted );
+            ScreenManager.AddScreen( phase1Info );
         }
 
-        void phaseInfo_Accepted( object sender, EventArgs e )
+        void phase1Info_Accepted( object sender, EventArgs e )
         {
             // User has closed the phase info message, so do the other phase action
-            Phase1 phase1 = (Phase1)phase;
             PlayerCollection pc = phase1.FindKingsAid();
             Phase1KingsAidScreen kingsAidScreen = new Phase1KingsAidScreen( pc );
             kingsAidScreen.Accepted += new EventHandler<EventArgs>( kingsAidScreen_Accepted );
@@ -123,6 +124,23 @@ namespace KingsburgXNA.Screens
         }
 
         void kingsAidScreen_Accepted( object sender, EventArgs e )
+        {
+            // Phase 1 is now complete, time to move to Phase 2.
+            ( (Game1)ScreenManager.Game ).Data.CurrentPhase = PhasesEnum.Phase2;
+        }
+        #endregion
+
+        #region Phase 2
+        Phase2 phase2;
+        public void HandlePhase2()
+        {
+            phase2 = new Phase2( ( (Game1)ScreenManager.Game ).Data );
+            PhaseInfoScreen phase2Info = new PhaseInfoScreen( phase2 );
+            phase2Info.Accepted += new EventHandler<EventArgs>( phase2Info_Accepted );
+            ScreenManager.AddScreen( phase2Info );
+        }
+
+        void phase2Info_Accepted( object sender, EventArgs e )
         {
             throw new NotImplementedException();
         }

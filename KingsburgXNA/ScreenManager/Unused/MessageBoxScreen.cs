@@ -43,7 +43,7 @@ namespace KingsburgXNA.Screens
 
         #endregion
 
-        #region Fields
+        #region Properties
         public string Title
         {
             get
@@ -64,7 +64,8 @@ namespace KingsburgXNA.Screens
             }
             set
             {
-                message = value;
+                //message = Fonts.BreakTextIntoLines( "55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 55555 fd.", 50 );
+                message = Fonts.BreakTextIntoLines( value, 30 );
             }
         }
         #endregion
@@ -76,6 +77,20 @@ namespace KingsburgXNA.Screens
 
         #endregion
 
+        #region Properties
+        public Rectangle BackgroundRectangle
+        {
+            get
+            {
+                Rectangle toReturn = new Rectangle();
+                toReturn.Width = backgroundTexture.Width;
+                toReturn.Height = backgroundTexture.Height;
+                toReturn.X = (int)backgroundPosition.X;
+                toReturn.Y = (int)backgroundPosition.Y;
+                return toReturn;
+            }
+        }
+        #endregion
 
         #region Initialization
 
@@ -86,8 +101,8 @@ namespace KingsburgXNA.Screens
         /// <param name="isCancellable">Whether the message box can be cancelled.</param>
         public MessageBoxScreen( string title, string message, bool isCancellable )
         {
-            this.title = title;
-            this.message = message;
+            this.Title = title;
+            this.Message = message;
             this.isCancellable = isCancellable;
 
             IsPopup = true;
@@ -209,8 +224,8 @@ namespace KingsburgXNA.Screens
                 selectPosition.Y + 5 ), Color.White );
             batch.DrawString( Fonts.HeaderFont, "Confirmation", confirmPosition,
                 Fonts.CaptionColor );
-            batch.DrawString( Fonts.CaptionFont, Fonts.BreakTextIntoLines( message, 300 ), messagePosition,
-                Fonts.CaptionColor );
+            batch.DrawString( Fonts.CaptionFont, message, messagePosition,
+                Fonts.CountColor );
 
             batch.End();
         }

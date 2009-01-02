@@ -97,11 +97,13 @@
     <Compile Include="ScreenManager\Unused\ControlsScreen.cs" />
     <Compile Include="ScreenManager\GameScreen.cs" />
     <Compile Include="ScreenManager\Unused\HelpScreen.cs" />
+    <Compile Include="Screens\GoodsChoiceScreen.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="ScreenManager\MenuComponent.cs" />
     <Compile Include="ScreenManager\Unused\MenuEntry.cs" />
     <Compile Include="Screens\MessageBox.cs" />
     <Compile Include="Screens\Phase1Screen.cs" />
+    <Compile Include="Screens\Phase2Screen.cs" />
     <Compile Include="Screens\Unused\MainMenuScreen.cs" />
     <Compile Include="ScreenManager\Unused\MessageBoxScreen.cs" />
     <Compile Include="ScreenManager\Unused\SaveLoadScreen.cs" />

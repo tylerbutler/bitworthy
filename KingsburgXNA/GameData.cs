@@ -13,6 +13,7 @@ namespace KingsburgXNA
         public PhasesEnum CurrentPhase = PhasesEnum.Start;
         public XNAPlayer CurrentPlayer;
         public XNAPlayer Player1;
+        public bool hasPlayed = false;
         //public XNAPlayer Player2 = new XNAPlayer();
         private Game1 game;
 

@@ -286,16 +286,18 @@ namespace KingsburgXNA.Screens
             StringBuilder stringBuilder = new StringBuilder( text );
             int currentLine = 0;
             int newLineIndex = 0;
+            int lineIndex = 0;
             while( ( ( text.Length - newLineIndex ) > maximumCharactersPerLine ) )
             {
                 text.IndexOf( ' ', 0 );
                 int nextIndex = newLineIndex;
-                while( ( nextIndex >= 0 ) && ( nextIndex < maximumCharactersPerLine ) )
+                while( ( nextIndex >= 0 ) && ( ( nextIndex - lineIndex ) < maximumCharactersPerLine ) )
                 {
                     newLineIndex = nextIndex;
                     nextIndex = text.IndexOf( ' ', newLineIndex + 1 );
                 }
                 stringBuilder.Replace( ' ', '\n', newLineIndex, 1 );
+                lineIndex = newLineIndex;
                 currentLine++;
             }
 
